@@ -1,32 +1,39 @@
 {
-  "name": "Snowbeat",
-  "type": "module",
-  "version": "6.0.0",
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "lint": "npx eslint .",
-    "prettier:check": "npx prettier .",
-    "prettier:fix": "npx prettier . --write",
-    "stylelint:check": "npx stylelint '**/*.astro'"
-  },
-  "dependencies": {
-    "@astrojs/mdx": "^7.0.3",
-    "astro": "^7.1.3"
-  },
-  "devDependencies": {
-    "@typescript-eslint/parser": "^8.65.0",
-    "eslint": "^10.7.0",
-    "eslint-plugin-astro": "^1.7.0",
-    "postcss-html": "^1.8.1",
-    "prettier": "3.9.6",
-    "prettier-plugin-astro": "0.14.1",
-    "stylelint": "^17.14.1",
-    "stylelint-config-html": "^1.1.0"
-  }
+    "name": "Snowbeat",
+    "type": "module",
+    "version": "6.0.0",
+    "engines": {
+        "node": ">=22.12.0"
+    },
+    "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro",
+        "lint:check": "astro check && npx eslint . && npx stylelint '**/*.{css,astro}'",
+        "lint:fix": "npx eslint --fix . && npx stylelint '**/*.{css,astro}' --fix",
+        "prettier:check": "npx prettier .",
+        "prettier:fix": "npx prettier . --write"
+    },
+    "dependencies": {
+        "@astrojs/check": "^0.9.9",
+        "@astrojs/mdx": "7.0.3",
+        "astro": "7.1.3",
+        "typescript": "^6.0.3"
+    },
+    "devDependencies": {
+        "@csstools/postcss-global-data": "^4.0.0",
+        "@typescript-eslint/parser": "^8.65.0",
+        "eslint": "^10.7.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-astro": "^1.7.0",
+        "postcss": "^8.5.22",
+        "postcss-custom-media": "^12.0.1",
+        "postcss-html": "^1.8.1",
+        "prettier": "3.9.6",
+        "prettier-plugin-astro": "0.14.1",
+        "stylelint": "^17.14.1",
+        "stylelint-config-html": "^1.1.0",
+        "stylelint-config-standard": "^40.0.0"
+    }
 }

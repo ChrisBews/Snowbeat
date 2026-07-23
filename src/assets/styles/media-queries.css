@@ -1,0 +1,2 @@
+@custom-media --bp-800 (width >= 800px);
+@custom-media --bp-600 (width >= 600px);

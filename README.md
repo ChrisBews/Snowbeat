@@ -1,2 +1,3 @@
 # Snowbeat
+
 The Snowbeat website

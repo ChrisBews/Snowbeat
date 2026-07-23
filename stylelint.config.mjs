@@ -1,7 +1,5 @@
 /** @type {import("stylelint").Config} */
 export default {
-  extends: ["stylelint-config-html"],
-  rules: {
-    
-  }
+    extends: ['stylelint-config-standard', 'stylelint-config-html'],
+    rules: {},
 };

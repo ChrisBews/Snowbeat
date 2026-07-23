@@ -1,0 +1,96 @@
+---
+import { Font } from 'astro:assets';
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <Font cssVariable="--font-geist" />
+        <Font cssVariable="--font-worksans" />
+        <title>Snowbeat</title>
+    </head>
+    <body>
+        <style is:global>
+            :root {
+                --color-brand-yellow: #efff12;
+                --color-brand-grey-light: #f9f9f9;
+                --font-size-700: 2.5rem;
+                --font-size-600: 2rem;
+                --font-size-500: 1.5rem;
+                --font-size-450: 1.25rem;
+                --font-size-400: 1rem;
+                --font-size-350: 0.875rem;
+
+                @media (--bp-800) {
+                    --font-size-700: 3.5rem;
+                    --font-size-600: 2.5rem;
+                    --font-size-500: 2rem;
+                    --font-size-450: 1.5rem;
+                    --font-size-400: 1.25rem;
+                    --font-size-350: 1.125rem;
+                }
+            }
+
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                font: inherit;
+            }
+
+            img,
+            picture,
+            svg,
+            video {
+                display: block;
+            }
+
+            html,
+            body {
+                min-height: 100svh;
+                font-family: var(--font-worksans);
+                background-color: var(--color-brand-grey-light);
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: var(--font-geist);
+                font-weight: 700;
+            }
+
+            main {
+                width: 100%;
+            }
+
+            .section-content {
+                max-width: 1180px;
+                margin: 0 auto;
+                padding: 0 20px;
+
+                @media (--bp-600) {
+                    padding-inline: 30px;
+                }
+
+                @media (--bp-800) {
+                    padding-inline: 50px;
+                }
+            }
+        </style>
+        <main>
+            <slot />
+        </main>
+    </body>
+</html>

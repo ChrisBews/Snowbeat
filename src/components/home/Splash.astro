@@ -1,0 +1,63 @@
+---
+import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
+import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
+---
+
+<style define:vars={{ 'bg-url': `url(${SnowbeatIcon.src})` }}>
+    .wrapper {
+        width: 100%;
+        background-color: var(--color-brand-yellow);
+        background-image: var(--bg-url);
+        background-repeat: no-repeat;
+        background-position: calc(70% + 80px) 45%;
+    }
+
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80svh;
+        max-height: 634px;
+        min-height: 360px;
+        padding-bottom: 10px;
+        padding-inline: 40px;
+    }
+
+    .logo {
+        width: 100%;
+        max-width: 494px;
+    }
+
+    .logo-text {
+        opacity: 0;
+    }
+
+    h2 {
+        padding-top: 1rem;
+        font-family: var(--font-worksans);
+        font-size: clamp(1rem, 4.3vw, 1.5rem);
+        text-align: center;
+        text-wrap: pretty;
+    }
+
+    @media (--bp-600) {
+        .wrapper {
+            background-position: calc(50% + 180px) 55%;
+        }
+
+        h2 {
+            padding-top: 1.25rem;
+        }
+    }
+</style>
+
+<section class="wrapper">
+    <div class="section-content content-wrapper">
+        <h1>
+            <span class="logo-text">Snowbeat</span>
+            <img src={SnowbeatLogo.src} aria-hidden="true" class="logo" />
+        </h1>
+        <h2>The home of developer Christopher Bews</h2>
+    </div>
+</section>

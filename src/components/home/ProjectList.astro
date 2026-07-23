@@ -1,0 +1,34 @@
+---
+import ProjectListItem from './ProjectListItem.astro';
+
+import TestLogo from '@snowbeat/assets/images/projects/tasklane/project-logo.png';
+import RoliLearnLogo from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
+---
+
+<style>
+    .project-list-items {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px 20px;
+        width: 100%;
+        padding-top: 34px;
+        padding-bottom: 60px;
+
+        @media (--bp-600) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (--bp-800) {
+            gap: 30px 40px;
+        }
+    }
+</style>
+
+<div>
+    <ProjectListItem isFeatured title="ROLI Learn" image={RoliLearnLogo} />
+    <div class="project-list-items section-content">
+        <ProjectListItem title="Tasklane" image={TestLogo} />
+        <ProjectListItem title="ROLI Connect" image={TestLogo} />
+        <ProjectListItem title="Play LUMI" image={TestLogo} />
+    </div>
+</div>

@@ -1,24 +1,12 @@
 ---
-import { Font } from "astro:assets";
+import SiteLayout from '@snowbeat/layouts/SiteLayout.astro';
+import Splash from '@snowbeat/components/home/Splash.astro';
+import SectionTitle from '@snowbeat/components/shared/SectionTitle.astro';
+import ProjectList from '@snowbeat/components/home/ProjectList.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <Font cssVariable="--font-geist" />
-    <Font cssVariable="--font-worksans" />
-    <title>Snowbeat</title>
-  </head>
-  <body>
-    <style>
-      h1 {
-        font-family: var(--font-geist);
-      }
-    </style>
-    <h1>Snowbeat</h1>
-  </body>
-</html>
+<SiteLayout>
+    <Splash />
+    <SectionTitle>Projects</SectionTitle>
+    <ProjectList />
+</SiteLayout>

@@ -1,0 +1,28 @@
+---
+
+---
+
+<style>
+    .image-caption {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        padding-inline: 16px;
+        padding-block: 10px;
+        font-family: var(--font-geist);
+        font-size: var(--font-size-350);
+        font-weight: 700;
+        background-color: var(--color-brand-yellow);
+
+        @media (--bp-800) {
+            bottom: 32px;
+            right: 32px;
+            padding-inline: 1.25rem;
+            padding-block: 0.8125rem;
+        }
+    }
+</style>
+
+<figcaption class="image-caption">
+    <slot />
+</figcaption>
