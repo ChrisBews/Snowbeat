@@ -1,0 +1,51 @@
+---
+import LinkedInIcon from '@snowbeat/assets/images/icon-linkedin.svg';
+import GithubIcon from '@snowbeat/assets/images/icon-github.svg';
+import ExternalIcon from '@snowbeat/assets/images/icon-external.svg';
+
+interface Props {
+    icon: 'linkedin' | 'github' | 'external';
+    href: string;
+    target?: '_blank' | '_self';
+}
+
+const { icon, href, target } = Astro.props;
+
+const iconData = {
+    linkedin: LinkedInIcon,
+    github: GithubIcon,
+    external: ExternalIcon,
+};
+
+const IconSvg = iconData[icon];
+const iconWidth = icon === 'github' ? 33 : 32;
+const iconHeight = 32;
+---
+
+<style>
+    a {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        padding: 0.625rem;
+        color: var(--color-brand-white);
+        font-family: var(--font-worksans);
+        font-size: var(--font-size-400);
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 8px;
+        background-color: var(--color-brand-black);
+    }
+</style>
+
+<a href={href} target={target} rel="noreferrer"
+    ><img
+        src={IconSvg.src}
+        width={iconWidth}
+        height={iconHeight}
+        alt=""
+        aria-hidden="true"
+    />
+    <slot /></a
+>

@@ -29,14 +29,10 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
         max-width: 494px;
     }
 
-    .logo-text {
-        opacity: 0;
-    }
-
     h2 {
         padding-top: 1rem;
         font-family: var(--font-worksans);
-        font-size: clamp(1rem, 4.3vw, 1.5rem);
+        font-size: clamp(1rem, 4.3vw, 1.5625rem);
         text-align: center;
         text-wrap: pretty;
     }
@@ -55,8 +51,12 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
 <section class="wrapper">
     <div class="section-content content-wrapper">
         <h1>
-            <span class="logo-text">Snowbeat</span>
-            <img src={SnowbeatLogo.src} aria-hidden="true" class="logo" />
+            <img
+                src={SnowbeatLogo.src}
+                aria-hidden="true"
+                class="logo"
+                alt="Snowbeat"
+            />
         </h1>
         <h2>The home of developer Christopher Bews</h2>
     </div>

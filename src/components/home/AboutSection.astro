@@ -1,0 +1,68 @@
+---
+import SectionTitle from '../shared/SectionTitle.astro';
+import IconButton from '../shared/IconButton.astro';
+
+import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
+---
+
+<style define:vars={{ 'bg-url': `url(${SnowbeatIcon.src})` }}>
+    section {
+        padding-bottom: 60px;
+        text-align: center;
+        background-color: var(--color-brand-yellow);
+        background-image: var(--bg-url);
+        background-size: clamp(1100px, 190vw, 2000px);
+        background-repeat: no-repeat;
+        background-position: calc(50% + 150px) 2.5%;
+    }
+
+    .content-wrapper {
+        max-width: 640px;
+
+        @media (--bp-800) {
+            max-width: 840px;
+        }
+    }
+
+    .social-links {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 20px;
+        list-style: none;
+        padding-top: 40px;
+
+        @media (--bp-600) {
+            gap: 32px;
+            padding-top: 60px;
+        }
+    }
+</style>
+
+<section>
+    <div class="section-content content-wrapper">
+        <SectionTitle>About</SectionTitle>
+        <p>
+            I am a developer based in London, with 20 years of experience split
+            between design agencies and a hardware/software startup. I began as
+            a designer, then moved into frontend web development (with Flash,
+            hand drawn animation, 3D modelling, and information architecture
+            mixed in), then moved into React Native mobile app development. I
+            also have experience managing other developers and making wider
+            architectural decisions. I generally try to cover any gaps that
+            arise to help the wider team achieve their goals.
+        </p>
+        <h3 class="visually-hidden">Social links</h3>
+        <ul class="social-links">
+            <li>
+                <IconButton href="#" icon="linkedin"
+                    >Find me on LinkedIn</IconButton
+                >
+            </li>
+            <li>
+                <IconButton href="#" icon="github">Find me on Github</IconButton
+                >
+            </li>
+        </ul>
+    </div>
+</section>

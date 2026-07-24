@@ -1,12 +1,16 @@
 ---
 import SiteLayout from '@snowbeat/layouts/SiteLayout.astro';
-import Splash from '@snowbeat/components/home/Splash.astro';
-import SectionTitle from '@snowbeat/components/shared/SectionTitle.astro';
-import ProjectList from '@snowbeat/components/home/ProjectList.astro';
+import SplashSection from '@snowbeat/components/home/SplashSection.astro';
+import ProjectsSection from '@snowbeat/components/home/ProjectsSection.astro';
+import AboutSection from '@snowbeat/components/home/AboutSection.astro';
+import TimelineSection from '@snowbeat/components/home/TimelineSection.astro';
+import ExtrasSection from '@snowbeat/components/home/ExtrasSection.astro';
 ---
 
 <SiteLayout>
-    <Splash />
-    <SectionTitle>Projects</SectionTitle>
-    <ProjectList />
+    <SplashSection />
+    <ProjectsSection />
+    <AboutSection />
+    <TimelineSection />
+    <ExtrasSection />
 </SiteLayout>

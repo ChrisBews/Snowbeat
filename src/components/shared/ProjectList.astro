@@ -3,6 +3,12 @@ import ProjectListItem from './ProjectListItem.astro';
 
 import TestLogo from '@snowbeat/assets/images/projects/tasklane/project-logo.png';
 import RoliLearnLogo from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
+
+interface Props {
+    isFirstItemHighlighted?: boolean;
+}
+
+const { isFirstItemHighlighted } = Astro.props;
 ---
 
 <style>
@@ -11,7 +17,6 @@ import RoliLearnLogo from '@snowbeat/assets/images/projects/roli-learn/project-l
         grid-template-columns: 1fr;
         gap: 16px 20px;
         width: 100%;
-        padding-top: 34px;
         padding-bottom: 60px;
 
         @media (--bp-600) {
@@ -22,11 +27,25 @@ import RoliLearnLogo from '@snowbeat/assets/images/projects/roli-learn/project-l
             gap: 30px 40px;
         }
     }
+
+    .list-below-highlight {
+        padding-top: 34px;
+    }
 </style>
 
 <div>
-    <ProjectListItem isFeatured title="ROLI Learn" image={RoliLearnLogo} />
-    <div class="project-list-items section-content">
+    {
+        isFirstItemHighlighted && (
+            <ProjectListItem
+                isFeatured
+                title="ROLI Learn"
+                image={RoliLearnLogo}
+            />
+        )
+    }
+    <div
+        class={`project-list-items section-content${isFirstItemHighlighted ? ' list-below-highlight' : ''}`}
+    >
         <ProjectListItem title="Tasklane" image={TestLogo} />
         <ProjectListItem title="ROLI Connect" image={TestLogo} />
         <ProjectListItem title="Play LUMI" image={TestLogo} />
