@@ -1,5 +1,7 @@
 ---
 import { Font } from 'astro:assets';
+
+import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
 ---
 
 <html lang="en">
@@ -17,6 +19,7 @@ import { Font } from 'astro:assets';
         <style is:global>
             :root {
                 --color-brand-yellow: #efff12;
+                --color-brand-yellow-dark: #e4f400;
                 --color-brand-grey-light: #f9f9f9;
                 --color-brand-black: #191919;
                 --color-brand-white: #f3f3f3;
@@ -117,5 +120,6 @@ import { Font } from 'astro:assets';
         <main>
             <slot />
         </main>
+        <SiteFooter />
     </body>
 </html>

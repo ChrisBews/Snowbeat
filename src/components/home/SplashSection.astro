@@ -6,6 +6,7 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
 <style define:vars={{ 'bg-url': `url(${SnowbeatIcon.src})` }}>
     .wrapper {
         width: 100%;
+        color: var(--color-brand-black);
         background-color: var(--color-brand-yellow);
         background-image: var(--bg-url);
         background-repeat: no-repeat;
@@ -51,12 +52,8 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
 <section class="wrapper">
     <div class="section-content content-wrapper">
         <h1>
-            <img
-                src={SnowbeatLogo.src}
-                aria-hidden="true"
-                class="logo"
-                alt="Snowbeat"
-            />
+            <span class="visually-hidden">Snowbeat</span>
+            <SnowbeatLogo aria-hidden="true" class="logo" />
         </h1>
         <h2>The home of developer Christopher Bews</h2>
     </div>

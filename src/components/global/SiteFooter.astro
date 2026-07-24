@@ -1,0 +1,99 @@
+---
+import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
+import LinkedInIcon from '@snowbeat/assets/images/icon-linkedin.svg';
+import GithubIcon from '@snowbeat/assets/images/icon-github.svg';
+---
+
+<style>
+    footer {
+        display: flex;
+        flex-direction: column;
+        height: 84svw;
+        color: var(--color-brand-yellow);
+        background-color: var(--color-brand-yellow-dark);
+
+        @media (--bp-500) {
+            height: 55svw;
+        }
+
+        @media (--bp-600) {
+            height: 50svw;
+        }
+
+        @media (--bp-800) {
+            height: 45svw;
+            max-height: 468px;
+        }
+    }
+
+    .top-row {
+        display: flex;
+        flex: 1;
+        align-items: flex-end;
+        overflow: hidden;
+    }
+
+    .logo {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 494/83;
+        transform: translateY(12%);
+    }
+
+    .bottom-row {
+        padding-top: 16px;
+        padding-bottom: 14px;
+        background-color: var(--color-brand-yellow);
+
+        @media (--bp-500) {
+            padding-bottom: 16px;
+        }
+    }
+
+    .bottom-row-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+
+        @media (--bp-500) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    .social-links {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        list-style: none;
+        color: var(--color-brand-black);
+    }
+
+    .copyright {
+        color: var(--color-brand-black);
+        font-size: var(--font-size-400);
+        font-weight: 700;
+    }
+</style>
+<footer>
+    <div class="top-row">
+        <SnowbeatLogo aria-hidden="true" class="section-content logo" />
+    </div>
+    <div class="bottom-row">
+        <div class="section-content bottom-row-content">
+            <h2 class="visually-hidden">Social links</h2>
+            <ul class="social-links">
+                <li>
+                    <span class="visually-hidden">LinkedIn</span>
+                    <LinkedInIcon aria-hidden="true" />
+                </li>
+                <li>
+                    <span class="visually-hidden">Github</span>
+                    <GithubIcon aria-hidden="true" />
+                </li>
+            </ul>
+            <p class="copyright">© Christopher Bews 2004-2026</p>
+        </div>
+    </div>
+</footer>
