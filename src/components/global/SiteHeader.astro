@@ -1,0 +1,332 @@
+---
+import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
+---
+
+<script>
+    const mainNavToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const mainNavOptions = document.querySelectorAll('.main-nav-item');
+    const screenOverlay = document.querySelector('.screen-overlay');
+
+    const openMainNav = () => {
+        mainNavToggle?.setAttribute('aria-expanded', 'true');
+        mainNavToggle?.setAttribute('data-active', 'true');
+        mainNav?.setAttribute('data-visible', 'true');
+        screenOverlay?.setAttribute('data-visible', 'true');
+    };
+
+    const closeMainNav = () => {
+        mainNavToggle?.removeAttribute('aria-expanded');
+        mainNavToggle?.removeAttribute('data-active');
+        mainNav?.removeAttribute('data-visible');
+        screenOverlay?.removeAttribute('data-visible');
+    };
+
+    const toggleMainNavVisiblility = () => {
+        const isVisible = !mainNav?.hasAttribute('data-visible');
+
+        if (isVisible) {
+            openMainNav();
+        } else {
+            closeMainNav();
+        }
+    };
+
+    screenOverlay?.addEventListener('click', () => {
+        toggleMainNavVisiblility();
+    });
+
+    mainNavToggle?.addEventListener('click', () => {
+        toggleMainNavVisiblility();
+    });
+
+    mainNavOptions?.forEach((navOption) => {
+        navOption.addEventListener('click', closeMainNav);
+    });
+
+    // Handle issue where scaling the browser down to mobile layout
+    // would show the main nav animating into it's hidden position
+    const MOBILE_NAV_BREAKPOINT = 800;
+    let wasDesktop = window.innerWidth >= MOBILE_NAV_BREAKPOINT;
+
+    const observer = new ResizeObserver((entries) => {
+        const width = entries[0].contentRect.width;
+        const isDesktop = width >= MOBILE_NAV_BREAKPOINT;
+
+        if (isDesktop !== wasDesktop) {
+            // Use the no-transition class to force the nav into it's hidden position instantly
+            mainNav?.classList.add('no-transition');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // Remove the class after layout has properly updated
+                    mainNav?.classList.remove('no-transition');
+                });
+            });
+            wasDesktop = isDesktop;
+        }
+    });
+
+    observer.observe(document.body);
+</script>
+<style>
+    .screen-overlay {
+        position: fixed;
+        z-index: 99;
+        inset: 0;
+        opacity: 0;
+        pointer-events: none;
+        background-color: var(--color-brand-black);
+        transition: opacity 0.15s linear;
+
+        &[data-visible] {
+            opacity: 0.3;
+            pointer-events: auto;
+        }
+    }
+
+    header {
+        position: fixed;
+        top: 24px;
+        left: 0;
+        right: 0;
+        z-index: 100;
+    }
+
+    .header-content {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 0;
+        border-radius: 8px;
+        background-color: var(--color-brand-yellow);
+    }
+
+    .logo-wrapper {
+        padding-block: 20px;
+        padding-left: 30px;
+
+        @media (--bp-800) {
+            padding-block: 24px;
+        }
+    }
+
+    .logo-wrapper a {
+        color: var(--color-brand-black);
+    }
+
+    .logo {
+        width: 160px;
+        height: auto;
+
+        @media (--bp-800) {
+            width: 180px;
+        }
+    }
+
+    .main-nav {
+        position: absolute;
+        right: 0;
+        top: 100%;
+        width: 100%;
+        display: flex;
+        overflow: hidden;
+
+        @media (--bp-800) {
+            position: static;
+            flex-basis: 70%;
+            display: flex;
+            padding-block: 8px;
+        }
+    }
+
+    .main-nav-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: 100%;
+        list-style: none;
+
+        @media (--bp-800) {
+            flex-direction: row;
+        }
+    }
+
+    .main-nav-item {
+        position: relative;
+        display: flex;
+        flex: 1;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition:
+            transform 0.07s linear
+                calc((3 - var(--nav-item-index)) * var(--anim-main-nav-delay)),
+            opacity 0.01s linear
+                calc((4 - var(--nav-item-index)) * var(--anim-main-nav-delay));
+
+        /* Flip depth order so that successive nav items show/hide beneath the previous one */
+        &:nth-child(1) {
+            z-index: 4;
+        }
+
+        &:nth-child(2) {
+            z-index: 3;
+        }
+
+        &:nth-child(3) {
+            z-index: 2;
+        }
+
+        &:nth-child(4) {
+            z-index: 1;
+        }
+
+        @media (--bp-800) {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
+
+    .main-nav[data-visible] .main-nav-item {
+        transform: translateY(0);
+        opacity: 1;
+        transition-delay: calc(
+            var(--nav-item-index) * var(--anim-main-nav-delay)
+        );
+
+        @media (--bp-800) {
+            transform: none;
+        }
+    }
+
+    .main-nav.no-transition .main-nav-item {
+        transition: none;
+    }
+
+    .main-nav-button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 20px;
+        color: var(--color-brand-black);
+        font-size: var(--font-size-450);
+        text-decoration: none;
+        border-radius: 8px;
+        background-color: var(--color-brand-yellow);
+        transition: background-color 0.15s linear;
+
+        @media (--bp-800) {
+            justify-content: center;
+            padding: 0;
+            font-size: var(--font-size-400);
+            border-radius: 4px;
+        }
+    }
+
+    .main-nav-button:hover {
+        @media (hover: hover) {
+            background-color: var(--color-brand-yellow-dark);
+        }
+    }
+
+    .menu-toggle {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 76px;
+        margin: 4px;
+        cursor: pointer;
+        border: 0;
+        border-radius: 8px;
+        background-color: var(--color-brand-yellow);
+        transition: background-color 0.15s linear;
+
+        @media (hover: hover) {
+            &:hover {
+                background-color: var(--color-brand-yellow-dark);
+            }
+        }
+
+        @media (--bp-800) {
+            display: none;
+        }
+    }
+
+    .menu-icon {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        width: 36px;
+        height: 26px;
+    }
+
+    .menu-icon-row {
+        display: block;
+        width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background-color: var(--color-brand-black);
+        transition: transform 0.15s cubic-bezier(0.5, 1, 0.89, 1);
+    }
+
+    .active .menu-icon-row {
+        &:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+
+        &:nth-child(2) {
+            transform: rotate(45deg);
+        }
+
+        &:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+    }
+</style>
+
+<div class="screen-overlay"></div>
+
+<header>
+    <div class="section-content">
+        <div class="header-content">
+            <h1 class="logo-wrapper">
+                <span class="visually-hidden">Snowbeat</span>
+                <a href="/">
+                    <SnowbeatLogo aria-hidden="true" class="logo" />
+                </a>
+            </h1>
+            <button
+                class="menu-toggle"
+                aria-controls="main-nav"
+                aria-expanded="false"
+                ><span class="visually-hidden">Main menu</span>
+                <div class="menu-icon">
+                    <span class="menu-icon-row"></span>
+                    <span class="menu-icon-row"></span>
+                    <span class="menu-icon-row"></span>
+                </div>
+            </button>
+            <nav class="main-nav" id="main-nav">
+                <ul class="main-nav-list">
+                    <li class="main-nav-item" style="--nav-item-index: 0">
+                        <a href="#" class="main-nav-button active">Projects</a>
+                    </li>
+                    <li class="main-nav-item" style="--nav-item-index: 1">
+                        <a href="#" class="main-nav-button">About</a>
+                    </li>
+                    <li class="main-nav-item" style="--nav-item-index: 2">
+                        <a href="#" class="main-nav-button">Timeline</a>
+                    </li>
+                    <li class="main-nav-item" style="--nav-item-index: 3">
+                        <a href="#" class="main-nav-button">Extras</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>

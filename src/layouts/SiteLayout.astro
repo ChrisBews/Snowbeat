@@ -1,6 +1,7 @@
 ---
 import { Font } from 'astro:assets';
 
+import SiteHeader from '@snowbeat/components/global/SiteHeader.astro';
 import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
 ---
 
@@ -30,6 +31,7 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
                 --font-size-450: 1.25rem;
                 --font-size-400: 1rem;
                 --font-size-350: 0.875rem;
+                --anim-main-nav-delay: 0.05s;
 
                 @media (--bp-800) {
                     --font-size-700: 3.5rem;
@@ -117,6 +119,7 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
                 }
             }
         </style>
+        <SiteHeader />
         <main>
             <slot />
         </main>

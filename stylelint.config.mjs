@@ -1,5 +1,7 @@
 /** @type {import("stylelint").Config} */
 export default {
     extends: ['stylelint-config-standard', 'stylelint-config-html'],
-    rules: {},
+    rules: {
+        "custom-property-empty-line-before": null
+    },
 };
