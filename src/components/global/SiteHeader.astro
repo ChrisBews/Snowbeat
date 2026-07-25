@@ -79,7 +79,7 @@ import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
         transition: opacity 0.15s linear;
 
         &[data-visible] {
-            opacity: 0.3;
+            opacity: 0.2;
             pointer-events: auto;
         }
     }
@@ -274,7 +274,7 @@ import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
         transition: transform 0.15s cubic-bezier(0.5, 1, 0.89, 1);
     }
 
-    .active .menu-icon-row {
+    .menu-toggle[data-active] .menu-icon-row {
         &:nth-child(1) {
             transform: translateY(11px) rotate(45deg);
         }
