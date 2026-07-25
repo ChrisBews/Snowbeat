@@ -1,9 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
+
 import ProjectList from '../shared/ProjectList.astro';
 import SectionTitle from '../shared/SectionTitle.astro';
+
+const extraProjects = (await getCollection('extras')).sort(
+    (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
 ---
 
 <section>
     <SectionTitle>Extras</SectionTitle>
-    <ProjectList />
+    <ProjectList projects={extraProjects} basePath="extras" />
 </section>

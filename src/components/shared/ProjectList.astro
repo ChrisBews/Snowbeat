@@ -1,14 +1,17 @@
 ---
-import ProjectListItem from './ProjectListItem.astro';
+import type { CollectionEntry } from 'astro:content';
 
-import TestLogo from '@snowbeat/assets/images/projects/tasklane/project-logo.png';
-import RoliLearnLogo from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
+import ProjectListItem from './ProjectListItem.astro';
 
 interface Props {
     isFirstItemHighlighted?: boolean;
+    projects: CollectionEntry<'projects' | 'extras'>[];
+    basePath: string;
 }
 
-const { isFirstItemHighlighted } = Astro.props;
+const { isFirstItemHighlighted, projects, basePath } = Astro.props;
+
+const parsedProjects = isFirstItemHighlighted ? projects.slice(1) : projects;
 ---
 
 <style>
@@ -38,16 +41,25 @@ const { isFirstItemHighlighted } = Astro.props;
         isFirstItemHighlighted && (
             <ProjectListItem
                 isFeatured
-                title="ROLI Learn"
-                image={RoliLearnLogo}
+                title={projects[0].data.title}
+                image={projects[0].data.primaryImage}
+                type={projects[0].data.type}
+                slug={`/${basePath}/${projects[0].id}`}
             />
         )
     }
     <div
         class={`project-list-items section-content${isFirstItemHighlighted ? ' list-below-highlight' : ''}`}
     >
-        <ProjectListItem title="Tasklane" image={TestLogo} />
-        <ProjectListItem title="ROLI Connect" image={TestLogo} />
-        <ProjectListItem title="Play LUMI" image={TestLogo} />
+        {
+            (parsedProjects || []).map((project) => (
+                <ProjectListItem
+                    title={project.data.title}
+                    image={project.data.primaryImage}
+                    type={project.data.type}
+                    slug={`/${basePath}/${project.id}`}
+                />
+            ))
+        }
     </div>
 </div>

@@ -139,6 +139,7 @@ import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
             flex-basis: 70%;
             display: flex;
             padding-block: 8px;
+            padding-right: 8px;
         }
     }
 
@@ -218,6 +219,10 @@ import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
         border-radius: 8px;
         background-color: var(--color-brand-yellow);
         transition: background-color 0.15s linear;
+
+        &.active {
+            background-color: var(--color-brand-yellow-dark);
+        }
 
         @media (--bp-800) {
             justify-content: center;

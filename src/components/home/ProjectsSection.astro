@@ -1,9 +1,19 @@
 ---
+import { getCollection } from 'astro:content';
+
 import ProjectList from '../shared/ProjectList.astro';
 import SectionTitle from '../shared/SectionTitle.astro';
+
+const projects = (await getCollection('projects')).sort(
+    (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
 ---
 
 <section>
     <SectionTitle>Projects</SectionTitle>
-    <ProjectList isFirstItemHighlighted />
+    <ProjectList
+        isFirstItemHighlighted
+        projects={projects}
+        basePath="projects"
+    />
 </section>

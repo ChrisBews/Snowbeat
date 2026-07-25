@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+
+import SiteLayout from '@snowbeat/layouts/SiteLayout.astro';
+import { Image } from 'astro:assets';
+
+// Generates a new path for every collection item
+export async function getStaticPaths() {
+    const projects = await getCollection('projects');
+
+    return projects.map((project) => ({
+        params: { id: project.id },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<SiteLayout>
+    <Image
+        src={project.data.primaryImage}
+        alt={`${project.data.title} logo`}
+        layout="full-width"
+    />
+    <Content />
+</SiteLayout>
