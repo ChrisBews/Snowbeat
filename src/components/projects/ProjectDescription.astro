@@ -8,6 +8,7 @@ interface Props {
 }
 
 const { websiteUrl, appStoreUrl, playStoreUrl } = Astro.props;
+const hasButtons = !!websiteUrl || !!appStoreUrl || !!playStoreUrl;
 ---
 
 <style>
@@ -30,10 +31,14 @@ const { websiteUrl, appStoreUrl, playStoreUrl } = Astro.props;
 <section class="project-description">
     <div class="section-content-reduced">
         <slot />
-        <ProjectButtons
-            websiteUrl={websiteUrl}
-            appStoreUrl={appStoreUrl}
-            playStoreUrl={playStoreUrl}
-        />
+        {
+            hasButtons && (
+                <ProjectButtons
+                    websiteUrl={websiteUrl}
+                    appStoreUrl={appStoreUrl}
+                    playStoreUrl={playStoreUrl}
+                />
+            )
+        }
     </div>
 </section>

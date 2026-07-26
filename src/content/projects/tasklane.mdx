@@ -5,7 +5,6 @@ type: Web, iOS, and Android app
 startDate: 2022
 endDate: Present
 primaryImage: ../../assets/images/projects/roli-learn/project-logo.png
-secondaryImage: ../../assets/images/projects/roli-learn/project-logo.png
 technologies:
     - React Native
     - Unity
@@ -18,4 +17,21 @@ languages:
     - C++
 ---
 
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+
+import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
+
+<ProjectImage
+    image={topImage}
+    type='screen-crop'
+    caption="More stuff would go here"
+/>
+
+<ProjectDescription
+    websiteUrl={frontmatter.websiteUrl}
+    appStoreUrl={frontmatter.appStoreUrl}
+    playStoreUrl={frontmatter.playStoreUrl}
+>
 blah blah
+</ProjectDescription>
