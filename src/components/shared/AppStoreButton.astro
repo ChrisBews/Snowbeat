@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+
+import AppStoreButtonSvg from '@snowbeat/assets/images/button-app-store.svg';
+
+interface Props {
+    href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<style>
+    .app-store-button {
+        display: inline-block;
+        text-decoration: none;
+    }
+</style>
+
+<a href={href} class="app-store-button" target="_blank">
+    <Image
+        src={AppStoreButtonSvg}
+        alt="Download on the App Store"
+        width="167"
+        height="54"
+    />
+</a>

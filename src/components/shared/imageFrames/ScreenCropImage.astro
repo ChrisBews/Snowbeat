@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+    src: ImageMetadata;
+    alt?: string;
+}
+
+const { src, alt = '' } = Astro.props;
+---
+
+<style>
+    .screen-crop-image {
+        padding: 20px 12px 0;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: var(--color-brand-grey-dark);
+
+        @media (--bp-600) {
+            padding: 40px 24px 0;
+        }
+    }
+
+    .frame {
+        padding: 12px 12px 0;
+        background-color: var(--color-brand-black);
+        border-top-right-radius: 3.2svw;
+        border-top-left-radius: 3.2svw;
+
+        @media (--bp-600) {
+            padding: 16px 16px 0;
+            border-top-right-radius: 16px;
+            border-top-left-radius: 16px;
+        }
+
+        @media (--bp-700) {
+            padding: 18px 18px 0;
+            border-top-right-radius: 18px;
+            border-top-left-radius: 18px;
+        }
+
+        @media (--bp-800) {
+            padding: 24px 24px 0;
+            border-top-right-radius: 24px;
+            border-top-left-radius: 24px;
+        }
+    }
+
+    .image {
+        width: 100%;
+        height: auto;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        overflow: hidden;
+
+        @media (--bp-600) {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+    }
+</style>
+
+<figure class="screen-crop-image">
+    <div class="frame">
+        <Image src={src} alt={alt} class="image" />
+    </div>
+</figure>

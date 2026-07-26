@@ -1,0 +1,39 @@
+---
+import ProjectButtons from './ProjectButtons.astro';
+
+interface Props {
+    websiteUrl?: string;
+    appStoreUrl?: string;
+    playStoreUrl?: string;
+}
+
+const { websiteUrl, appStoreUrl, playStoreUrl } = Astro.props;
+---
+
+<style>
+    .project-description {
+        padding-block: 60px;
+        color: var(--color-brand-black);
+        text-align: center;
+        background-color: var(--color-brand-grey-dark);
+    }
+
+    .project-description :global(p) {
+        padding-bottom: 40px;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+</style>
+
+<section class="project-description">
+    <div class="section-content-reduced">
+        <slot />
+        <ProjectButtons
+            websiteUrl={websiteUrl}
+            appStoreUrl={appStoreUrl}
+            playStoreUrl={playStoreUrl}
+        />
+    </div>
+</section>

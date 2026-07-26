@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+
+import PlayStoreButtonSvg from '@snowbeat/assets/images/button-play-store.svg';
+
+interface Props {
+    href: string;
+}
+
+const { href } = Astro.props;
+---
+
+<style>
+    .play-store-button {
+        display: inline-block;
+        text-decoration: none;
+    }
+</style>
+
+<a href={href} class="play-store-button" target="_blank">
+    <Image
+        src={PlayStoreButtonSvg}
+        alt="Get it on Google Play"
+        width="181"
+        height="54"
+    />
+</a>

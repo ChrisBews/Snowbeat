@@ -119,6 +119,21 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
                     padding-inline: 50px;
                 }
             }
+
+            .section-content-reduced {
+                max-width: 640px;
+                margin: 0 auto;
+                padding: 0 20px;
+
+                @media (--bp-600) {
+                    padding-inline: 30px;
+                }
+
+                @media (--bp-800) {
+                    max-width: 840px;
+                    padding-inline: 50px;
+                }
+            }
         </style>
         <SiteHeader />
         <main>

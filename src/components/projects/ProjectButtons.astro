@@ -1,0 +1,54 @@
+---
+import AppStoreButton from '../shared/AppStoreButton.astro';
+import IconButton from '../shared/IconButton.astro';
+import PlayStoreButton from '../shared/PlayStoreButton.astro';
+
+interface Props {
+    websiteUrl?: string;
+    appStoreUrl?: string;
+    playStoreUrl?: string;
+}
+
+const { websiteUrl, appStoreUrl, playStoreUrl } = Astro.props;
+---
+
+<style>
+    .buttons-list {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        gap: 10px;
+        list-style: none;
+    }
+
+    .buttons-list li {
+        display: flex;
+    }
+</style>
+<div class="project-buttons">
+    <ul class="buttons-list">
+        {
+            !!websiteUrl && (
+                <li>
+                    <IconButton icon="external" href="#">
+                        View website
+                    </IconButton>
+                </li>
+            )
+        }
+        {
+            !!appStoreUrl && (
+                <li>
+                    <AppStoreButton href={appStoreUrl} />
+                </li>
+            )
+        }
+        {
+            !!playStoreUrl && (
+                <li>
+                    <PlayStoreButton href={playStoreUrl} />
+                </li>
+            )
+        }
+    </ul>
+</div>

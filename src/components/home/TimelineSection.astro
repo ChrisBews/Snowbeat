@@ -69,7 +69,6 @@ const timelineData: TimelineEventData[] = [
         display: flex;
         flex-direction: column;
         gap: 60px;
-        max-width: 640px;
         list-style: none;
 
         @media (--bp-500) {
@@ -78,14 +77,13 @@ const timelineData: TimelineEventData[] = [
 
         @media (--bp-800) {
             gap: 80px;
-            max-width: 840px;
         }
     }
 </style>
 
 <section>
     <SectionTitle>Timeline</SectionTitle>
-    <ol class="section-content event-list">
+    <ol class="section-content-reduced event-list">
         {
             timelineData.map((data) => (
                 <li>
