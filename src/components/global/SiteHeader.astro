@@ -172,6 +172,11 @@ const MAIN_NAV_OPTIONS = [
         width: 100%;
         display: flex;
         overflow: hidden;
+        pointer-events: none;
+
+        &[data-visible] {
+            pointer-events: auto;
+        }
 
         @media (--bp-800) {
             position: static;
@@ -179,6 +184,7 @@ const MAIN_NAV_OPTIONS = [
             display: flex;
             padding-block: 8px;
             padding-right: 8px;
+            pointer-events: auto;
         }
     }
 
