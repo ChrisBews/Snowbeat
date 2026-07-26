@@ -1,0 +1,24 @@
+---
+
+---
+
+<style>
+    .highlight-text {
+        display: inline-block;
+        padding-inline: 16px;
+        padding-block: 10px;
+        color: var(--color-brand-black);
+        font-family: var(--font-geist);
+        font-size: var(--font-size-350);
+        font-weight: 700;
+        background-color: var(--color-brand-yellow);
+
+        @media (--bp-800) {
+            padding-inline: 1.25rem;
+            padding-block: 0.8125rem;
+        }
+    }
+</style>
+<span class="highlight-text">
+    <slot />
+</span>

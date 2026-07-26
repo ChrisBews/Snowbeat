@@ -10,6 +10,8 @@ const projects = defineCollection({
         startDate: z.coerce.date(),
         endDate: z.union([z.literal("Present"), z.coerce.date()]),
         primaryImage: image().refine(() => true),
+        technologies: z.array(z.string()),
+        languages: z.array(z.string()),
     }),
 })
 

@@ -1,5 +1,35 @@
 ---
 import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
+import { HEADER_OFFSET, HEADER_OFFSET_SMALL } from '@snowbeat/constants';
+
+const isNavOptionActive = (href: string) => {
+    const currentPath = new URL(Astro.url).pathname;
+
+    return href === '' ? currentPath === '' : currentPath.startsWith(href);
+};
+
+const MAIN_NAV_OPTIONS = [
+    {
+        href: '/projects',
+        label: 'Projects',
+        isActive: isNavOptionActive('/projects'),
+    },
+    {
+        href: '/#about',
+        label: 'About',
+        isActive: isNavOptionActive('/about'),
+    },
+    {
+        href: '/#timeline',
+        label: 'Timeline',
+        isActive: isNavOptionActive('/timeline'),
+    },
+    {
+        href: '/extras',
+        label: 'Extras',
+        isActive: isNavOptionActive('/extras'),
+    },
+];
 ---
 
 <script>
@@ -68,7 +98,12 @@ import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
 
     observer.observe(document.body);
 </script>
-<style>
+<style
+    define:vars={{
+        'header-offset': `${HEADER_OFFSET}px`,
+        'header-offset-small': `${HEADER_OFFSET_SMALL}px`,
+    }}
+>
     .screen-overlay {
         position: fixed;
         z-index: 99;
@@ -86,10 +121,14 @@ import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
 
     header {
         position: fixed;
-        top: 24px;
+        top: var(--header-offset-small);
         left: 0;
         right: 0;
         z-index: 100;
+
+        @media (--bp-800) {
+            top: var(--header-offset);
+        }
     }
 
     .header-content {
@@ -318,18 +357,21 @@ import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
             </button>
             <nav class="main-nav" id="main-nav">
                 <ul class="main-nav-list">
-                    <li class="main-nav-item" style="--nav-item-index: 0">
-                        <a href="#" class="main-nav-button active">Projects</a>
-                    </li>
-                    <li class="main-nav-item" style="--nav-item-index: 1">
-                        <a href="#" class="main-nav-button">About</a>
-                    </li>
-                    <li class="main-nav-item" style="--nav-item-index: 2">
-                        <a href="#" class="main-nav-button">Timeline</a>
-                    </li>
-                    <li class="main-nav-item" style="--nav-item-index: 3">
-                        <a href="#" class="main-nav-button">Extras</a>
-                    </li>
+                    {
+                        MAIN_NAV_OPTIONS.map((navOption, index) => (
+                            <li
+                                class="main-nav-item"
+                                style={`--nav-item-index: ${index}`}
+                            >
+                                <a
+                                    href={navOption.href}
+                                    class={`main-nav-button${navOption.isActive ? ' active' : ''}`}
+                                >
+                                    {navOption.label}
+                                </a>
+                            </li>
+                        ))
+                    }
                 </ul>
             </nav>
         </div>

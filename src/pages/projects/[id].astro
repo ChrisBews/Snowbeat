@@ -2,7 +2,8 @@
 import { getCollection, render } from 'astro:content';
 
 import SiteLayout from '@snowbeat/layouts/SiteLayout.astro';
-import { Image } from 'astro:assets';
+import PrimaryImage from '@snowbeat/components/projects/PrimaryImage.astro';
+import ProjectMeta from '@snowbeat/components/projects/ProjectMeta.astro';
 
 // Generates a new path for every collection item
 export async function getStaticPaths() {
@@ -18,11 +19,26 @@ const { project } = Astro.props;
 const { Content } = await render(project);
 ---
 
+<style>
+    main {
+        background-color: var(--color-brand-grey-light);
+    }
+</style>
+
 <SiteLayout>
-    <Image
-        src={project.data.primaryImage}
-        alt={`${project.data.title} logo`}
-        layout="full-width"
-    />
-    <Content />
+    <main>
+        <PrimaryImage
+            image={project.data.primaryImage}
+            alt={`${project.data.title} logo`}
+        />
+        <ProjectMeta
+            title={project.data.title}
+            type={project.data.type}
+            startDate={project.data.startDate}
+            endDate={project.data.endDate}
+            technologies={project.data.technologies}
+            languages={project.data.languages}
+        />
+        <Content />
+    </main>
 </SiteLayout>

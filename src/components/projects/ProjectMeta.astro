@@ -1,0 +1,63 @@
+---
+import ProjectType from '../shared/ProjectType.astro';
+import ProjectMetaStat from './ProjectMetaStat.astro';
+
+interface Props {
+    title: string;
+    type: string;
+    startDate: Date;
+    endDate: Date | 'Present';
+    technologies: string[];
+    languages: string[];
+}
+
+let { title, type, startDate, endDate, technologies, languages } = Astro.props;
+
+const formattedStartDate = startDate.getFullYear().toString();
+const formattedEndDate =
+    endDate === 'Present' ? 'Present' : endDate.getFullYear().toString();
+---
+
+<style>
+    .section-wrapper {
+        padding-top: 20px;
+
+        @media (--bp-600) {
+            padding-top: 30px;
+        }
+    }
+
+    h2 {
+        padding-top: 8px;
+        padding-bottom: 12px;
+        font-size: var(--font-size-700);
+    }
+
+    .project-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        @media (--bp-600) {
+            gap: 8px;
+        }
+    }
+</style>
+
+<div class="section-wrapper">
+    <div class="section-content">
+        <ProjectType>{type}</ProjectType>
+        <h2>{title}</h2>
+        <div class="project-stats">
+            <ProjectMetaStat name="Years active">
+                {formattedStartDate} - {formattedEndDate}
+            </ProjectMetaStat>
+            <ProjectMetaStat name="Technologies"
+                >{technologies.join(', ')}</ProjectMetaStat
+            >
+            <ProjectMetaStat name="Languages"
+                >{languages.join(', ')}</ProjectMetaStat
+            >
+        </div>
+    </div>
+</div>

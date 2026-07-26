@@ -1,0 +1,57 @@
+---
+import {
+    HEADER_HEIGHT,
+    HEADER_OFFSET,
+    HEADER_OFFSET_SMALL,
+    HEADER_HEIGHT_SMALL,
+} from '@snowbeat/constants';
+import { Image } from 'astro:assets';
+
+interface Props {
+    image: ImageMetadata;
+    alt: string;
+}
+
+const { image, alt } = Astro.props;
+
+const topPadding = HEADER_OFFSET + HEADER_HEIGHT + 40;
+const topPaddingSmall = HEADER_OFFSET_SMALL + HEADER_HEIGHT_SMALL + 20;
+---
+
+<style
+    define:vars={{
+        'top-padding': `${topPadding}px`,
+        'top-padding-small': `${topPaddingSmall}px`,
+    }}
+>
+    section {
+        padding-top: var(--top-padding-small);
+        padding-bottom: 20px;
+        background-color: var(--color-brand-grey-mid);
+
+        @media (--bp-600) {
+            padding-bottom: 30px;
+        }
+
+        @media (--bp-800) {
+            padding-top: var(--top-padding);
+            padding-bottom: 50px;
+        }
+    }
+
+    .primary-image {
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+<section>
+    <div class="section-content">
+        <Image
+            src={image}
+            alt={alt}
+            layout="full-width"
+            class="primary-image"
+        />
+    </div>
+</section>
