@@ -1,19 +1,32 @@
 ---
-import ScreenCropImage from '@snowbeat/components/shared/imageFrames/ScreenCropImage.astro';
-import TabletImage from '../shared/imageFrames/TabletImage.astro';
-import RawImage from '../shared/imageFrames/RawImage.astro';
-import PortraitPhoneImage from '../shared/imageFrames/PortraitPhoneImage.astro';
-import LandscapePhoneImage from '../shared/imageFrames/LandscapePhoneImage.astro';
+import { Image } from 'astro:assets';
+
+import ScreenCropFrame from '@snowbeat/components/shared/mediaFrames/ScreenCropFrame.astro';
+import TabletFrame from '../shared/mediaFrames/TabletFrame.astro';
+import RawMediaFrame from '../shared/mediaFrames/RawMediaFrame.astro';
+import PortraitPhoneFrame from '../shared/mediaFrames/PortraitPhoneFrame.astro';
+import LandscapePhoneFrame from '../shared/mediaFrames/LandscapePhoneFrame.astro';
 
 interface Props {
-    image: ImageMetadata;
+    src: ImageMetadata;
     type?:
         'screen-crop' | 'raw' | 'tablet' | 'phone-portrait' | 'phone-landscape';
     alt?: string;
     caption?: string;
 }
 
-const { image, type = 'raw', alt = '', caption } = Astro.props;
+const { src, type = 'raw', alt = '', caption } = Astro.props;
+
+let FrameComponent = RawMediaFrame;
+if (type === 'tablet') {
+    FrameComponent = TabletFrame;
+} else if (type === 'phone-landscape') {
+    FrameComponent = LandscapePhoneFrame;
+} else if (type === 'phone-portrait') {
+    FrameComponent = PortraitPhoneFrame;
+} else if (type === 'screen-crop') {
+    FrameComponent = ScreenCropFrame;
+}
 ---
 
 <style>
@@ -24,28 +37,25 @@ const { image, type = 'raw', alt = '', caption } = Astro.props;
         justify-content: center;
         width: 100%;
     }
+
+    .image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .crop-image {
+        border-radius: 8px 8px 0 0;
+    }
 </style>
 
 <div class="project-image">
-    {type === 'raw' && <RawImage src={image} alt={alt} caption={caption} />}
-    {
-        type === 'screen-crop' && (
-            <ScreenCropImage src={image} caption={caption} alt={alt} />
-        )
-    }
-    {
-        type === 'tablet' && (
-            <TabletImage src={image} caption={caption} alt={alt} />
-        )
-    }
-    {
-        type === 'phone-portrait' && (
-            <PortraitPhoneImage src={image} caption={caption} alt={alt} />
-        )
-    }
-    {
-        type === 'phone-landscape' && (
-            <LandscapePhoneImage src={image} caption={caption} alt={alt} />
-        )
-    }
+    <FrameComponent caption={caption}>
+        <Image
+            src={src}
+            alt={alt}
+            class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
+        />
+    </FrameComponent>
 </div>

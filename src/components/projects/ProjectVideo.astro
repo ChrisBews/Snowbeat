@@ -1,0 +1,120 @@
+---
+import ScreenCropFrame from '@snowbeat/components/shared/mediaFrames/ScreenCropFrame.astro';
+import TabletFrame from '../shared/mediaFrames/TabletFrame.astro';
+import RawMediaFrame from '../shared/mediaFrames/RawMediaFrame.astro';
+import PortraitPhoneFrame from '../shared/mediaFrames/PortraitPhoneFrame.astro';
+import LandscapePhoneFrame from '../shared/mediaFrames/LandscapePhoneFrame.astro';
+import OverlayPlayButton from '@snowbeat/components/shared/video/OverlayPlayButton.astro';
+
+interface Props {
+    src: string;
+    type?:
+        'screen-crop' | 'raw' | 'tablet' | 'phone-portrait' | 'phone-landscape';
+    caption?: string;
+    isMuted?: boolean;
+    isLooping?: boolean;
+    isAutoPlaying?: boolean;
+    hasControls?: boolean;
+}
+
+const {
+    src,
+    type = 'raw',
+    caption,
+    isMuted,
+    isLooping,
+    isAutoPlaying,
+    hasControls,
+} = Astro.props;
+
+let FrameComponent = RawMediaFrame;
+if (type === 'tablet') {
+    FrameComponent = TabletFrame;
+} else if (type === 'phone-landscape') {
+    FrameComponent = LandscapePhoneFrame;
+} else if (type === 'phone-portrait') {
+    FrameComponent = PortraitPhoneFrame;
+} else if (type === 'screen-crop') {
+    FrameComponent = ScreenCropFrame;
+}
+
+const playerId = crypto.randomUUID();
+---
+
+<style>
+    .project-video {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .crop-image {
+        border-radius: 8px 8px 0 0;
+    }
+</style>
+
+<video-player
+    class="project-video"
+    data-video-id={playerId}
+    data-has-controls={hasControls}
+>
+    <FrameComponent caption={caption}>
+        <video
+            src={src}
+            loop={isLooping}
+            muted={isMuted}
+            autoplay={isAutoPlaying}
+            playsinline={isLooping}
+            class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
+        ></video>
+    </FrameComponent>
+    {hasControls && <OverlayPlayButton />}
+</video-player>
+
+<script>
+    class VideoPlayer extends HTMLElement {
+        private video: HTMLVideoElement | null = null;
+        private isPlaying: boolean = false;
+        private overlayPlayButton: HTMLDivElement | null = null;
+
+        connectedCallback() {
+            if (!this.hasAttribute('data-has-controls')) return;
+
+            this.video = this.querySelector('video');
+            this.overlayPlayButton = this.querySelector('.overlay-play-button');
+            this.overlayPlayButton?.addEventListener(
+                'click',
+                this.handlePlayButtonPress
+            );
+
+            this.video?.addEventListener('ended', this.handleVideoEnded);
+        }
+
+        handlePlayButtonPress = () => {
+            this.overlayPlayButton?.classList.toggle('active');
+            if (!this.isPlaying) {
+                this.isPlaying = true;
+                this.video?.play();
+            } else {
+                this.isPlaying = false;
+                this.video?.pause();
+            }
+        };
+
+        handleVideoEnded = () => {
+            this.overlayPlayButton?.classList.toggle('active');
+            this.isPlaying = false;
+        };
+    }
+
+    customElements.define('video-player', VideoPlayer);
+</script>

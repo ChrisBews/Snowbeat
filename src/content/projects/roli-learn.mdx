@@ -22,6 +22,7 @@ playStoreUrl: https://play.google.com/store/apps/details?id=com.roli.lumi
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
 import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
@@ -33,7 +34,7 @@ import phoneLandscapeImage from '@snowbeat/assets/images/projects/roli-learn/hom
 
 <OneColumn>
     <ProjectImage
-        image={topImage}
+        src={topImage}
         type='screen-crop'
         caption="More stuff would go here"
     />
@@ -53,49 +54,86 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
 
 <OneColumn>
     <ProjectImage
-        image={topImage}
+        src={topImage}
         type='raw'
         caption='Testing stuff here'
     />
 
     <ProjectImage
-        image={classicViewTablet}
+        src={classicViewTablet}
         type='tablet'
     />
 
     <ProjectImage
-        image={phonePortraitImage}
+        src={phonePortraitImage}
         type='phone-portrait'
     />
 
     <ProjectImage
-        image={phoneLandscapeImage}
+        src={phoneLandscapeImage}
         type='phone-landscape'
     />
 </OneColumn>
 
 <ThreeColumns>
     <ProjectImage
-        image={phonePortraitImage}
+        src={phonePortraitImage}
         type='phone-portrait'
     />
     <ProjectImage
-        image={phonePortraitImage}
+        src={phonePortraitImage}
         type='phone-portrait'
     />
     <ProjectImage
-        image={phonePortraitImage}
+        src={phonePortraitImage}
         type='phone-portrait'
     />
 </ThreeColumns>
 
 <TwoColumns>
     <ProjectImage
-        image={phonePortraitImage}
+        src={phonePortraitImage}
         type='phone-portrait'
     />
     <ProjectImage
-        image={phonePortraitImage}
+        src={phonePortraitImage}
         type='phone-portrait'
     />
 </TwoColumns>
+
+<TwoColumns arrangement='third-left'>
+    <ProjectImage
+        src={phonePortraitImage}
+        type='phone-portrait'
+    />
+    <ProjectImage
+        src={classicViewTablet}
+        type='tablet'
+    />
+</TwoColumns>
+
+<TwoColumns arrangement='third-right'>
+    <ProjectImage
+        src={classicViewTablet}
+        type='tablet'
+    />
+    <ProjectImage
+        src={phonePortraitImage}
+        type='phone-portrait'
+    />
+</TwoColumns>
+
+<OneColumn>
+    <ProjectVideo
+        src='/media/projects/roli-play/song-settings.mp4'
+        isLooping
+        isMuted
+        type='phone-portrait'
+    />
+
+    <ProjectVideo
+        src='/media/projects/roli-play/song-settings.mp4'
+        type='phone-portrait'
+        hasControls
+    />
+</OneColumn>

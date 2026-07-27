@@ -1,14 +1,11 @@
 ---
-import { Image } from 'astro:assets';
 import ImageCaption from '../ImageCaption.astro';
 
 interface Props {
-    src: ImageMetadata;
-    alt?: string;
     caption?: string;
 }
 
-const { src, alt = '', caption } = Astro.props;
+const { caption } = Astro.props;
 ---
 
 <style>
@@ -48,19 +45,11 @@ const { src, alt = '', caption } = Astro.props;
             border-top-left-radius: 24px;
         }
     }
-
-    .image {
-        width: 100%;
-        height: auto;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
-        overflow: hidden;
-    }
 </style>
 
 <figure class="screen-crop-image">
     <div class="frame">
-        <Image src={src} alt={alt} class="image" />
+        <slot />
     </div>
     {!!caption && <ImageCaption>{caption}</ImageCaption>}
 </figure>

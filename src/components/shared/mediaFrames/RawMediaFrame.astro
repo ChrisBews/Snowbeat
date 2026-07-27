@@ -1,0 +1,19 @@
+---
+import ImageCaption from '../ImageCaption.astro';
+
+interface Props {
+    caption?: string;
+}
+
+const { caption } = Astro.props;
+---
+
+<style>
+    .raw-image {
+        position: relative;
+    }
+</style>
+<figure class="raw-image">
+    <slot />
+    {!!caption && <ImageCaption>{caption}</ImageCaption>}
+</figure>

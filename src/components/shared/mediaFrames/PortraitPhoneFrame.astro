@@ -1,15 +1,11 @@
 ---
-import { Image } from 'astro:assets';
-
 import ImageCaption from '../ImageCaption.astro';
 
 interface Props {
-    src: ImageMetadata;
-    alt?: string;
     caption?: string;
 }
 
-const { src, alt = '', caption } = Astro.props;
+const { caption } = Astro.props;
 ---
 
 <style>
@@ -36,6 +32,7 @@ const { src, alt = '', caption } = Astro.props;
 
     .frame {
         position: relative;
+        max-width: 300px;
         padding: 6px;
         border-radius: 12px;
         background: var(--color-brand-black);
@@ -52,37 +49,30 @@ const { src, alt = '', caption } = Astro.props;
 
     .buttons-wrapper {
         position: absolute;
-        bottom: -2px;
-        left: 20%;
+        top: 20%;
+        left: -2px;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 5%;
-        width: 22%;
-        height: 4px;
+        width: 4px;
+        height: 20%;
         justify-content: center;
     }
 
     .device-button {
-        height: 4px;
-        width: 45%;
+        width: 4px;
+        height: 45%;
         border-radius: 2px;
         background-color: var(--color-brand-black);
     }
 
     .power-button-wrapper {
-        top: -2px;
-        bottom: auto;
+        left: auto;
+        right: -2px;
     }
 
     .power-button {
-        width: 70%;
-    }
-
-    .image {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        overflow: hidden;
+        height: calc(70%);
     }
 </style>
 
@@ -96,7 +86,7 @@ const { src, alt = '', caption } = Astro.props;
         <div class="buttons-wrapper power-button-wrapper">
             <div class="device-button power-button"></div>
         </div>
-        <Image src={src} alt={alt} class="image" />
+        <slot />
     </div>
     {!!caption && <ImageCaption>{caption}</ImageCaption>}
 </figure>

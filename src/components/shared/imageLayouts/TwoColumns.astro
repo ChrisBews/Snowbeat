@@ -1,5 +1,9 @@
 ---
+interface Props {
+    arrangement?: 'halves' | 'third-left' | 'third-right';
+}
 
+const { arrangement = 'halves' } = Astro.props;
 ---
 
 <style>
@@ -13,8 +17,24 @@
             grid-template-columns: repeat(2, 1fr);
         }
     }
+
+    .third-left {
+        grid-template-columns: 1fr;
+
+        @media (--bp-900) {
+            grid-template-columns: repeat(1, 1fr 2fr);
+        }
+    }
+
+    .third-right {
+        grid-template-columns: 1fr;
+
+        @media (--bp-900) {
+            grid-template-columns: repeat(1, 2fr 1fr);
+        }
+    }
 </style>
 
-<div class="two-columns section-content">
+<div class={`two-columns section-content ${arrangement}`}>
     <slot />
 </div>
