@@ -22,14 +22,22 @@ playStoreUrl: https://play.google.com/store/apps/details?id=com.roli.lumi
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
+import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
 
 import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
+import classicViewTablet from '@snowbeat/assets/images/projects/roli-learn/classic-view-tablet.png';
+import phonePortraitImage from '@snowbeat/assets/images/projects/roli-learn/search-phone-portrait.png';
+import phoneLandscapeImage from '@snowbeat/assets/images/projects/roli-learn/home-phone-landscape.png';
 
-<ProjectImage
-    image={topImage}
-    type='screen-crop'
-    caption="More stuff would go here"
-/>
+<OneColumn>
+    <ProjectImage
+        image={topImage}
+        type='screen-crop'
+        caption="More stuff would go here"
+    />
+</OneColumn>
 
 <ProjectDescription
     websiteUrl={frontmatter.websiteUrl}
@@ -43,13 +51,51 @@ The app features hundreds of songs to learn, a huge number of structured guided 
 The ROLI Airwave was later integrated to support hand tracking within the app, allowing us to teach users which fingers to use for each note and flag when they use the incorrect one.
 </ProjectDescription>
 
-<ProjectImage
-    image={topImage}
-    type='raw'
-    caption='Testing stuff here'
-/>
+<OneColumn>
+    <ProjectImage
+        image={topImage}
+        type='raw'
+        caption='Testing stuff here'
+    />
 
-<ProjectImage
-    image={topImage}
-    type='tablet'
-/>
+    <ProjectImage
+        image={classicViewTablet}
+        type='tablet'
+    />
+
+    <ProjectImage
+        image={phonePortraitImage}
+        type='phone-portrait'
+    />
+
+    <ProjectImage
+        image={phoneLandscapeImage}
+        type='phone-landscape'
+    />
+</OneColumn>
+
+<ThreeColumns>
+    <ProjectImage
+        image={phonePortraitImage}
+        type='phone-portrait'
+    />
+    <ProjectImage
+        image={phonePortraitImage}
+        type='phone-portrait'
+    />
+    <ProjectImage
+        image={phonePortraitImage}
+        type='phone-portrait'
+    />
+</ThreeColumns>
+
+<TwoColumns>
+    <ProjectImage
+        image={phonePortraitImage}
+        type='phone-portrait'
+    />
+    <ProjectImage
+        image={phonePortraitImage}
+        type='phone-portrait'
+    />
+</TwoColumns>

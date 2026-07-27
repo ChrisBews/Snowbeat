@@ -12,8 +12,11 @@ const { src, alt = '', caption } = Astro.props;
 ---
 
 <style>
-    .tablet-image {
+    .phone-image {
         position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
         width: 100%;
         padding: 24px 22px;
         border-radius: 8px;
@@ -32,18 +35,18 @@ const { src, alt = '', caption } = Astro.props;
 
     .frame {
         position: relative;
-        padding: 10px;
-        border-radius: 16px;
+        max-width: 300px;
+        padding: 6px;
+        border-radius: 12px;
         background: var(--color-brand-black);
 
         @media (--bp-600) {
-            padding: 12px;
-            border-radius: 20px;
+            padding: 8px;
         }
 
         @media (--bp-800) {
-            padding: 16px;
-            border-radius: 20px;
+            padding: 12px;
+            border-radius: 16px;
         }
     }
 
@@ -53,19 +56,15 @@ const { src, alt = '', caption } = Astro.props;
         left: -2px;
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 5%;
         width: 4px;
-        height: 80px;
+        height: 20%;
         justify-content: center;
-
-        @media (--bp-600) {
-            height: 108px;
-        }
     }
 
     .device-button {
         width: 4px;
-        height: calc(50% - 2px);
+        height: 45%;
         border-radius: 2px;
         background-color: var(--color-brand-black);
     }
@@ -87,9 +86,16 @@ const { src, alt = '', caption } = Astro.props;
     }
 </style>
 
-<figure class="tablet-image">
+<figure class="phone-image">
     <div class="ground"></div>
     <div class="frame">
+        <div class="buttons-wrapper">
+            <div class="device-button"></div>
+            <div class="device-button"></div>
+        </div>
+        <div class="buttons-wrapper power-button-wrapper">
+            <div class="device-button power-button"></div>
+        </div>
         <Image src={src} alt={alt} class="image" />
     </div>
     {!!caption && <ImageCaption>{caption}</ImageCaption>}

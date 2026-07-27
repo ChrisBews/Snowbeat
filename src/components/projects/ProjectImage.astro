@@ -2,10 +2,13 @@
 import ScreenCropImage from '@snowbeat/components/shared/imageFrames/ScreenCropImage.astro';
 import TabletImage from '../shared/imageFrames/TabletImage.astro';
 import RawImage from '../shared/imageFrames/RawImage.astro';
+import PortraitPhoneImage from '../shared/imageFrames/PortraitPhoneImage.astro';
+import LandscapePhoneImage from '../shared/imageFrames/LandscapePhoneImage.astro';
 
 interface Props {
     image: ImageMetadata;
-    type?: 'screen-crop' | 'raw' | 'tablet' | 'phone';
+    type?:
+        'screen-crop' | 'raw' | 'tablet' | 'phone-portrait' | 'phone-landscape';
     alt?: string;
     caption?: string;
 }
@@ -16,16 +19,33 @@ const { image, type = 'raw', alt = '', caption } = Astro.props;
 <style>
     .project-image {
         position: relative;
-        display: block;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
     }
 </style>
 
-<figure class="project-image section-content">
-    {type === 'raw' && <RawImage src={image} alt="" caption={caption} />}
+<div class="project-image">
+    {type === 'raw' && <RawImage src={image} alt={alt} caption={caption} />}
     {
         type === 'screen-crop' && (
             <ScreenCropImage src={image} caption={caption} alt={alt} />
         )
     }
-    {type === 'tablet' && <TabletImage src={image} caption={caption} />}
-</figure>
+    {
+        type === 'tablet' && (
+            <TabletImage src={image} caption={caption} alt={alt} />
+        )
+    }
+    {
+        type === 'phone-portrait' && (
+            <PortraitPhoneImage src={image} caption={caption} alt={alt} />
+        )
+    }
+    {
+        type === 'phone-landscape' && (
+            <LandscapePhoneImage src={image} caption={caption} alt={alt} />
+        )
+    }
+</div>
