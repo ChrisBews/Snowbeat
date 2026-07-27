@@ -98,6 +98,7 @@ const MAIN_NAV_OPTIONS = [
 
     observer.observe(document.body);
 </script>
+
 <style
     define:vars={{
         'header-offset': `${HEADER_OFFSET}px`,
@@ -110,11 +111,11 @@ const MAIN_NAV_OPTIONS = [
         inset: 0;
         opacity: 0;
         pointer-events: none;
-        background-color: var(--color-brand-black);
+        background-color: var(--color-brand-black-overlay);
         transition: opacity 0.15s linear;
 
         &[data-visible] {
-            opacity: 0.2;
+            opacity: 1;
             pointer-events: auto;
         }
     }

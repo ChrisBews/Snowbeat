@@ -48,13 +48,13 @@ const playerId = crypto.randomUUID();
         flex-direction: row;
         justify-content: center;
         width: 100%;
-    }
-
-    .image {
-        width: 100%;
-        height: auto;
         border-radius: 8px;
         overflow: hidden;
+    }
+
+    .project-video video {
+        width: 100%;
+        height: auto;
     }
 
     .crop-image {
@@ -85,6 +85,7 @@ const playerId = crypto.randomUUID();
         private video: HTMLVideoElement | null = null;
         private isPlaying: boolean = false;
         private overlayPlayButton: HTMLDivElement | null = null;
+        private inactivityTimer: number = 0;
 
         connectedCallback() {
             if (!this.hasAttribute('data-has-controls')) return;
@@ -96,23 +97,56 @@ const playerId = crypto.randomUUID();
                 this.handlePlayButtonPress
             );
 
+            this.overlayPlayButton?.addEventListener(
+                'mousemove',
+                this.handleMouseMove
+            );
+
             this.video?.addEventListener('ended', this.handleVideoEnded);
         }
+
+        restartMouseMoveTimer = () => {
+            if (this.inactivityTimer) {
+                clearTimeout(this.inactivityTimer);
+            }
+            this.inactivityTimer = setTimeout(this.hideOverlay, 3000);
+        };
+
+        hideOverlay = () => {
+            if (this.isPlaying) {
+                this.overlayPlayButton?.classList.add('hidden');
+            }
+        };
+
+        showOverlay = () => {
+            this.overlayPlayButton?.classList.remove('hidden');
+        };
 
         handlePlayButtonPress = () => {
             this.overlayPlayButton?.classList.toggle('active');
             if (!this.isPlaying) {
                 this.isPlaying = true;
                 this.video?.play();
+                this.restartMouseMoveTimer();
             } else {
                 this.isPlaying = false;
                 this.video?.pause();
+                clearTimeout(this.inactivityTimer);
+                this.showOverlay();
             }
         };
 
         handleVideoEnded = () => {
             this.overlayPlayButton?.classList.toggle('active');
             this.isPlaying = false;
+            this.showOverlay();
+        };
+
+        handleMouseMove = () => {
+            if (this.isPlaying) {
+                this.restartMouseMoveTimer();
+                this.showOverlay();
+            }
         };
     }
 

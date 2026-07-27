@@ -17,6 +17,35 @@
         background: transparent;
     }
 
+    .overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-brand-black-overlay);
+        transition:
+            opacity 0.15s linear,
+            transform 0.15s linear;
+    }
+
+    .overlay-play-button.hidden .overlay,
+    .overlay-play-button.active .overlay {
+        opacity: 0;
+        transform: scale(1.125);
+    }
+
+    .overlay-play-button:hover .overlay,
+    .overlay-play-button.active:hover .overlay {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .overlay-play-button.hidden:hover .overlay {
+        opacity: 0;
+        transform: scale(1.125);
+    }
+
     .play-button {
         display: flex;
         justify-content: center;
@@ -55,8 +84,10 @@
 </style>
 
 <button class="overlay-play-button">
-    <div class="play-button">
-        <div class="overlay-play-icon"></div>
-        <div class="overlay-pause-icon"></div>
+    <div class="overlay">
+        <div class="play-button">
+            <div class="overlay-play-icon"></div>
+            <div class="overlay-pause-icon"></div>
+        </div>
     </div>
 </button>

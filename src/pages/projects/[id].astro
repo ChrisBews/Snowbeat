@@ -33,21 +33,19 @@ const { Content } = await render(project);
 </style>
 
 <SiteLayout>
-    <main>
-        <PrimaryImage
-            image={project.data.primaryImage}
-            alt={`${project.data.title} logo`}
-        />
-        <ProjectMeta
-            title={project.data.title}
-            type={project.data.type}
-            startDate={project.data.startDate}
-            endDate={project.data.endDate}
-            technologies={project.data.technologies}
-            languages={project.data.languages}
-        />
-        <div class="project-content">
-            <Content />
-        </div>
-    </main>
+    <PrimaryImage
+        image={project.data.primaryImage}
+        alt={`${project.data.title} logo`}
+    />
+    <ProjectMeta
+        title={project.data.title}
+        type={project.data.type}
+        startDate={project.data.startDate}
+        endDate={project.data.endDate}
+        technologies={project.data.technologies}
+        languages={project.data.languages}
+    />
+    <div class="project-content">
+        <Content />
+    </div>
 </SiteLayout>
