@@ -97,6 +97,28 @@ const MAIN_NAV_OPTIONS = [
     });
 
     observer.observe(document.body);
+
+    // Handle active state toggling based on page scroll
+    const sections = document.querySelectorAll('#about, #timeline');
+
+    const mainNavObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                const link = document.querySelector(
+                    `a[href="/#${entry.target.id}"]`
+                );
+                if (link) {
+                    link.classList.toggle('active', entry.isIntersecting);
+                }
+            });
+        },
+        // Limit the detection area to a 0px area at the half-way mark
+        // Since about and timeline follow each other, this ensures both
+        // can't be considered visible at the same time
+        { rootMargin: '-50% 0px -50% 0px' }
+    );
+
+    sections.forEach((section) => mainNavObserver.observe(section));
 </script>
 
 <style
@@ -322,7 +344,7 @@ const MAIN_NAV_OPTIONS = [
         height: 4px;
         border-radius: 2px;
         background-color: var(--color-brand-black);
-        transition: transform 0.15s cubic-bezier(0.5, 1, 0.89, 1);
+        transition: transform 0.15s var(--anim-easing-quad-inout);
     }
 
     .menu-toggle[data-active] .menu-icon-row {

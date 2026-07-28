@@ -37,8 +37,6 @@ if (type === 'tablet') {
 } else if (type === 'screen-crop') {
     FrameComponent = ScreenCropFrame;
 }
-
-const playerId = crypto.randomUUID();
 ---
 
 <style>
@@ -62,11 +60,7 @@ const playerId = crypto.randomUUID();
     }
 </style>
 
-<video-player
-    class="project-video"
-    data-video-id={playerId}
-    data-has-controls={hasControls}
->
+<video-player class="project-video" data-has-controls={hasControls}>
     <FrameComponent caption={caption}>
         <video
             src={src}
@@ -124,6 +118,14 @@ const playerId = crypto.randomUUID();
 
         handlePlayButtonPress = () => {
             this.overlayPlayButton?.classList.toggle('active');
+            this.overlayPlayButton?.classList.remove('pressed');
+            // Wait for page repaint before adding the class back on again
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.overlayPlayButton?.classList.add('pressed');
+                });
+            });
+
             if (!this.isPlaying) {
                 this.isPlaying = true;
                 this.video?.play();

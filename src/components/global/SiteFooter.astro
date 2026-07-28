@@ -2,6 +2,8 @@
 import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
 import LinkedInIcon from '@snowbeat/assets/images/icon-linkedin.svg';
 import GithubIcon from '@snowbeat/assets/images/icon-github.svg';
+
+import { LINKEDIN_URL, GITHUB_URL } from '@snowbeat/constants';
 ---
 
 <style>
@@ -67,6 +69,9 @@ import GithubIcon from '@snowbeat/assets/images/icon-github.svg';
         flex-direction: row;
         gap: 20px;
         list-style: none;
+    }
+
+    .social-links a {
         color: var(--color-brand-black);
     }
 
@@ -85,12 +90,16 @@ import GithubIcon from '@snowbeat/assets/images/icon-github.svg';
             <h2 class="visually-hidden">Social links</h2>
             <ul class="social-links">
                 <li>
-                    <span class="visually-hidden">LinkedIn</span>
-                    <LinkedInIcon aria-hidden="true" />
+                    <a href={LINKEDIN_URL} target="_blank">
+                        <span class="visually-hidden">LinkedIn</span>
+                        <LinkedInIcon aria-hidden="true" />
+                    </a>
                 </li>
                 <li>
-                    <span class="visually-hidden">Github</span>
-                    <GithubIcon aria-hidden="true" />
+                    <a href={GITHUB_URL} target="_blank">
+                        <span class="visually-hidden">Github</span>
+                        <GithubIcon aria-hidden="true" />
+                    </a>
                 </li>
             </ul>
             <p class="copyright">© Christopher Bews 2004-2026</p>

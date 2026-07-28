@@ -1,6 +1,13 @@
 ---
 import { Font } from 'astro:assets';
 
+import {
+    HEADER_HEIGHT,
+    HEADER_OFFSET,
+    HEADER_OFFSET_SMALL,
+    HEADER_HEIGHT_SMALL,
+} from '@snowbeat/constants';
+
 import SiteHeader from '@snowbeat/components/global/SiteHeader.astro';
 import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
 ---
@@ -17,7 +24,15 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
         <title>Snowbeat</title>
     </head>
     <body>
-        <style is:global>
+        <style
+            is:global
+            define:vars={{
+                'header-height': `${HEADER_HEIGHT}px;`,
+                'header-height-small': `${HEADER_HEIGHT_SMALL}px`,
+                'header-offset': `${HEADER_OFFSET}px`,
+                'header-offset-small': `${HEADER_OFFSET_SMALL}px`,
+            }}
+        >
             :root {
                 --color-brand-yellow: #efff12;
                 --color-brand-yellow-dark: #e4f400;
@@ -35,6 +50,7 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
                 --font-size-400: 1rem;
                 --font-size-350: 0.875rem;
                 --anim-main-nav-delay: 0.05s;
+                --anim-easing-quad-inout: cubic-bezier(0.5, 1, 0.89, 1);
 
                 @media (--bp-800) {
                     --font-size-700: 3.5rem;
@@ -63,6 +79,19 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
             svg,
             video {
                 display: block;
+            }
+
+            html {
+                scroll-behavior: smooth;
+                scroll-padding-top: calc(
+                    var(--header-height-small) + var(--header-offset-small) * 2
+                );
+
+                @media (--bp-800) {
+                    scroll-padding-top: calc(
+                        var(--header-height) + var(--header-offset) * 2
+                    );
+                }
             }
 
             html,

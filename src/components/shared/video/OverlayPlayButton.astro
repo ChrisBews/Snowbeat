@@ -20,6 +20,7 @@
     .overlay {
         position: absolute;
         inset: 0;
+        pointer-events: none;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -55,6 +56,24 @@
         border-radius: 12px;
         overflow: hidden;
         background-color: var(--color-brand-yellow);
+    }
+
+    .pressed .play-button {
+        animation: press-anim 0.2s var(--anim-easing-quad-inout);
+    }
+
+    @keyframes press-anim {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(0.9);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
 
     .overlay-play-icon {

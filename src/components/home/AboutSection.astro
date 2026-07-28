@@ -1,4 +1,6 @@
 ---
+import { GITHUB_URL, LINKEDIN_URL } from '@snowbeat/constants';
+
 import SectionTitle from '../shared/SectionTitle.astro';
 import IconButton from '../shared/IconButton.astro';
 
@@ -31,7 +33,7 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
     }
 </style>
 
-<section>
+<section id="about">
     <div class="section-content-reduced">
         <SectionTitle>About</SectionTitle>
         <p>
@@ -47,12 +49,13 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
         <h3 class="visually-hidden">Social links</h3>
         <ul class="social-links">
             <li>
-                <IconButton href="#" icon="linkedin"
+                <IconButton href={LINKEDIN_URL} icon="linkedin"
                     >Find me on LinkedIn</IconButton
                 >
             </li>
             <li>
-                <IconButton href="#" icon="github">Find me on Github</IconButton
+                <IconButton href={GITHUB_URL} icon="github"
+                    >Find me on Github</IconButton
                 >
             </li>
         </ul>

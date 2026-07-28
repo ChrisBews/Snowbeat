@@ -1,0 +1,46 @@
+---
+import {
+    HEADER_HEIGHT,
+    HEADER_OFFSET,
+    HEADER_OFFSET_SMALL,
+    HEADER_HEIGHT_SMALL,
+} from '@snowbeat/constants';
+import { getCollection } from 'astro:content';
+
+import ProjectList from '@snowbeat/components/shared/ProjectList.astro';
+import SectionTitle from '@snowbeat/components/shared/SectionTitle.astro';
+import SiteLayout from '@snowbeat/layouts/SiteLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+    (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+
+const topPadding = HEADER_OFFSET + HEADER_HEIGHT;
+const topPaddingSmall = HEADER_OFFSET_SMALL + HEADER_HEIGHT_SMALL;
+---
+
+<style
+    define:vars={{
+        'top-padding': `${topPadding}px`,
+        'top-padding-small': `${topPaddingSmall}px`,
+    }}
+>
+    section {
+        padding-top: var(--top-padding-small);
+
+        @media (--bp-800) {
+            padding-top: var(--top-padding);
+        }
+    }
+</style>
+
+<SiteLayout>
+    <section>
+        <SectionTitle>Projects</SectionTitle>
+        <ProjectList
+            isFirstItemHighlighted
+            projects={projects}
+            basePath="projects"
+        />
+    </section>
+</SiteLayout>
