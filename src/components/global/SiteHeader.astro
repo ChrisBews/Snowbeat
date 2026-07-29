@@ -111,14 +111,23 @@ const MAIN_NAV_OPTIONS = [
         position: fixed;
         z-index: 99;
         inset: 0;
+        display: none;
         opacity: 0;
         pointer-events: none;
         background-color: var(--color-brand-black-overlay);
-        transition: opacity 0.15s linear;
+        transition:
+            opacity 0.15s linear,
+            display 0.15s linear;
+        transition-behavior: allow-discrete;
 
         &[data-visible] {
+            display: block;
             opacity: 1;
             pointer-events: auto;
+
+            @starting-style {
+                opacity: 0;
+            }
         }
     }
 
@@ -175,19 +184,12 @@ const MAIN_NAV_OPTIONS = [
         width: 100%;
         display: flex;
         overflow: hidden;
-        pointer-events: none;
-
-        &[data-visible] {
-            pointer-events: auto;
-        }
 
         @media (--bp-800) {
             position: static;
             flex-basis: 70%;
-            display: flex;
             padding-block: 8px;
             padding-right: 8px;
-            pointer-events: auto;
         }
     }
 
@@ -200,21 +202,28 @@ const MAIN_NAV_OPTIONS = [
 
         @media (--bp-800) {
             flex-direction: row;
-            gap: 10px;
+            gap: 8px;
         }
     }
 
     .main-nav-item {
         position: relative;
-        display: flex;
+        display: none;
         flex: 1;
+        opacity: 1;
         transform: translateY(-100%);
-        opacity: 0;
+
+        /* Animate display so that we can still animate other values when display is initially none.
+           We still need to animate opacity due to the note found in the following link (below transition-property): 
+           https://www.w3.org/TR/css-transitions-2/#transition-property-property */
         transition:
             transform 0.07s linear
                 calc((3 - var(--nav-item-index)) * var(--anim-main-nav-delay)),
+            display 0.01s linear
+                calc((4 - var(--nav-item-index)) * var(--anim-main-nav-delay)),
             opacity 0.01s linear
                 calc((4 - var(--nav-item-index)) * var(--anim-main-nav-delay));
+        transition-behavior: allow-discrete;
 
         /* Flip depth order so that successive nav items show/hide beneath the previous one */
         &:nth-child(1) {
@@ -234,21 +243,28 @@ const MAIN_NAV_OPTIONS = [
         }
 
         @media (--bp-800) {
-            opacity: 1;
+            display: flex;
             transform: none;
             transition: none;
+            opacity: 1;
         }
     }
 
     .main-nav[data-visible] .main-nav-item {
-        transform: translateY(0);
+        display: flex;
         opacity: 1;
+        transform: translateY(0);
         transition-delay: calc(
             var(--nav-item-index) * var(--anim-main-nav-delay)
         );
 
         @media (--bp-800) {
             transform: none;
+        }
+
+        @starting-style {
+            opacity: 0;
+            transform: translateY(-100%);
         }
     }
 
