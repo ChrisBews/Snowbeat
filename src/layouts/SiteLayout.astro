@@ -166,7 +166,7 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
                 }
             }
         </style>
-        <SiteHeader />
+        {Astro.url.pathname !== '/' && <SiteHeader />}
         <main>
             <slot />
         </main>

@@ -13,31 +13,28 @@ const isNavOptionActive = (href: string) => {
 const MAIN_NAV_OPTIONS = [
     {
         label: 'Projects',
-        id: 'projects',
+        href: '/#projects',
         isActive: isNavOptionActive('/projects'),
     },
     {
         label: 'About',
-        id: 'about',
+        href: '/#about',
         isActive: isNavOptionActive('/about'),
     },
     {
         label: 'Timeline',
-        id: 'timeline',
+        href: '/#timeline',
         isActive: isNavOptionActive('/timeline'),
     },
     {
         label: 'Extras',
-        id: 'extras',
+        href: '/#extras',
         isActive: isNavOptionActive('/extras'),
     },
 ];
 ---
 
 <script>
-    import { HEADER_HEIGHT } from '@snowbeat/constants';
-
-    const siteHeader = document.querySelector('[data-site-header]');
     const mainNavToggle = document.querySelector('.menu-toggle');
     const mainNav = document.querySelector('.main-nav');
     const mainNavOptions = document.querySelectorAll('.main-nav-item');
@@ -102,48 +99,6 @@ const MAIN_NAV_OPTIONS = [
     });
 
     observer.observe(document.body);
-
-    // Handle active state toggling based on page scroll
-    const navOptionIds = Array.from(
-        document.querySelectorAll('[data-nav-id]')
-    ).map((element) => element.getAttribute('data-nav-id'));
-
-    const sections = document.querySelectorAll(
-        navOptionIds.map((option) => `#${option}`).join(', ')
-    );
-
-    const mainNavObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                const link = document.querySelector(
-                    `[data-nav-id='${entry.target.id}']`
-                );
-                if (link) {
-                    link.classList.toggle('active', entry.isIntersecting);
-                }
-            });
-        },
-        // Limit the detection area to a 0px area at the half-way mark
-        // Since about and timeline follow each other, this ensures both
-        // can't be considered visible at the same time
-        { rootMargin: '-50% 0px -50% 0px' }
-    );
-
-    sections.forEach((section) => mainNavObserver.observe(section));
-
-    // Hide the navbar while the splash section is visible on the homepage
-    const splashSection = document.querySelector('[data-splash-section]');
-
-    const splashObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                siteHeader?.classList.toggle('hidden', entry.isIntersecting);
-            });
-        },
-        { threshold: 0.2 }
-    );
-
-    if (splashSection) splashObserver.observe(splashSection);
 </script>
 
 <style
@@ -168,23 +123,11 @@ const MAIN_NAV_OPTIONS = [
     }
 
     .site-header {
-        --anim-easing-visible: cubic-bezier(0, 0.55, 0.45, 1);
-        --anim-easing-hidden: cubic-bezier(0.55, 0, 1, 0.45);
-
         position: fixed;
         top: var(--header-offset-small);
         left: 0;
         right: 0;
         z-index: 100;
-        transition:
-            opacity 0.1s var(--anim-easing-visible),
-            transform 0.1s var(--anim-easing-visible);
-
-        &.hidden {
-            opacity: 0;
-            transition-timing-function: var(--anim-easing-hidden);
-            /*transform: translateY(calc(-100% - var(--header-offset)));*/
-        }
 
         @media (--bp-800) {
             top: var(--header-offset);
@@ -257,6 +200,7 @@ const MAIN_NAV_OPTIONS = [
 
         @media (--bp-800) {
             flex-direction: row;
+            gap: 10px;
         }
     }
 
@@ -401,9 +345,9 @@ const MAIN_NAV_OPTIONS = [
 
 <div class="screen-overlay"></div>
 
-<header class="site-header" data-site-header>
+<header class="site-header">
     <div class="section-content">
-        <div class="header-content" data-site-header-content>
+        <div class="header-content">
             <h1 class="logo-wrapper">
                 <span class="visually-hidden">Snowbeat</span>
                 <a href="/">
@@ -430,8 +374,7 @@ const MAIN_NAV_OPTIONS = [
                                 style={`--nav-item-index: ${index}`}
                             >
                                 <a
-                                    href={`/#${navOption.id}`}
-                                    data-nav-id={navOption.id}
+                                    href={navOption.href}
                                     class={`main-nav-button${navOption.isActive ? ' active' : ''}`}
                                 >
                                     {navOption.label}
