@@ -76,6 +76,7 @@ if (type === 'tablet') {
 
 <script>
     class VideoPlayer extends HTMLElement {
+        private INACTIVITY_DELAY = 2000;
         private video: HTMLVideoElement | null = null;
         private isPlaying: boolean = false;
         private overlayPlayButton: HTMLDivElement | null = null;
@@ -103,7 +104,10 @@ if (type === 'tablet') {
             if (this.inactivityTimer) {
                 clearTimeout(this.inactivityTimer);
             }
-            this.inactivityTimer = setTimeout(this.hideOverlay, 3000);
+            this.inactivityTimer = setTimeout(
+                this.hideOverlay,
+                this.INACTIVITY_DELAY
+            );
         };
 
         hideOverlay = () => {

@@ -1,5 +1,6 @@
 ---
 import SnowbeatLogo from '@snowbeat/assets/images/logo.svg';
+
 import { HEADER_OFFSET, HEADER_OFFSET_SMALL } from '@snowbeat/constants';
 
 const isNavOptionActive = (href: string) => {
@@ -8,31 +9,35 @@ const isNavOptionActive = (href: string) => {
     return href === '' ? currentPath === '' : currentPath.startsWith(href);
 };
 
+// isActive in use when navigating into individual projects/extras
 const MAIN_NAV_OPTIONS = [
     {
-        href: '/projects',
         label: 'Projects',
+        id: 'projects',
         isActive: isNavOptionActive('/projects'),
     },
     {
-        href: '/#about',
         label: 'About',
+        id: 'about',
         isActive: isNavOptionActive('/about'),
     },
     {
-        href: '/#timeline',
         label: 'Timeline',
+        id: 'timeline',
         isActive: isNavOptionActive('/timeline'),
     },
     {
-        href: '/extras',
         label: 'Extras',
+        id: 'extras',
         isActive: isNavOptionActive('/extras'),
     },
 ];
 ---
 
 <script>
+    import { HEADER_HEIGHT } from '@snowbeat/constants';
+
+    const siteHeader = document.querySelector('[data-site-header]');
     const mainNavToggle = document.querySelector('.menu-toggle');
     const mainNav = document.querySelector('.main-nav');
     const mainNavOptions = document.querySelectorAll('.main-nav-item');
@@ -99,13 +104,19 @@ const MAIN_NAV_OPTIONS = [
     observer.observe(document.body);
 
     // Handle active state toggling based on page scroll
-    const sections = document.querySelectorAll('#about, #timeline');
+    const navOptionIds = Array.from(
+        document.querySelectorAll('[data-nav-id]')
+    ).map((element) => element.getAttribute('data-nav-id'));
+
+    const sections = document.querySelectorAll(
+        navOptionIds.map((option) => `#${option}`).join(', ')
+    );
 
     const mainNavObserver = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
                 const link = document.querySelector(
-                    `a[href="/#${entry.target.id}"]`
+                    `[data-nav-id='${entry.target.id}']`
                 );
                 if (link) {
                     link.classList.toggle('active', entry.isIntersecting);
@@ -119,6 +130,20 @@ const MAIN_NAV_OPTIONS = [
     );
 
     sections.forEach((section) => mainNavObserver.observe(section));
+
+    // Hide the navbar while the splash section is visible on the homepage
+    const splashSection = document.querySelector('[data-splash-section]');
+
+    const splashObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                siteHeader?.classList.toggle('hidden', entry.isIntersecting);
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    if (splashSection) splashObserver.observe(splashSection);
 </script>
 
 <style
@@ -142,12 +167,24 @@ const MAIN_NAV_OPTIONS = [
         }
     }
 
-    header {
+    .site-header {
+        --anim-easing-visible: cubic-bezier(0, 0.55, 0.45, 1);
+        --anim-easing-hidden: cubic-bezier(0.55, 0, 1, 0.45);
+
         position: fixed;
         top: var(--header-offset-small);
         left: 0;
         right: 0;
         z-index: 100;
+        transition:
+            opacity 0.1s var(--anim-easing-visible),
+            transform 0.1s var(--anim-easing-visible);
+
+        &.hidden {
+            opacity: 0;
+            transition-timing-function: var(--anim-easing-hidden);
+            /*transform: translateY(calc(-100% - var(--header-offset)));*/
+        }
 
         @media (--bp-800) {
             top: var(--header-offset);
@@ -364,9 +401,9 @@ const MAIN_NAV_OPTIONS = [
 
 <div class="screen-overlay"></div>
 
-<header>
+<header class="site-header" data-site-header>
     <div class="section-content">
-        <div class="header-content">
+        <div class="header-content" data-site-header-content>
             <h1 class="logo-wrapper">
                 <span class="visually-hidden">Snowbeat</span>
                 <a href="/">
@@ -393,7 +430,8 @@ const MAIN_NAV_OPTIONS = [
                                 style={`--nav-item-index: ${index}`}
                             >
                                 <a
-                                    href={navOption.href}
+                                    href={`/#${navOption.id}`}
+                                    data-nav-id={navOption.id}
                                     class={`main-nav-button${navOption.isActive ? ' active' : ''}`}
                                 >
                                     {navOption.label}
