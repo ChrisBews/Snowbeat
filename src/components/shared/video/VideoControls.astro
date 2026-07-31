@@ -1,0 +1,577 @@
+---
+import { Image } from 'astro:assets';
+
+import VolumeOnSvg from '@snowbeat/assets/images/icon-volume-on.svg';
+import VolumeOffSvg from '@snowbeat/assets/images/icon-volume-off.svg';
+
+interface Props {
+    controlsType?: VideoControlsType;
+    isInitiallyMuted?: boolean;
+    isAutoPlaying?: boolean;
+}
+
+const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
+---
+
+<style>
+    @keyframes press-anim {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(0.9);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .video-controls {
+        position: absolute;
+        inset: 0;
+    }
+
+    /* Overlay play button */
+    .overlay-play-button {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        background: transparent;
+    }
+
+    .darkening-overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-brand-black-overlay);
+        transition:
+            opacity 0.15s linear,
+            transform 0.15s linear;
+    }
+
+    .is-playing .overlay-play-button .darkening-overlay,
+    .overlay-play-button.hidden .darkening-overlay {
+        opacity: 0;
+        transform: scale(1.125);
+    }
+
+    .overlay-play-button:not(.hidden):hover .darkening-overlay,
+    .is-playing .overlay-play-button:not(.hidden):hover .darkening-overlay {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .is-playing .overlay-play-button.hidden:hover .darkening-overlay {
+        opacity: 0;
+        transform: scale(1.125);
+    }
+
+    .overlay-play-toggle-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 102px;
+        height: 102px;
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: var(--color-brand-yellow);
+    }
+
+    .pressed .overlay-play-toggle-icon {
+        animation: press-anim 0.2s var(--anim-easing-quad-inout);
+    }
+
+    .overlay-play-icon {
+        width: calc(50px * 0.9);
+        height: 50px;
+        clip-path: polygon(100% 50%, 0 100%, 0 0);
+        transform: translateX(4px);
+        background-color: var(--color-brand-black);
+    }
+
+    .is-playing .overlay-play-icon {
+        display: none;
+    }
+
+    .overlay-pause-icon {
+        display: none;
+        width: 50px;
+        height: 50px;
+        border-width: 0 20px;
+        border-color: var(--color-brand-black);
+        border-style: solid;
+    }
+
+    .is-playing .overlay-pause-icon {
+        display: block;
+    }
+
+    /* Main video controls */
+    .main-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        border-radius: 8px;
+        background-color: var(--color-brand-yellow);
+        transition:
+            opacity 0.2s var(--anim-easing-quad-inout),
+            transform 0.2s var(--anim-easing-quad-inout);
+
+        @media (--bp-800) {
+            bottom: 40px;
+            left: 40px;
+            right: 40px;
+        }
+    }
+
+    .main-controls.has-started {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .main-controls.has-started.hidden {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    .controls-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        aspect-ratio: 1;
+        border: 0;
+        cursor: pointer;
+        background: transparent;
+    }
+
+    .play-icon {
+        width: calc(32px * 0.9);
+        height: 32px;
+        clip-path: polygon(100% 50%, 0 100%, 0 0);
+        transform: translateX(4px);
+        background-color: var(--color-brand-black);
+    }
+
+    .pause-icon {
+        display: none;
+        width: 32px;
+        height: 32px;
+        border-width: 0 12px;
+        border-color: var(--color-brand-black);
+        border-style: solid;
+    }
+
+    .is-playing .play-button .play-icon {
+        display: none;
+    }
+
+    .is-playing .play-button .pause-icon {
+        display: block;
+    }
+
+    .volume-on-icon,
+    .volume-off-icon {
+        width: 36px;
+        height: 32px;
+    }
+
+    .volume-on-icon {
+        display: none;
+    }
+
+    .volume-button.is-muted .volume-on-icon {
+        display: block;
+    }
+
+    .volume-button.is-muted .volume-off-icon {
+        display: none;
+    }
+
+    .progress-bar-container {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+
+    .progress-bar {
+        --thumb-size: 22px;
+
+        position: relative;
+        z-index: 2;
+        flex: 1;
+        width: 100%;
+        height: 8px;
+        cursor: pointer;
+        appearance: none;
+        background: linear-gradient(
+            to right,
+            var(--color-brand-black) var(--played, 0%),
+            #deee00 var(--played, 0%)
+        );
+
+        /* Prevent browser scroll on touch devices */
+        touch-action: none;
+
+        @media (pointer: coarse) {
+            --thumb-size: 44px;
+        }
+    }
+
+    .progress-bar::-webkit-slider-thumb {
+        appearance: none;
+        width: var(--thumb-size);
+        height: var(--thumb-size);
+        border: 0;
+        border-radius: calc(var(--thumb-size) / 2);
+        background-color: var(--color-brand-black);
+        transition: transform 0.15s var(--anim-easing-quad-inout);
+    }
+
+    .progress-bar::-moz-range-thumb {
+        width: var(--thumb-size);
+        height: var(--thumb-size);
+        border: 0;
+        border-radius: 16px;
+        background-color: var(--color-brand-black);
+        transition: transform 0.15s var(--anim-easing-quad-inout);
+    }
+
+    .progress-bar:hover::-webkit-slider-thumb {
+        @media (pointer: fine) {
+            transform: scale(1.3);
+        }
+    }
+
+    .progress-bar:hover::-moz-range-thumb {
+        @media (pointer: fine) {
+            transform: scale(1.3);
+        }
+    }
+</style>
+
+<video-player-controls
+    class={`video-controls${isAutoPlaying ? ' is-playing' : ''}`}
+    data-video-controls
+    data-is-autoplaying={isAutoPlaying}
+    data-controls-type={controlsType}
+    data
+    style={`--played: 0%`}
+>
+    <button class="overlay-play-button">
+        <div class="darkening-overlay">
+            <div class="overlay-play-toggle-icon">
+                <div class="overlay-play-icon"></div>
+                <div class="overlay-pause-icon"></div>
+            </div>
+        </div>
+    </button>
+    {
+        controlsType === 'full' && (
+            <div class="main-controls">
+                <button class="controls-button play-button">
+                    <div class="play-icon" />
+                    <div class="pause-icon" />
+                </button>
+                <div class="progress-bar-container">
+                    <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value="0"
+                        class="progress-bar"
+                    />
+                </div>
+                <button
+                    class={`controls-button volume-button${!isInitiallyMuted && ' is-muted'}`}
+                >
+                    <Image
+                        src={VolumeOnSvg}
+                        alt="Volume on"
+                        width="36"
+                        height="32"
+                        class="volume-on-icon"
+                    />
+                    <Image
+                        src={VolumeOffSvg}
+                        alt="Volume off"
+                        width="36"
+                        height="32"
+                        class="volume-off-icon"
+                    />
+                </button>
+            </div>
+        )
+    }
+</video-player-controls>
+
+<script>
+    class VideoControls extends HTMLElement implements VideoControlsElement {
+        private INACTIVITY_DELAY = 2000;
+        private progressBar: HTMLInputElement | null = null;
+        private playButton: HTMLButtonElement | null = null;
+        private volumeButton: HTMLButtonElement | null = null;
+        private overlayPlayButton: HTMLButtonElement | null = null;
+        private mainControls: HTMLDivElement | null = null;
+        private controlsType: VideoControlsType = 'none';
+        private isPlaying: boolean = false;
+        private isAutoPlaying: boolean = false;
+        private inactivityTimer: number = 0;
+        private progressBarThumbSize: number = 22;
+
+        connectedCallback() {
+            this.controlsType = this.getAttribute(
+                'data-controls-type'
+            ) as VideoControlsType;
+            this.isAutoPlaying =
+                this.getAttribute('data-is-autoplaying') === 'true';
+
+            this.getElementReferences();
+
+            this.updateProgressBarThumbSize();
+
+            if (this.isAutoPlaying) {
+                this.setMuted(true);
+                this.setVideoPlaying(true);
+                this.setHasStarted(true);
+            }
+
+            this.prepareListeners();
+        }
+
+        private getElementReferences = () => {
+            this.overlayPlayButton = this.querySelector('.overlay-play-button');
+            if (this.controlsType === 'full') {
+                this.overlayPlayButton?.classList.add('hidden-during-play');
+            }
+            this.mainControls = this.querySelector('.main-controls');
+            this.progressBar = this.querySelector('.progress-bar');
+            this.playButton = this.querySelector('.play-button');
+            this.volumeButton = this.querySelector('.volume-button');
+        };
+
+        private updateProgressBarThumbSize = () => {
+            if (!this.progressBar) return;
+
+            const size =
+                parseInt(
+                    getComputedStyle(this.progressBar).getPropertyValue(
+                        '--thumb-size'
+                    ),
+                    10
+                ) || 22;
+
+            this.progressBarThumbSize = Number.isFinite(size) ? size : 22;
+        };
+
+        private calculateThumbCenterPercentage(percentage: number): number {
+            const thumbWidth = this.progressBarThumbSize;
+            const barWidth =
+                this.progressBar?.getBoundingClientRect().width ?? 0;
+            if (barWidth === 0) return percentage;
+            return (
+                ((thumbWidth / 2 +
+                    (percentage / 100) * (barWidth - thumbWidth)) /
+                    barWidth) *
+                100
+            );
+        }
+
+        private prepareListeners = () => {
+            this.playButton?.addEventListener('click', this.handlePlayPress);
+            this.volumeButton?.addEventListener(
+                'click',
+                this.handleVolumePress
+            );
+            this.progressBar?.addEventListener(
+                'input',
+                this.handleProgressChange
+            );
+
+            this.progressBar?.addEventListener(
+                'touchstart',
+                this.handleProgressTouchStart
+            );
+
+            this.progressBar?.addEventListener(
+                'touchmove',
+                this.handleProgressTouchMove,
+                { passive: false } // Make sure we can actually call preventDefault in the handler
+            );
+
+            this.progressBar?.addEventListener(
+                'touchend',
+                this.handleProgressTouchEnd
+            );
+
+            this.overlayPlayButton?.addEventListener(
+                'click',
+                this.handleOverlayPress
+            );
+
+            this.overlayPlayButton?.addEventListener(
+                'mousemove',
+                this.handleMouseMove
+            );
+
+            this.overlayPlayButton?.addEventListener(
+                'touchstart',
+                this.handleTouchStart
+            );
+        };
+
+        private restartMouseMoveTimer = () => {
+            if (!['simple', 'full'].includes(this.controlsType)) return;
+
+            if (this.inactivityTimer) {
+                clearTimeout(this.inactivityTimer);
+            }
+            this.inactivityTimer = setTimeout(this.hide, this.INACTIVITY_DELAY);
+        };
+
+        private handleProgressTouchStart = () => {
+            if (this.inactivityTimer) {
+                clearTimeout(this.inactivityTimer);
+            }
+        };
+
+        private handleProgressTouchEnd = () => {
+            this.restartMouseMoveTimer();
+        };
+
+        private handleProgressTouchMove = (event: TouchEvent) => {
+            event.preventDefault();
+        };
+
+        private handleMouseMove = () => {
+            if (this.isPlaying) {
+                this.restartMouseMoveTimer();
+                if (['simple', 'full'].includes(this.controlsType)) this.show();
+            }
+        };
+
+        private handleTouchStart = () => {
+            this.show();
+            if (!this.isPlaying) {
+                this.restartMouseMoveTimer();
+            }
+        };
+
+        private handleOverlayPress = () => {
+            this.overlayPlayButton?.classList.remove('pressed');
+            // Wait for page repaint before adding the class back on again
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.overlayPlayButton?.classList.add('pressed');
+                });
+            });
+            this.handlePlayPress();
+        };
+
+        private handlePlayPress = () => {
+            this.dispatchEvent(new CustomEvent('play-press'));
+        };
+
+        private handleVolumePress = () => {
+            this.dispatchEvent(new CustomEvent('volume-press'));
+        };
+
+        private handleProgressChange = (event: Event) => {
+            const target = event.target as HTMLInputElement;
+            const percentage = parseFloat(target.value);
+            this.mainControls?.style.setProperty(
+                '--played',
+                `${this.calculateThumbCenterPercentage(percentage)}%`
+            );
+
+            this.dispatchEvent(
+                new CustomEvent('progress-change', {
+                    detail: {
+                        percentage,
+                    },
+                })
+            );
+        };
+
+        public hideOverlay = () => {
+            this.overlayPlayButton?.classList.add('hidden');
+        };
+
+        public showOverlay = () => {
+            this.overlayPlayButton?.classList.remove('hidden');
+        };
+
+        public setVideoPlaying = (isPlaying: boolean) => {
+            this.isPlaying = isPlaying;
+            this?.classList.toggle('is-playing', isPlaying);
+            if (!isPlaying) {
+                clearTimeout(this.inactivityTimer);
+            }
+            if (isPlaying && ['simple', 'full'].includes(this.controlsType)) {
+                this.restartMouseMoveTimer();
+            }
+        };
+
+        public setMuted = (isMuted: boolean) => {
+            this.volumeButton?.classList.toggle('is-muted', !isMuted);
+        };
+
+        public updateProgress = (
+            currentTime: number = 0,
+            duration: number = 0
+        ) => {
+            if (!this.progressBar) return;
+
+            const percentage = (currentTime / duration) * 100 || 0;
+
+            this.mainControls?.style.setProperty(
+                '--played',
+                `${this.calculateThumbCenterPercentage(percentage)}%`
+            );
+            this.progressBar.value = percentage.toString();
+        };
+
+        public hide = () => {
+            if (this.controlsType === 'full') {
+                this.mainControls?.classList.add('hidden');
+            } else if (this.controlsType === 'simple') {
+                this.hideOverlay();
+            }
+        };
+
+        public show = (includeOverlay?: boolean) => {
+            if (this.controlsType === 'full') {
+                this.mainControls?.classList.remove('hidden');
+            }
+            if (this.controlsType === 'simple' || includeOverlay) {
+                this.showOverlay();
+            }
+        };
+
+        public setHasStarted = (hasStarted: boolean) => {
+            this.mainControls?.classList.toggle('has-started', hasStarted);
+            if (this.controlsType === 'full' && hasStarted) this.hideOverlay();
+        };
+    }
+
+    customElements.define('video-player-controls', VideoControls);
+</script>

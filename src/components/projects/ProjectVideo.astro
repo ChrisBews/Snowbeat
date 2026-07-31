@@ -4,7 +4,7 @@ import TabletFrame from '../shared/mediaFrames/TabletFrame.astro';
 import RawMediaFrame from '../shared/mediaFrames/RawMediaFrame.astro';
 import PortraitPhoneFrame from '../shared/mediaFrames/PortraitPhoneFrame.astro';
 import LandscapePhoneFrame from '../shared/mediaFrames/LandscapePhoneFrame.astro';
-import OverlayPlayButton from '@snowbeat/components/shared/video/OverlayPlayButton.astro';
+import VideoControls from '@snowbeat/components/shared/video/VideoControls.astro';
 
 interface Props {
     src: string;
@@ -14,7 +14,7 @@ interface Props {
     isMuted?: boolean;
     isLooping?: boolean;
     isAutoPlaying?: boolean;
-    hasControls?: boolean;
+    controlsType?: VideoControlsType;
 }
 
 const {
@@ -24,7 +24,7 @@ const {
     isMuted,
     isLooping,
     isAutoPlaying,
-    hasControls,
+    controlsType = 'none',
 } = Astro.props;
 
 let FrameComponent = RawMediaFrame;
@@ -48,6 +48,7 @@ if (type === 'tablet') {
         width: 100%;
         border-radius: 8px;
         overflow: hidden;
+        touch-action: manipulation;
     }
 
     .project-video video {
@@ -60,99 +61,129 @@ if (type === 'tablet') {
     }
 </style>
 
-<video-player class="project-video" data-has-controls={hasControls}>
+<video-player class="project-video" data-controls-type={controlsType}>
     <FrameComponent caption={caption}>
         <video
             src={src}
             loop={isLooping}
-            muted={isMuted}
+            muted={isMuted || isAutoPlaying}
             autoplay={isAutoPlaying}
-            playsinline={isLooping}
+            playsinline
             class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
         ></video>
     </FrameComponent>
-    {hasControls && <OverlayPlayButton />}
+    {
+        ['full', 'simple'].includes(controlsType) && (
+            <VideoControls
+                controlsType={controlsType}
+                isInitiallyMuted={isMuted || isAutoPlaying}
+                isAutoPlaying={isAutoPlaying}
+            />
+        )
+    }
 </video-player>
 
 <script>
     class VideoPlayer extends HTMLElement {
-        private INACTIVITY_DELAY = 2000;
         private video: HTMLVideoElement | null = null;
+        private playerControls: VideoControlsElement | null = null;
         private isPlaying: boolean = false;
-        private overlayPlayButton: HTMLDivElement | null = null;
-        private inactivityTimer: number = 0;
+        private isMuted: boolean = false;
+
+        private hasStarted: boolean = false;
 
         connectedCallback() {
-            if (!this.hasAttribute('data-has-controls')) return;
-
             this.video = this.querySelector('video');
-            this.overlayPlayButton = this.querySelector('.overlay-play-button');
-            this.overlayPlayButton?.addEventListener(
-                'click',
-                this.handlePlayButtonPress
-            );
+            this.isMuted = Boolean(this.video?.muted);
+            this.playerControls = this.querySelector('[data-video-controls]');
 
-            this.overlayPlayButton?.addEventListener(
-                'mousemove',
-                this.handleMouseMove
-            );
+            if (this.video?.autoplay) {
+                this.hasStarted = true;
+                this.isPlaying = true;
+            }
 
-            this.video?.addEventListener('ended', this.handleVideoEnded);
+            this.prepareListeners();
         }
 
-        restartMouseMoveTimer = () => {
-            if (this.inactivityTimer) {
-                clearTimeout(this.inactivityTimer);
+        private prepareListeners = () => {
+            this.video?.addEventListener('ended', this.handleVideoEnded);
+            this.video?.addEventListener('timeupdate', this.handleTimeUpdate);
+            this.playerControls?.addEventListener(
+                'progress-change',
+                this.handleProgressBarMove
+            );
+            this.playerControls?.addEventListener(
+                'play-press',
+                this.handlePlayButtonPress
+            );
+            this.playerControls?.addEventListener(
+                'volume-press',
+                this.handleVolumePress
+            );
+            this.addEventListener('mouseleave', this.handleMouseLeave);
+        };
+
+        private markVideoStarted = () => {
+            if (!this.hasStarted) {
+                this.hasStarted = true;
+                this.playerControls?.setHasStarted(true);
             }
-            this.inactivityTimer = setTimeout(
-                this.hideOverlay,
-                this.INACTIVITY_DELAY
+        };
+
+        private markVideoNotStarted = () => {
+            if (this.hasStarted) {
+                this.hasStarted = false;
+                this.playerControls?.setHasStarted(false);
+            }
+        };
+
+        private handleMouseLeave = () => {
+            if (this.isPlaying) {
+                this.playerControls?.hide();
+            }
+        };
+
+        private handleProgressBarMove = (e: CustomEvent) => {
+            if (!this.video) return;
+
+            const seekTime =
+                (e.detail.percentage / 100) * (this.video?.duration || 0);
+            this.video.currentTime = seekTime;
+        };
+
+        private handleTimeUpdate = () => {
+            this.playerControls?.updateProgress(
+                this.video?.currentTime || 0,
+                this.video?.duration || 0
             );
         };
 
-        hideOverlay = () => {
-            if (this.isPlaying) {
-                this.overlayPlayButton?.classList.add('hidden');
-            }
+        private handleVolumePress = () => {
+            this.isMuted = !this.isMuted;
+            this.playerControls?.setMuted(this.isMuted);
+            if (this.video) this.video.muted = this.isMuted;
         };
 
-        showOverlay = () => {
-            this.overlayPlayButton?.classList.remove('hidden');
-        };
-
-        handlePlayButtonPress = () => {
-            this.overlayPlayButton?.classList.toggle('active');
-            this.overlayPlayButton?.classList.remove('pressed');
-            // Wait for page repaint before adding the class back on again
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    this.overlayPlayButton?.classList.add('pressed');
-                });
-            });
-
+        private handlePlayButtonPress = () => {
             if (!this.isPlaying) {
+                this.markVideoStarted();
                 this.isPlaying = true;
+                this.playerControls?.setVideoPlaying(true);
                 this.video?.play();
-                this.restartMouseMoveTimer();
             } else {
                 this.isPlaying = false;
+                this.playerControls?.setVideoPlaying(false);
                 this.video?.pause();
-                clearTimeout(this.inactivityTimer);
-                this.showOverlay();
+                this.playerControls?.show();
             }
         };
 
-        handleVideoEnded = () => {
-            this.overlayPlayButton?.classList.toggle('active');
+        private handleVideoEnded = () => {
+            this.playerControls?.hide();
+            this.playerControls?.setVideoPlaying(false);
             this.isPlaying = false;
-            this.showOverlay();
-        };
-
-        handleMouseMove = () => {
-            if (this.isPlaying) {
-                this.restartMouseMoveTimer();
-                this.showOverlay();
-            }
+            this.playerControls?.show(true);
+            this.markVideoNotStarted();
         };
     }
 
