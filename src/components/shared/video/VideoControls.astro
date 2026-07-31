@@ -3,6 +3,8 @@ import { Image } from 'astro:assets';
 
 import VolumeOnSvg from '@snowbeat/assets/images/icon-volume-on.svg';
 import VolumeOffSvg from '@snowbeat/assets/images/icon-volume-off.svg';
+import FullScreenEnterSvg from '@snowbeat/assets/images/icon-full-screen-enter.svg';
+import FullScreenLeaveSvg from '@snowbeat/assets/images/icon-full-screen-leave.svg';
 
 interface Props {
     controlsType?: VideoControlsType;
@@ -188,6 +190,24 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
         display: block;
     }
 
+    .full-screen-enter-icon,
+    .full-screen-leave-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .full-screen-leave-icon {
+        display: none;
+    }
+
+    .full-screen-button.is-full-screen .full-screen-enter-icon {
+        display: none;
+    }
+
+    .full-screen-button.is-full-screen .full-screen-leave-icon {
+        display: block;
+    }
+
     .volume-on-icon,
     .volume-off-icon {
         width: 36px;
@@ -211,6 +231,8 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
         flex: 1;
         display: flex;
         align-items: center;
+        margin-left: 8px;
+        margin-right: 16px;
     }
 
     .progress-bar {
@@ -319,17 +341,36 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
                         class="volume-off-icon"
                     />
                 </button>
+                <button class="controls-button full-screen-button">
+                    <Image
+                        src={FullScreenEnterSvg}
+                        alt="Enter full screen"
+                        width="36"
+                        height="32"
+                        class="full-screen-enter-icon"
+                    />
+                    <Image
+                        src={FullScreenLeaveSvg}
+                        alt="Exit full screen"
+                        width="36"
+                        height="32"
+                        class="full-screen-leave-icon"
+                    />
+                </button>
             </div>
         )
     }
 </video-player-controls>
 
 <script>
+    import { VideoPlayerEvent } from '@snowbeat/constants';
+
     class VideoControls extends HTMLElement implements VideoControlsElement {
         private INACTIVITY_DELAY = 2000;
         private progressBar: HTMLInputElement | null = null;
         private playButton: HTMLButtonElement | null = null;
         private volumeButton: HTMLButtonElement | null = null;
+        private fullScreenButton: HTMLButtonElement | null = null;
         private overlayPlayButton: HTMLButtonElement | null = null;
         private mainControls: HTMLDivElement | null = null;
         private controlsType: VideoControlsType = 'none';
@@ -367,6 +408,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
             this.progressBar = this.querySelector('.progress-bar');
             this.playButton = this.querySelector('.play-button');
             this.volumeButton = this.querySelector('.volume-button');
+            this.fullScreenButton = this.querySelector('.full-screen-button');
         };
 
         private updateProgressBarThumbSize = () => {
@@ -402,6 +444,11 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
                 'click',
                 this.handleVolumePress
             );
+            this.fullScreenButton?.addEventListener(
+                'click',
+                this.handleFullScreenPress
+            );
+
             this.progressBar?.addEventListener(
                 'input',
                 this.handleProgressChange
@@ -428,10 +475,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
                 this.handleOverlayPress
             );
 
-            this.overlayPlayButton?.addEventListener(
-                'mousemove',
-                this.handleMouseMove
-            );
+            this?.addEventListener('mousemove', this.handleMouseMove);
 
             this.overlayPlayButton?.addEventListener(
                 'touchstart',
@@ -488,11 +532,17 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
         };
 
         private handlePlayPress = () => {
-            this.dispatchEvent(new CustomEvent('play-press'));
+            this.dispatchEvent(new CustomEvent(VideoPlayerEvent.PLAY_PRESS));
         };
 
         private handleVolumePress = () => {
-            this.dispatchEvent(new CustomEvent('volume-press'));
+            this.dispatchEvent(new CustomEvent(VideoPlayerEvent.VOLUME_PRESS));
+        };
+
+        private handleFullScreenPress = () => {
+            this.dispatchEvent(
+                new CustomEvent(VideoPlayerEvent.FULL_SCREEN_PRESSS)
+            );
         };
 
         private handleProgressChange = (event: Event) => {
@@ -504,7 +554,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
             );
 
             this.dispatchEvent(
-                new CustomEvent('progress-change', {
+                new CustomEvent(VideoPlayerEvent.PROGRESS_CHANGE, {
                     detail: {
                         percentage,
                     },
@@ -570,6 +620,10 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
         public setHasStarted = (hasStarted: boolean) => {
             this.mainControls?.classList.toggle('has-started', hasStarted);
             if (this.controlsType === 'full' && hasStarted) this.hideOverlay();
+        };
+
+        public setFullScreenActive = (isActive: boolean) => {
+            this.fullScreenButton?.classList.toggle('is-full-screen', isActive);
         };
     }
 

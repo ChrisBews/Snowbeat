@@ -84,13 +84,15 @@ if (type === 'tablet') {
 </video-player>
 
 <script>
+    import { VideoPlayerEvent } from '@snowbeat/constants';
+
     class VideoPlayer extends HTMLElement {
         private video: HTMLVideoElement | null = null;
         private playerControls: VideoControlsElement | null = null;
         private isPlaying: boolean = false;
         private isMuted: boolean = false;
-
         private hasStarted: boolean = false;
+        private isIOSFullScreen: boolean = false;
 
         connectedCallback() {
             this.video = this.querySelector('video');
@@ -109,18 +111,26 @@ if (type === 'tablet') {
             this.video?.addEventListener('ended', this.handleVideoEnded);
             this.video?.addEventListener('timeupdate', this.handleTimeUpdate);
             this.playerControls?.addEventListener(
-                'progress-change',
+                VideoPlayerEvent.PROGRESS_CHANGE,
                 this.handleProgressBarMove
             );
             this.playerControls?.addEventListener(
-                'play-press',
+                VideoPlayerEvent.PLAY_PRESS,
                 this.handlePlayButtonPress
             );
             this.playerControls?.addEventListener(
-                'volume-press',
+                VideoPlayerEvent.VOLUME_PRESS,
                 this.handleVolumePress
             );
+            this.playerControls?.addEventListener(
+                VideoPlayerEvent.FULL_SCREEN_PRESSS,
+                this.handleFullScreenPress
+            );
             this.addEventListener('mouseleave', this.handleMouseLeave);
+            this.addEventListener(
+                'fullscreenchange',
+                this.handleFullScreenChange
+            );
         };
 
         private markVideoStarted = () => {
@@ -156,6 +166,30 @@ if (type === 'tablet') {
                 this.video?.currentTime || 0,
                 this.video?.duration || 0
             );
+        };
+
+        private handleFullScreenChange = () => {
+            this.isIOSFullScreen = false;
+            this.playerControls?.setFullScreenActive(
+                Boolean(document.fullscreenElement)
+            );
+        };
+
+        private handleFullScreenPress = () => {
+            if (document.fullscreenElement || this.isIOSFullScreen) {
+                this.isIOSFullScreen = false;
+                document.exitFullscreen().catch(() => {
+                    // Ignore if user somehow enters during full screen exit
+                });
+            } else if (this.requestFullscreen) {
+                this.requestFullscreen().catch(() => {
+                    // Ignore if user exits during the full screen request
+                });
+            } else {
+                this.isIOSFullScreen = true;
+                // iOS safari still needs this
+                this.video?.webkitEnterFullScreen?.();
+            }
         };
 
         private handleVolumePress = () => {

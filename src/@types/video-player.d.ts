@@ -3,6 +3,7 @@ interface VideoControlsElement extends HTMLElement {
     show: (includeOverlay?: boolean) => void;
     setVideoPlaying: (isPlaying: boolean) => void;
     setMuted: (isMuted: boolean) => void;
+    setFullScreenActive: (isActive: boolean) => void;
     setHasStarted: (hasStarted: boolean) => void;
     updateProgress: (currentTime: number, duration: number, bufferedEnd?: number) => void;
     hideOverlay: () => void;
@@ -14,3 +15,8 @@ interface HTMLElementEventMap {
 }
 
 type VideoControlsType = 'none' | 'simple' | 'full';
+
+interface HTMLVideoElement {
+    webkitEnterFullScreen?: () => void;
+    webkitExitFullScreen?: () => void;
+}
