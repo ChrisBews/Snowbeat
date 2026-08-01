@@ -73,6 +73,11 @@ import { LINKEDIN_URL, GITHUB_URL } from '@snowbeat/constants';
 
     .social-links a {
         color: var(--color-brand-black);
+        transition: color 0.15s linear;
+
+        &:hover {
+            color: var(--color-brand-black-light);
+        }
     }
 
     .copyright {

@@ -5,6 +5,8 @@ interface VideoControlsElement extends HTMLElement {
     setMuted: (isMuted: boolean) => void;
     setFullScreenActive: (isActive: boolean) => void;
     setHasStarted: (hasStarted: boolean) => void;
+    setLoading: (isLoading: boolean) => void;
+    setHasError: () => void;
     updateProgress: (currentTime: number, duration: number, bufferedEnd?: number) => void;
     hideOverlay: () => void;
     showOverlay: () => void;

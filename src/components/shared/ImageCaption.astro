@@ -7,14 +7,23 @@ import HighlightText from './HighlightText.astro';
         position: absolute;
         bottom: 20px;
         right: 20px;
+        left: 20px;
+        text-align: right;
 
         @media (--bp-800) {
             bottom: 32px;
             right: 32px;
+            left: 32px;
         }
+    }
+
+    .highlight-wrapper {
+        text-align: center;
     }
 </style>
 
 <figcaption class="image-caption">
-    <HighlightText><slot /></HighlightText>
+    <span class="highlight-wrapper">
+        <HighlightText><slot /></HighlightText>
+    </span>
 </figcaption>

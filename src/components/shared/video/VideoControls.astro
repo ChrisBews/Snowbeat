@@ -5,14 +5,17 @@ import VolumeOnSvg from '@snowbeat/assets/images/icon-volume-on.svg';
 import VolumeOffSvg from '@snowbeat/assets/images/icon-volume-off.svg';
 import FullScreenEnterSvg from '@snowbeat/assets/images/icon-full-screen-enter.svg';
 import FullScreenLeaveSvg from '@snowbeat/assets/images/icon-full-screen-leave.svg';
+import ImageCaption from '../ImageCaption.astro';
+import HighlightText from '../HighlightText.astro';
 
 interface Props {
     controlsType?: VideoControlsType;
     isInitiallyMuted?: boolean;
     isAutoPlaying?: boolean;
+    caption?: string;
 }
 
-const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
+const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 ---
 
 <style>
@@ -63,6 +66,20 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
             transform 0.15s linear;
     }
 
+    .caption-wrapper {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        pointer-events: none;
+        transition: opacity 0.15s linear;
+    }
+
+    .is-playing .overlay-play-button .caption-wrapper,
+    .overlay-play-button.hidden .caption-wrapper {
+        opacity: 0;
+    }
+
     .is-playing .overlay-play-button .darkening-overlay,
     .overlay-play-button.hidden .darkening-overlay {
         opacity: 0;
@@ -88,11 +105,16 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
         height: 102px;
         border-radius: 12px;
         overflow: hidden;
+        transition: background-color 0.15s linear;
         background-color: var(--color-brand-yellow);
     }
 
     .pressed .overlay-play-toggle-icon {
         animation: press-anim 0.2s var(--anim-easing-quad-inout);
+    }
+
+    .overlay-play-button:not(.hidden):hover .overlay-play-toggle-icon {
+        background-color: var(--color-brand-yellow-dark);
     }
 
     .overlay-play-icon {
@@ -289,6 +311,23 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
             transform: scale(1.3);
         }
     }
+
+    .has-error {
+        display: none;
+        pointer-events: none;
+    }
+
+    .loading-spinner {
+        display: none;
+    }
+
+    .is-loading .loading-spinner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 
 <video-player-controls
@@ -296,7 +335,6 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
     data-video-controls
     data-is-autoplaying={isAutoPlaying}
     data-controls-type={controlsType}
-    data
     style={`--played: 0%`}
 >
     <button class="overlay-play-button">
@@ -306,6 +344,13 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
                 <div class="overlay-pause-icon"></div>
             </div>
         </div>
+        {
+            caption && (
+                <div class="caption-wrapper">
+                    <ImageCaption>{caption}</ImageCaption>
+                </div>
+            )
+        }
     </button>
     {
         controlsType === 'full' && (
@@ -360,6 +405,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
             </div>
         )
     }
+    <div class="loading-spinner"><HighlightText>Loading</HighlightText></div>
 </video-player-controls>
 
 <script>
@@ -579,6 +625,14 @@ const { controlsType, isInitiallyMuted, isAutoPlaying } = Astro.props;
             if (isPlaying && ['simple', 'full'].includes(this.controlsType)) {
                 this.restartMouseMoveTimer();
             }
+        };
+
+        public setLoading = (isLoading: boolean) => {
+            this.classList.toggle('is-loading', isLoading);
+        };
+
+        public setHasError = () => {
+            this.classList.toggle('has-error', true);
         };
 
         public setMuted = (isMuted: boolean) => {

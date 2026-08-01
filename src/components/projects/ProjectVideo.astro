@@ -5,6 +5,7 @@ import RawMediaFrame from '../shared/mediaFrames/RawMediaFrame.astro';
 import PortraitPhoneFrame from '../shared/mediaFrames/PortraitPhoneFrame.astro';
 import LandscapePhoneFrame from '../shared/mediaFrames/LandscapePhoneFrame.astro';
 import VideoControls from '@snowbeat/components/shared/video/VideoControls.astro';
+import HighlightText from '../shared/HighlightText.astro';
 
 interface Props {
     src: string;
@@ -59,10 +60,22 @@ if (type === 'tablet') {
     .crop-image {
         border-radius: 8px 8px 0 0;
     }
+
+    .error-message {
+        position: absolute;
+        inset: 0;
+        display: none;
+    }
+
+    .has-error .error-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 
 <video-player class="project-video" data-controls-type={controlsType}>
-    <FrameComponent caption={caption}>
+    <FrameComponent>
         <video
             src={src}
             loop={isLooping}
@@ -78,9 +91,13 @@ if (type === 'tablet') {
                 controlsType={controlsType}
                 isInitiallyMuted={isMuted || isAutoPlaying}
                 isAutoPlaying={isAutoPlaying}
+                caption={caption}
             />
         )
     }
+    <div class="error-message">
+        <HighlightText>Error loading video</HighlightText>
+    </div>
 </video-player>
 
 <script>
@@ -105,11 +122,18 @@ if (type === 'tablet') {
             }
 
             this.prepareListeners();
+            /*requestAnimationFrame(() => {
+                this.handleVideoWaiting();
+            });*/
         }
 
         private prepareListeners = () => {
+            this.video?.addEventListener('waiting', this.handleVideoWaiting);
+            this.video?.addEventListener('playing', this.handleVideoPlaying);
+            this.video?.addEventListener('error', this.handleVideoError);
             this.video?.addEventListener('ended', this.handleVideoEnded);
             this.video?.addEventListener('timeupdate', this.handleTimeUpdate);
+
             this.playerControls?.addEventListener(
                 VideoPlayerEvent.PROGRESS_CHANGE,
                 this.handleProgressBarMove
@@ -147,6 +171,20 @@ if (type === 'tablet') {
             }
         };
 
+        private handleVideoWaiting = () => {
+            this.playerControls?.setLoading(true);
+        };
+
+        private handleVideoPlaying = () => {
+            this.playerControls?.setLoading(false);
+        };
+
+        private handleVideoError = () => {
+            this.playerControls?.setLoading(false);
+            this.playerControls?.setHasError();
+            this.classList.add('has-error');
+        };
+
         private handleMouseLeave = () => {
             if (this.isPlaying) {
                 this.playerControls?.hide();
@@ -154,7 +192,7 @@ if (type === 'tablet') {
         };
 
         private handleProgressBarMove = (e: CustomEvent) => {
-            if (!this.video) return;
+            if (!this.video || !Number.isFinite(this.video.duration)) return;
 
             const seekTime =
                 (e.detail.percentage / 100) * (this.video?.duration || 0);
@@ -203,7 +241,10 @@ if (type === 'tablet') {
                 this.markVideoStarted();
                 this.isPlaying = true;
                 this.playerControls?.setVideoPlaying(true);
-                this.video?.play();
+                this.video?.play()?.catch(() => {
+                    this.isPlaying = false;
+                    this.playerControls?.setVideoPlaying(false);
+                });
             } else {
                 this.isPlaying = false;
                 this.playerControls?.setVideoPlaying(false);
