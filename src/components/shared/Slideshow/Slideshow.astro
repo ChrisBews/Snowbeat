@@ -1,0 +1,207 @@
+---
+import { Image } from 'astro:assets';
+
+import LandscapePhoneFrame from '@snowbeat/components/shared/mediaFrames/LandscapePhoneFrame.astro';
+import PortraitPhoneFrame from '@snowbeat/components/shared/mediaFrames/PortraitPhoneFrame.astro';
+import RawMediaFrame from '@snowbeat/components/shared/mediaFrames/RawMediaFrame.astro';
+import ScreenCropFrame from '@snowbeat/components/shared/mediaFrames/ScreenCropFrame.astro';
+import TabletFrame from '@snowbeat/components/shared/mediaFrames/TabletFrame.astro';
+import SlideshowControls from './SlideshowControls.astro';
+
+interface SlideItem {
+    src: ImageMetadata;
+    type?: ImageType;
+    alt?: string;
+    caption?: string;
+}
+
+interface Props {
+    data: SlideItem[];
+}
+
+const { data } = Astro.props;
+
+const imageFrames = data.map((slideData) => {
+    let frameComponent = RawMediaFrame;
+    if (slideData.type === 'tablet') {
+        frameComponent = TabletFrame;
+    } else if (slideData.type === 'phone-landscape') {
+        frameComponent = LandscapePhoneFrame;
+    } else if (slideData.type === 'phone-portrait') {
+        frameComponent = PortraitPhoneFrame;
+    } else if (slideData.type === 'screen-crop') {
+        frameComponent = ScreenCropFrame;
+    }
+    return frameComponent;
+});
+---
+
+<style>
+    .slideshow {
+        position: relative;
+        width: 100%;
+    }
+
+    .slides-wrapper {
+        position: relative;
+        display: grid;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .slide {
+        position: relative;
+        grid-area: 1/1;
+        display: flex;
+        width: 100%;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s var(--anim-easing-quad-inout);
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        &.is-current {
+            opacity: 1;
+            z-index: 1;
+            pointer-events: auto;
+        }
+
+        /* Starting state held before animating a slide in */
+        &.is-entering {
+            opacity: 0;
+            z-index: 2;
+        }
+
+        &.is-entering.is-visible {
+            opacity: 1;
+        }
+    }
+</style>
+
+<section>
+    <image-slideshow class="slideshow">
+        <div class="slides-wrapper">
+            {
+                data.map((slideData, i) => {
+                    const FrameComponent = imageFrames[i];
+                    return (
+                        <article
+                            class={`slide ${i === 0 ? 'is-current' : ''}`}
+                            data-slide
+                            data-caption={slideData.caption}
+                        >
+                            <FrameComponent>
+                                <Image
+                                    src={slideData.src}
+                                    alt={slideData.alt ?? ''}
+                                />
+                            </FrameComponent>
+                        </article>
+                    );
+                })
+            }
+        </div>
+        <SlideshowControls />
+    </image-slideshow>
+</section>
+
+<script>
+    import { SlideshowEvent } from '@snowbeat/constants';
+
+    class Slideshow extends HTMLElement {
+        private slideshowControls: SlideshowControlsElement | null = null;
+        private slides: HTMLElement[] | null = null;
+        private activeSlideIndex = 0;
+        private totalSlides = 0;
+        private isAnimating = false;
+
+        connectedCallback() {
+            this.slides = Array.from(this.querySelectorAll('[data-slide]'));
+            this.totalSlides = this.slides.length;
+            this.slideshowControls = this.querySelector(
+                '[data-slideshow-controls]'
+            ) as SlideshowControlsElement;
+            this.prepareListeners();
+        }
+
+        private prepareListeners = () => {
+            if (this.slideshowControls) {
+                this.slideshowControls.addEventListener(
+                    SlideshowEvent.NEXT_PRESS,
+                    this.handleNextPress
+                );
+                this.slideshowControls.addEventListener(
+                    SlideshowEvent.PREVIOUS_PRESS,
+                    this.handlePreviousPress
+                );
+            }
+        };
+
+        private handlePreviousPress = () => {
+            const previousSlideIndex =
+                (this.activeSlideIndex - 1 + this.totalSlides) %
+                this.totalSlides;
+            this.showSlide(previousSlideIndex);
+        };
+
+        private handleNextPress = () => {
+            console.log('ok');
+            const nextSlideIndex =
+                (this.activeSlideIndex + 1) % (this.totalSlides || 1);
+            this.showSlide(nextSlideIndex);
+        };
+
+        private showSlide = (slideIndex: number) => {
+            if (
+                !this.slides?.length ||
+                this.isAnimating ||
+                slideIndex === this.activeSlideIndex
+            )
+                return;
+
+            this.isAnimating = true;
+
+            const currentSlide = this.slides[this.activeSlideIndex];
+            const nextSlide = this.slides[slideIndex];
+
+            // Set starting opacity to 0 before animating it in
+            nextSlide.classList.add('is-entering');
+
+            // Wait for repaint
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // Animate the next slide in now
+                    nextSlide.classList.add('is-visible');
+
+                    nextSlide.addEventListener(
+                        'transitionend',
+                        (event: TransitionEvent) => {
+                            if (
+                                event.target !== nextSlide ||
+                                event.propertyName !== 'opacity'
+                            ) {
+                                return;
+                            }
+
+                            // Next slide is faded in, so we can let the old one fade out back to it's start state now
+                            currentSlide.classList.remove('is-current');
+                            nextSlide.classList.remove(
+                                'is-entering',
+                                'is-visible'
+                            );
+                            nextSlide.classList.add('is-current');
+                            this.activeSlideIndex = slideIndex;
+                            this.isAnimating = false;
+                        },
+                        { once: true }
+                    );
+                });
+            });
+        };
+    }
+
+    customElements.define('image-slideshow', Slideshow);
+</script>

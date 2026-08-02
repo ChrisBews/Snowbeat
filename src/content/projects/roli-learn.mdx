@@ -26,6 +26,7 @@ import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
 import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import Slideshow from '@snowbeat/components/shared/Slideshow/Slideshow.astro';
 
 import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
 import classicViewTablet from '@snowbeat/assets/images/projects/roli-learn/classic-view-tablet.png';
@@ -144,4 +145,24 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
         controlsType='full'
         caption='Song settings UI animations'
     />
+
+    <Slideshow data = {
+        [
+            {
+                src: classicViewTablet,
+                type: 'tablet',
+                caption: 'Caption 1'
+            },
+            {
+                src: phonePortraitImage,
+                type: 'phone-portrait',
+                caption: 'Caption 2'
+            },
+            {
+                src: topImage,
+                type: 'tablet',
+                caption: 'Caption 1'
+            },
+        ]
+    } />
 </OneColumn>

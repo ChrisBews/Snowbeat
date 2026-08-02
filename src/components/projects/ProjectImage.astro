@@ -9,8 +9,7 @@ import LandscapePhoneFrame from '../shared/mediaFrames/LandscapePhoneFrame.astro
 
 interface Props {
     src: ImageMetadata;
-    type?:
-        'screen-crop' | 'raw' | 'tablet' | 'phone-portrait' | 'phone-landscape';
+    type?: ImageType;
     alt?: string;
     caption?: string;
 }

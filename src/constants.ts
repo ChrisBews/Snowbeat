@@ -11,3 +11,8 @@ export enum VideoPlayerEvent {
     FULL_SCREEN_PRESSS = 'full-screen-press',
     PROGRESS_CHANGE = 'progress-change',
 }
+
+export enum SlideshowEvent {
+    NEXT_PRESS = 'next-press',
+    PREVIOUS_PRESS = 'previous-press',
+}

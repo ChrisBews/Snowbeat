@@ -1,0 +1,157 @@
+---
+
+---
+
+<style>
+    @keyframes slideshow-press-anim {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(0.97);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .slideshow-controls {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+    }
+
+    .overlay-button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 50%;
+        padding-inline: 50px;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        background: transparent;
+
+        &.previous {
+            left: 0;
+            align-items: flex-start;
+        }
+
+        &.next {
+            right: 0;
+            align-items: flex-end;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 120px;
+            border-radius: 12px;
+            background-color: var(--color-brand-yellow);
+            transition:
+                background-color 0.15s var(--anim-easing-quad-inout),
+                transform 0.15s var(--anim-easing-quad-inout);
+
+            &::after {
+                content: '';
+                display: block;
+                width: 29px;
+                height: 31px;
+                background-color: var(--color-brand-black);
+            }
+        }
+
+        &.pressed .icon {
+            animation: slideshow-press-anim 0.2s var(--anim-easing-quad-inout);
+        }
+
+        .icon::after {
+            clip-path: polygon(
+                0 37%,
+                38% 37%,
+                38% 8%,
+                100% 50%,
+                38% 92%,
+                38% 63%,
+                0 63%
+            );
+        }
+
+        &.previous .icon::after {
+            transform: rotate(180deg);
+        }
+
+        &:hover .icon {
+            transform: scale(1.05);
+            background-color: var(--color-brand-yellow-dark);
+        }
+    }
+</style>
+<slideshow-controls class="slideshow-controls" data-slideshow-controls>
+    <button class="overlay-button previous"
+        ><span class="icon"
+            ><span class="visually-hidden">Previous slide</span></span
+        ></button
+    >
+    <button class="overlay-button next"
+        ><span class="icon">
+            <span class="visually-hidden">Next slide</span></span
+        ></button
+    >
+</slideshow-controls>
+
+<script>
+    import { SlideshowEvent } from '@snowbeat/constants';
+
+    class SlideshowControls
+        extends HTMLElement
+        implements SlideshowControlsElement
+    {
+        private nextButton: HTMLButtonElement | null = null;
+        private previousButton: HTMLButtonElement | null = null;
+
+        connectedCallback() {
+            this.nextButton = this.querySelector('.next');
+            this.previousButton = this.querySelector('.previous');
+
+            this.prepareListeners();
+        }
+
+        private prepareListeners = () => {
+            this.nextButton?.addEventListener('click', this.handleNextPress);
+            this.previousButton?.addEventListener(
+                'click',
+                this.handlePreviousPress
+            );
+        };
+
+        private handleNextPress = () => {
+            this.nextButton?.classList.remove('pressed');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.nextButton?.classList.add('pressed');
+                });
+            });
+            this.dispatchEvent(new CustomEvent(SlideshowEvent.NEXT_PRESS));
+        };
+
+        private handlePreviousPress = () => {
+            this.previousButton?.classList.remove('pressed');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.previousButton?.classList.add('pressed');
+                });
+            });
+            this.dispatchEvent(new CustomEvent(SlideshowEvent.PREVIOUS_PRESS));
+        };
+    }
+
+    customElements.define('slideshow-controls', SlideshowControls);
+</script>
