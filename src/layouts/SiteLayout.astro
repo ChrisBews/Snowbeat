@@ -191,5 +191,12 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
             <slot />
         </main>
         <SiteFooter />
+        <!-- Cloudflare Web Analytics -->
+        <script
+            is:inline
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon='{"token": "77bb4a247598433f964123926a5d110f"}'
+        ></script><!-- End Cloudflare Web Analytics -->
     </body>
 </html>

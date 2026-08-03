@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+
 import { GITHUB_URL, LINKEDIN_URL } from '@snowbeat/constants';
 
 import SectionTitle from '../shared/SectionTitle.astro';
@@ -7,15 +9,40 @@ import IconButton from '../shared/IconButton.astro';
 import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
 ---
 
-<style define:vars={{ 'bg-url': `url(${SnowbeatIcon.src})` }}>
+<style>
     section {
+        position: relative;
         padding-bottom: 60px;
         text-align: center;
         background-color: var(--color-brand-yellow);
-        background-image: var(--bg-url);
-        background-size: clamp(1100px, 190vw, 2000px);
-        background-repeat: no-repeat;
-        background-position: calc(50% + 150px) 2.5%;
+        overflow: clip;
+    }
+
+    @keyframes about-logo-scroll {
+        from {
+            translate: -50% -10%;
+        }
+
+        to {
+            translate: -50% 10%;
+        }
+    }
+
+    .background-icon {
+        position: absolute;
+        top: 2.5%;
+        left: calc(50% + min(10svw, 150px));
+        z-index: 1;
+        translate: -50% -10%;
+        width: clamp(1300px, 190vw, 2000px);
+        height: auto;
+        animation: about-logo-scroll linear;
+        animation-timeline: view();
+    }
+
+    .content-wrapper {
+        position: relative;
+        z-index: 2;
     }
 
     .social-links {
@@ -34,7 +61,15 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
 </style>
 
 <section id="about">
-    <div class="section-content-reduced">
+    <Image
+        src={SnowbeatIcon}
+        alt=""
+        width="2000"
+        class="background-icon"
+        aria-hidden
+    />
+
+    <div class="section-content-reduced content-wrapper">
         <SectionTitle>About</SectionTitle>
         <p>
             I am a developer based in London, with 20 years of experience split
