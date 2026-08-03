@@ -15,4 +15,5 @@ export enum VideoPlayerEvent {
 export enum SlideshowEvent {
     NEXT_PRESS = 'next-press',
     PREVIOUS_PRESS = 'previous-press',
+    PIP_PRESS = 'pip-press'
 }

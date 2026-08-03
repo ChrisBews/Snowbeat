@@ -1,5 +1,14 @@
 ---
+import SlideshowCaptions from './SlideshowCaptions.astro';
+import SlideshowPips from './SlideshowPips.astro';
 
+interface Props {
+    totalSlides: number;
+    hasPips?: boolean;
+    captions?: (string | undefined)[];
+}
+
+const { totalSlides, hasPips, captions = [] } = Astro.props;
 ---
 
 <style>
@@ -31,11 +40,16 @@
         flex-direction: column;
         justify-content: center;
         width: 50%;
-        padding-inline: 50px;
+        padding-inline: 20px;
         border: 0;
         outline: 0;
         cursor: pointer;
         background: transparent;
+        -webkit-tap-highlight-color: transparent;
+
+        @media (--bp-800) {
+            padding-inline: 40px;
+        }
 
         &.previous {
             left: 0;
@@ -51,20 +65,31 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 72px;
-            height: 120px;
-            border-radius: 12px;
+            width: 42px;
+            height: 100px;
+            border-radius: 8px;
             background-color: var(--color-brand-yellow);
             transition:
                 background-color 0.15s var(--anim-easing-quad-inout),
                 transform 0.15s var(--anim-easing-quad-inout);
 
+            @media (--bp-600) {
+                width: 72px;
+                height: 120px;
+                border-radius: 12px;
+            }
+
             &::after {
                 content: '';
                 display: block;
-                width: 29px;
-                height: 31px;
+                width: 20px;
+                height: 21px;
                 background-color: var(--color-brand-black);
+
+                @media (--bp-600) {
+                    width: 29px;
+                    height: 31px;
+                }
             }
         }
 
@@ -93,7 +118,18 @@
             background-color: var(--color-brand-yellow-dark);
         }
     }
+
+    .bottom-nav {
+        position: absolute;
+        bottom: 24px;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
 </style>
+
 <slideshow-controls class="slideshow-controls" data-slideshow-controls>
     <button class="overlay-button previous"
         ><span class="icon"
@@ -105,6 +141,10 @@
             <span class="visually-hidden">Next slide</span></span
         ></button
     >
+    <div class="bottom-nav">
+        {captions.length > 0 && <SlideshowCaptions captions={captions} />}
+        {hasPips && <SlideshowPips totalSlides={totalSlides} />}
+    </div>
 </slideshow-controls>
 
 <script>
@@ -116,10 +156,14 @@
     {
         private nextButton: HTMLButtonElement | null = null;
         private previousButton: HTMLButtonElement | null = null;
+        private pips: SlideshowPipsElement | null = null;
+        private captions: SlideshowCaptionsElement | null = null;
 
         connectedCallback() {
             this.nextButton = this.querySelector('.next');
             this.previousButton = this.querySelector('.previous');
+            this.pips = this.querySelector('[data-slideshow-pips]');
+            this.captions = this.querySelector('[data-slideshow-captions');
 
             this.prepareListeners();
         }
@@ -150,6 +194,11 @@
                 });
             });
             this.dispatchEvent(new CustomEvent(SlideshowEvent.PREVIOUS_PRESS));
+        };
+
+        public setActiveSlide = (slideIndex: number) => {
+            this.pips?.setActiveSlide(slideIndex);
+            this.captions?.setActiveSlide(slideIndex);
         };
     }
 

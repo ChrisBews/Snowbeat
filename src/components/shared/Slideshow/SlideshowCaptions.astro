@@ -1,0 +1,80 @@
+---
+import HighlightText from '../HighlightText.astro';
+
+interface Props {
+    captions: (string | undefined)[];
+}
+
+const { captions = [] } = Astro.props;
+---
+
+<style>
+    .slideshow-captions {
+        display: grid;
+        justify-content: center;
+        align-items: flex-end;
+        width: 100%;
+        padding-inline: 32px;
+    }
+
+    .caption {
+        display: none;
+        grid-area: 1 / 1;
+        opacity: 0;
+        text-align: center;
+        line-height: unset;
+        transition:
+            opacity 0.15s linear,
+            display 0.15s linear;
+        transition-behavior: allow-discrete;
+
+        &.is-active {
+            display: block;
+            opacity: 1;
+            transition-delay: 0.15s;
+
+            @starting-style {
+                opacity: 0;
+            }
+        }
+    }
+</style>
+
+<slideshow-captions class="slideshow-captions" data-slideshow-captions>
+    {
+        captions.map((caption, index) =>
+            caption ? (
+                <p
+                    class={`caption${index === 0 ? ' is-active' : ''}`}
+                    data-caption-index={index}
+                >
+                    <HighlightText>{caption}</HighlightText>
+                </p>
+            ) : null
+        )
+    }
+</slideshow-captions>
+
+<script>
+    class SlideshowCaptions
+        extends HTMLElement
+        implements SlideshowCaptionsElement
+    {
+        private captions: HTMLParagraphElement[] = [];
+
+        connectedCallback() {
+            this.captions = Array.from(this.querySelectorAll('.caption'));
+        }
+
+        public setActiveSlide = (slideIndex: number) => {
+            this.captions.forEach((caption) => {
+                caption.classList.toggle(
+                    'is-active',
+                    caption.dataset.captionIndex === String(slideIndex)
+                );
+            });
+        };
+    }
+
+    customElements.define('slideshow-captions', SlideshowCaptions);
+</script>

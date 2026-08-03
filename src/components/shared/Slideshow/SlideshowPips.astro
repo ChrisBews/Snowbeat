@@ -1,0 +1,116 @@
+---
+interface Props {
+    totalSlides: number;
+}
+
+const { totalSlides } = Astro.props;
+---
+
+<style>
+    .slideshow-pips {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .pips-wrapper {
+        display: flex;
+        padding: 0;
+        list-style: none;
+        background-color: var(--color-brand-yellow);
+    }
+
+    .pip-button {
+        padding: 12px 8px;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        background: transparent;
+        transition: transform 0.15s var(--anim-easing-quad-inout);
+
+        @media (--bp-600) {
+            padding: 16px 14px;
+        }
+
+        &:hover {
+            transform: scale(1.5);
+        }
+    }
+
+    .pip-icon {
+        display: block;
+        width: 12px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: var(--color-brand-yellow-extra-dark);
+        transition: background-color 0.15s var(--anim-easing-quad-inout);
+
+        @media (--bp-600) {
+            width: 16px;
+        }
+    }
+
+    .is-active .pip-icon {
+        background-color: var(--color-brand-black);
+    }
+</style>
+
+<slideshow-pips class="slideshow-pips" data-slideshow-pips>
+    <ol class="pips-wrapper">
+        {
+            [...new Array(totalSlides)].map((_, index) => (
+                <li>
+                    <button
+                        class={`pip-button${index === 0 ? ' is-active' : ''}`}
+                    >
+                        <span class="pip-icon">
+                            <span class="visually-hidden">1</span>
+                        </span>
+                    </button>
+                </li>
+            ))
+        }
+    </ol>
+</slideshow-pips>
+
+<script>
+    import { SlideshowEvent } from '@snowbeat/constants';
+
+    class SlideshowPips extends HTMLElement implements SlideshowPipsElement {
+        private pipButtons: HTMLButtonElement[] = [];
+
+        connectedCallback() {
+            this.pipButtons = Array.from(this.querySelectorAll('.pip-button'));
+            this.prepareListeners();
+        }
+
+        private prepareListeners = () => {
+            this.pipButtons.forEach((pipButton, index) =>
+                pipButton.addEventListener('click', () =>
+                    this.handlePipPress(index)
+                )
+            );
+        };
+
+        private handlePipPress = (pipIndex: number) => {
+            this.dispatchEvent(
+                new CustomEvent(SlideshowEvent.PIP_PRESS, {
+                    detail: {
+                        pipIndex,
+                    },
+                    bubbles: true,
+                })
+            );
+        };
+
+        public setActiveSlide = (slideIndex: number) => {
+            this.pipButtons.forEach((pipButton, index) => {
+                pipButton.classList.toggle('is-active', index === slideIndex);
+            });
+        };
+    }
+
+    customElements.define('slideshow-pips', SlideshowPips);
+</script>

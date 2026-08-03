@@ -17,9 +17,14 @@ interface SlideItem {
 
 interface Props {
     data: SlideItem[];
+    hasPips?: boolean;
 }
 
-const { data } = Astro.props;
+const { data = [], hasPips } = Astro.props;
+
+const captions: (string | undefined)[] = data.map(
+    (slideItem) => slideItem.caption
+);
 
 const imageFrames = data.map((slideData) => {
     let frameComponent = RawMediaFrame;
@@ -47,6 +52,7 @@ const imageFrames = data.map((slideData) => {
         display: grid;
         width: 100%;
         overflow: hidden;
+        min-height: 400px;
     }
 
     .slide {
@@ -104,7 +110,11 @@ const imageFrames = data.map((slideData) => {
                 })
             }
         </div>
-        <SlideshowControls />
+        <SlideshowControls
+            totalSlides={data.length}
+            hasPips={hasPips}
+            captions={captions}
+        />
     </image-slideshow>
 </section>
 
@@ -137,7 +147,16 @@ const imageFrames = data.map((slideData) => {
                     SlideshowEvent.PREVIOUS_PRESS,
                     this.handlePreviousPress
                 );
+
+                this.slideshowControls.addEventListener(
+                    SlideshowEvent.PIP_PRESS,
+                    this.handlePipPress
+                );
             }
+        };
+
+        private handlePipPress = (event: CustomEvent) => {
+            this.showSlide(event.detail.pipIndex);
         };
 
         private handlePreviousPress = () => {
@@ -169,6 +188,8 @@ const imageFrames = data.map((slideData) => {
 
             // Set starting opacity to 0 before animating it in
             nextSlide.classList.add('is-entering');
+
+            this.slideshowControls?.setActiveSlide(slideIndex);
 
             // Wait for repaint
             requestAnimationFrame(() => {

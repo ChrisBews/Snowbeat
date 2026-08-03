@@ -180,28 +180,41 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 64px;
+        width: 48px;
         aspect-ratio: 1;
         border: 0;
         cursor: pointer;
         background: transparent;
+
+        @media (--bp-600) {
+            width: 64px;
+        }
     }
 
     .play-icon {
-        width: calc(32px * 0.9);
-        height: 32px;
+        width: calc(24px * 0.9);
+        height: 24px;
         clip-path: polygon(100% 50%, 0 100%, 0 0);
         transform: translateX(4px);
         background-color: var(--color-brand-black);
+
+        @media (--bp-600) {
+            width: calc(32px * 0.9);
+            height: 32px;
+        }
     }
 
     .pause-icon {
         display: none;
-        width: 32px;
-        height: 32px;
-        border-width: 0 12px;
+        width: 24px;
+        aspect-ratio: 1;
+        border-width: 0 10px;
         border-color: var(--color-brand-black);
         border-style: solid;
+
+        @media (--bp-600) {
+            width: 32px;
+        }
     }
 
     .is-playing .play-button .play-icon {
@@ -214,8 +227,12 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 
     .full-screen-enter-icon,
     .full-screen-leave-icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        aspect-ratio: 1;
+
+        @media (--bp-600) {
+            width: 28px;
+        }
     }
 
     .full-screen-leave-icon {
@@ -232,8 +249,13 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 
     .volume-on-icon,
     .volume-off-icon {
-        width: 36px;
-        height: 32px;
+        width: 28px;
+        height: 26px;
+
+        @media (--bp-600) {
+            width: 36px;
+            height: 32px;
+        }
     }
 
     .volume-on-icon {
@@ -270,14 +292,14 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
         background: linear-gradient(
             to right,
             var(--color-brand-black) var(--played, 0%),
-            #deee00 var(--played, 0%)
+            var(--color-brand-yellow-extra-dark) var(--played, 0%)
         );
 
         /* Prevent browser scroll on touch devices */
         touch-action: none;
 
         @media (pointer: coarse) {
-            --thumb-size: 44px;
+            --thumb-size: 32px;
         }
     }
 

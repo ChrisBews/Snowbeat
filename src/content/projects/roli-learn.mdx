@@ -146,23 +146,26 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
         caption='Song settings UI animations'
     />
 
-    <Slideshow data = {
-        [
-            {
-                src: classicViewTablet,
-                type: 'tablet',
-                caption: 'Caption 1'
-            },
-            {
-                src: phonePortraitImage,
-                type: 'phone-portrait',
-                caption: 'Caption 2'
-            },
-            {
-                src: topImage,
-                type: 'tablet',
-                caption: 'Caption 1'
-            },
-        ]
-    } />
+    <Slideshow
+        hasPips
+        data = {
+            [
+                {
+                    src: classicViewTablet,
+                    type: 'tablet',
+                    caption: 'Caption 1'
+                },
+                {
+                    src: phonePortraitImage,
+                    type: 'phone-portrait',
+                    caption: 'Caption 2'
+                },
+                {
+                    src: topImage,
+                    type: 'tablet',
+                    caption: 'Caption 3'
+                },
+            ]
+        }
+    />
 </OneColumn>
