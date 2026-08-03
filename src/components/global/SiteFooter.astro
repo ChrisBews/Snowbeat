@@ -95,13 +95,21 @@ import { LINKEDIN_URL, GITHUB_URL } from '@snowbeat/constants';
             <h2 class="visually-hidden">Social links</h2>
             <ul class="social-links">
                 <li>
-                    <a href={LINKEDIN_URL} target="_blank">
+                    <a
+                        href={LINKEDIN_URL}
+                        target="_blank"
+                        rel="noopener no-referer"
+                    >
                         <span class="visually-hidden">LinkedIn</span>
                         <LinkedInIcon aria-hidden="true" />
                     </a>
                 </li>
                 <li>
-                    <a href={GITHUB_URL} target="_blank">
+                    <a
+                        href={GITHUB_URL}
+                        target="_blank"
+                        rel="noopener noreferer"
+                    >
                         <span class="visually-hidden">Github</span>
                         <GithubIcon aria-hidden="true" />
                     </a>

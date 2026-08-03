@@ -9,7 +9,7 @@ const projects = defineCollection({
         type: z.string(),
         startDate: z.coerce.date(),
         endDate: z.union([z.literal("Present"), z.coerce.date()]),
-        primaryImage: image().refine(() => true),
+        primaryImage: image(),
         technologies: z.array(z.string()),
         languages: z.array(z.string()),
         websiteUrl: z.optional(z.string()),
@@ -25,7 +25,7 @@ const extras = defineCollection({
         type: z.string(),
         startDate: z.coerce.date(),
         endDate: z.union([z.literal("Present"), z.coerce.date()]),
-        primaryImage: image().refine(() => true),
+        primaryImage: image(),
     }),
 })
 

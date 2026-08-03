@@ -1,11 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
-import ScreenCropFrame from '@snowbeat/components/shared/mediaFrames/ScreenCropFrame.astro';
-import TabletFrame from '../shared/mediaFrames/TabletFrame.astro';
-import RawMediaFrame from '../shared/mediaFrames/RawMediaFrame.astro';
-import PortraitPhoneFrame from '../shared/mediaFrames/PortraitPhoneFrame.astro';
-import LandscapePhoneFrame from '../shared/mediaFrames/LandscapePhoneFrame.astro';
+import MediaFrame from '@snowbeat/components/shared/mediaFrames/MediaFrame.astro';
 
 interface Props {
     src: ImageMetadata;
@@ -15,17 +11,6 @@ interface Props {
 }
 
 const { src, type = 'raw', alt = '', caption } = Astro.props;
-
-let FrameComponent = RawMediaFrame;
-if (type === 'tablet') {
-    FrameComponent = TabletFrame;
-} else if (type === 'phone-landscape') {
-    FrameComponent = LandscapePhoneFrame;
-} else if (type === 'phone-portrait') {
-    FrameComponent = PortraitPhoneFrame;
-} else if (type === 'screen-crop') {
-    FrameComponent = ScreenCropFrame;
-}
 ---
 
 <style>
@@ -50,11 +35,11 @@ if (type === 'tablet') {
 </style>
 
 <div class="project-image">
-    <FrameComponent caption={caption}>
+    <MediaFrame type={type} caption={caption}>
         <Image
             src={src}
             alt={alt}
             class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
         />
-    </FrameComponent>
+    </MediaFrame>
 </div>

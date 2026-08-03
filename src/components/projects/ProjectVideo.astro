@@ -1,11 +1,7 @@
 ---
-import ScreenCropFrame from '@snowbeat/components/shared/mediaFrames/ScreenCropFrame.astro';
-import TabletFrame from '../shared/mediaFrames/TabletFrame.astro';
-import RawMediaFrame from '../shared/mediaFrames/RawMediaFrame.astro';
-import PortraitPhoneFrame from '../shared/mediaFrames/PortraitPhoneFrame.astro';
-import LandscapePhoneFrame from '../shared/mediaFrames/LandscapePhoneFrame.astro';
 import VideoControls from '@snowbeat/components/shared/video/VideoControls.astro';
-import HighlightText from '../shared/HighlightText.astro';
+import HighlightText from '@snowbeat/components/shared/HighlightText.astro';
+import MediaFrame from '@snowbeat/components/shared/mediaFrames/MediaFrame.astro';
 
 interface Props {
     src: string;
@@ -27,17 +23,6 @@ const {
     isAutoPlaying,
     controlsType = 'none',
 } = Astro.props;
-
-let FrameComponent = RawMediaFrame;
-if (type === 'tablet') {
-    FrameComponent = TabletFrame;
-} else if (type === 'phone-landscape') {
-    FrameComponent = LandscapePhoneFrame;
-} else if (type === 'phone-portrait') {
-    FrameComponent = PortraitPhoneFrame;
-} else if (type === 'screen-crop') {
-    FrameComponent = ScreenCropFrame;
-}
 ---
 
 <style>
@@ -75,7 +60,7 @@ if (type === 'tablet') {
 </style>
 
 <video-player class="project-video" data-controls-type={controlsType}>
-    <FrameComponent>
+    <MediaFrame type={type} caption={caption}>
         <video
             src={src}
             loop={isLooping}
@@ -84,7 +69,7 @@ if (type === 'tablet') {
             playsinline
             class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
         ></video>
-    </FrameComponent>
+    </MediaFrame>
     {
         ['full', 'simple'].includes(controlsType) && (
             <VideoControls

@@ -30,7 +30,7 @@ const { websiteUrl, appStoreUrl, playStoreUrl } = Astro.props;
         {
             !!websiteUrl && (
                 <li>
-                    <IconButton icon="external" href="#">
+                    <IconButton icon="external" href={websiteUrl}>
                         View website
                     </IconButton>
                 </li>

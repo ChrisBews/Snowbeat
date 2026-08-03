@@ -1,0 +1,28 @@
+---
+import ScreenCropFrame from '@snowbeat/components/shared/mediaFrames/ScreenCropFrame.astro';
+import TabletFrame from '@snowbeat/components/shared/mediaFrames/TabletFrame.astro';
+import RawMediaFrame from '@snowbeat/components/shared/mediaFrames/RawMediaFrame.astro';
+import PortraitPhoneFrame from '@snowbeat/components/shared/mediaFrames/PortraitPhoneFrame.astro';
+import LandscapePhoneFrame from '@snowbeat/components/shared/mediaFrames/LandscapePhoneFrame.astro';
+
+interface Props {
+    type?: ImageType;
+    caption?: string;
+}
+
+const { type = 'raw', caption } = Astro.props;
+
+const FRAME_COMPONENTS: Record<ImageType, typeof RawMediaFrame> = {
+    raw: RawMediaFrame,
+    tablet: TabletFrame,
+    'phone-landscape': LandscapePhoneFrame,
+    'phone-portrait': PortraitPhoneFrame,
+    'screen-crop': ScreenCropFrame,
+};
+
+const FrameComponent = FRAME_COMPONENTS[type];
+---
+
+<FrameComponent caption={caption}>
+    <slot />
+</FrameComponent>

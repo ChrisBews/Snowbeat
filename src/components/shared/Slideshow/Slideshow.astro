@@ -1,11 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 
-import LandscapePhoneFrame from '@snowbeat/components/shared/mediaFrames/LandscapePhoneFrame.astro';
-import PortraitPhoneFrame from '@snowbeat/components/shared/mediaFrames/PortraitPhoneFrame.astro';
-import RawMediaFrame from '@snowbeat/components/shared/mediaFrames/RawMediaFrame.astro';
-import ScreenCropFrame from '@snowbeat/components/shared/mediaFrames/ScreenCropFrame.astro';
-import TabletFrame from '@snowbeat/components/shared/mediaFrames/TabletFrame.astro';
+import MediaFrame from '@snowbeat/components/shared/mediaFrames/MediaFrame.astro';
 import SlideshowControls from './SlideshowControls.astro';
 
 interface SlideItem {
@@ -25,20 +21,6 @@ const { data = [], hasPips } = Astro.props;
 const captions: (string | undefined)[] = data.map(
     (slideItem) => slideItem.caption
 );
-
-const imageFrames = data.map((slideData) => {
-    let frameComponent = RawMediaFrame;
-    if (slideData.type === 'tablet') {
-        frameComponent = TabletFrame;
-    } else if (slideData.type === 'phone-landscape') {
-        frameComponent = LandscapePhoneFrame;
-    } else if (slideData.type === 'phone-portrait') {
-        frameComponent = PortraitPhoneFrame;
-    } else if (slideData.type === 'screen-crop') {
-        frameComponent = ScreenCropFrame;
-    }
-    return frameComponent;
-});
 ---
 
 <style>
@@ -91,23 +73,20 @@ const imageFrames = data.map((slideData) => {
     <image-slideshow class="slideshow">
         <div class="slides-wrapper">
             {
-                data.map((slideData, i) => {
-                    const FrameComponent = imageFrames[i];
-                    return (
-                        <article
-                            class={`slide ${i === 0 ? 'is-current' : ''}`}
-                            data-slide
-                            data-caption={slideData.caption}
-                        >
-                            <FrameComponent>
-                                <Image
-                                    src={slideData.src}
-                                    alt={slideData.alt ?? ''}
-                                />
-                            </FrameComponent>
-                        </article>
-                    );
-                })
+                data.map((slideData, i) => (
+                    <article
+                        class={`slide ${i === 0 ? 'is-current' : ''}`}
+                        data-slide
+                        data-caption={slideData.caption}
+                    >
+                        <MediaFrame type={slideData.type}>
+                            <Image
+                                src={slideData.src}
+                                alt={slideData.alt ?? ''}
+                            />
+                        </MediaFrame>
+                    </article>
+                ))
             }
         </div>
         <SlideshowControls
