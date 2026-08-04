@@ -80,6 +80,8 @@ const { companyLogo, companyName, startYear, endYear, roles } = Astro.props;
             alt={`{companyName} logo`}
             width="170"
             height="170"
+            loading="lazy"
+            decoding="async"
         />
     </div>
     <div class="event-details">
