@@ -1,62 +1,12 @@
 ---
+import { getCollection } from 'astro:content';
+
 import SectionTitle from '../shared/SectionTitle.astro';
 import TimelineEvent from './TimelineEvent.astro';
 
-import NationLogo from '@snowbeat/assets/images/timeline/company-logo-nation.svg';
-import DigitLogo from '@snowbeat/assets/images/timeline/company-logo-digit.svg';
-import RoliLogo from '@snowbeat/assets/images/timeline/company-logo-roli.svg';
-
-const timelineData: TimelineEventData[] = [
-    {
-        companyLogo: RoliLogo,
-        companyName: 'Luminary ROLI',
-        startYear: 2016,
-        endYear: 2026,
-        roles: [
-            {
-                position: 'Lead Software Engineer',
-                startYear: 2020,
-                endYear: 2026,
-            },
-            {
-                position: 'Senior Web Developer',
-                startYear: 2016,
-                endYear: 2020,
-            },
-        ],
-    },
-    {
-        companyLogo: NationLogo,
-        companyName: 'Nation',
-        startYear: 2009,
-        endYear: 2016,
-        roles: [
-            {
-                position: 'Lead developer',
-                startYear: 2009,
-                endYear: 2016,
-            },
-        ],
-    },
-    {
-        companyLogo: DigitLogo,
-        companyName: 'Digit',
-        startYear: 2006,
-        endYear: 2009,
-        roles: [
-            {
-                position: 'Interaction Designer',
-                startYear: 2007,
-                endYear: 2009,
-            },
-            {
-                position: 'Junior Designer',
-                startYear: 2006,
-                endYear: 2007,
-            },
-        ],
-    },
-];
+const timelineEvents = (await getCollection('timeline')).sort(
+    (a, b) => b.data.startYear - a.data.startYear
+);
 ---
 
 <style>
@@ -71,10 +21,6 @@ const timelineData: TimelineEventData[] = [
         gap: 60px;
         list-style: none;
 
-        @media (--bp-500) {
-            gap: 60px;
-        }
-
         @media (--bp-800) {
             gap: 80px;
         }
@@ -85,14 +31,14 @@ const timelineData: TimelineEventData[] = [
     <SectionTitle>Timeline</SectionTitle>
     <ol class="section-content-reduced event-list">
         {
-            timelineData.map((data) => (
+            timelineEvents.map((timelineEvent) => (
                 <li>
                     <TimelineEvent
-                        companyLogo={data.companyLogo}
-                        companyName={data.companyName}
-                        startYear={data.startYear}
-                        endYear={data.endYear}
-                        roles={data.roles}
+                        companyLogo={timelineEvent.data.companyLogo}
+                        companyName={timelineEvent.data.companyName}
+                        startYear={timelineEvent.data.startYear}
+                        endYear={timelineEvent.data.endYear}
+                        roles={timelineEvent.data.roles}
                     />
                 </li>
             ))

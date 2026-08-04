@@ -17,7 +17,7 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
         <Font cssVariable="--font-geist" />
         <Font cssVariable="--font-worksans" />
@@ -27,7 +27,7 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
         <style
             is:global
             define:vars={{
-                'header-height': `${HEADER_HEIGHT}px;`,
+                'header-height': `${HEADER_HEIGHT}px`,
                 'header-height-small': `${HEADER_HEIGHT_SMALL}px`,
                 'header-offset': `${HEADER_OFFSET}px`,
                 'header-offset-small': `${HEADER_OFFSET_SMALL}px`,
@@ -92,6 +92,10 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
                 scroll-padding-top: calc(
                     var(--header-height-small) + var(--header-offset-small) * 2
                 );
+
+                @media (prefers-reduced-motion: reduce) {
+                    scroll-behavior: auto;
+                }
 
                 @media (--bp-800) {
                     scroll-padding-top: calc(

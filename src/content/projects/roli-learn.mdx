@@ -1,8 +1,7 @@
 ---
 title: ROLI Learn
-slug: roli-learn
 type: iOS and Android app
-startDate: 01/08/2022
+startDate: 2022-08-01
 endDate: Present
 primaryImage: ../../assets/images/projects/roli-learn/project-logo.png
 technologies:
@@ -18,6 +17,7 @@ languages:
 websiteUrl: https://www.google.co.uk
 appStoreUrl: https://apps.apple.com/us/app/roli-learn-piano-lessons/id1481450834
 playStoreUrl: https://play.google.com/store/apps/details?id=com.roli.lumi
+isFeatured: true
 ---
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
@@ -28,17 +28,15 @@ import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astr
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
 import Slideshow from '@snowbeat/components/shared/Slideshow/Slideshow.astro';
 
+import introImage from '@snowbeat/assets/images/projects/roli-learn/intro-image.png';
+
 import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
 import classicViewTablet from '@snowbeat/assets/images/projects/roli-learn/classic-view-tablet.png';
 import phonePortraitImage from '@snowbeat/assets/images/projects/roli-learn/search-phone-portrait.png';
 import phoneLandscapeImage from '@snowbeat/assets/images/projects/roli-learn/home-phone-landscape.png';
 
 <OneColumn>
-    <ProjectImage
-        src={topImage}
-        type='screen-crop'
-        caption="More stuff would go here"
-    />
+    <ProjectImage src={introImage} type="raw" />
 </OneColumn>
 
 <ProjectDescription
@@ -51,6 +49,7 @@ An iOS and Android app that teaches users how to play the piano. The app is desi
 The app features [hundreds of songs to learn](https://google.co.uk), a huge number of structured guided music lessons, an AI music coach, goals to achieve, and numerous exercises and games to play.
 
 The ROLI Airwave was later integrated to support hand tracking within the app, allowing us to teach users which fingers to use for each note and flag when they use the incorrect one.
+
 </ProjectDescription>
 
 <OneColumn>
@@ -74,54 +73,28 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
         src={phoneLandscapeImage}
         type='phone-landscape'
     />
+
 </OneColumn>
 
 <ThreeColumns>
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
+    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
+    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
+    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
 </ThreeColumns>
 
 <TwoColumns>
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
+    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
+    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
 </TwoColumns>
 
-<TwoColumns arrangement='third-left'>
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
-    <ProjectImage
-        src={classicViewTablet}
-        type='tablet'
-    />
+<TwoColumns arrangement="third-left">
+    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
+    <ProjectImage src={classicViewTablet} type="tablet" />
 </TwoColumns>
 
-<TwoColumns arrangement='third-right'>
-    <ProjectImage
-        src={classicViewTablet}
-        type='tablet'
-    />
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
+<TwoColumns arrangement="third-right">
+    <ProjectImage src={classicViewTablet} type="tablet" />
+    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
 </TwoColumns>
 
 <OneColumn>
@@ -168,4 +141,5 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
             ]
         }
     />
+
 </OneColumn>

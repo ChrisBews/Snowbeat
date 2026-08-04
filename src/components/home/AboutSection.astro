@@ -38,6 +38,10 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
         height: auto;
         animation: about-logo-scroll linear;
         animation-timeline: view();
+
+        @media (prefers-reduced-motion: reduce) {
+            animation: none;
+        }
     }
 
     .content-wrapper {

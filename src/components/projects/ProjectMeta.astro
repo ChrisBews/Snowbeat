@@ -11,7 +11,8 @@ interface Props {
     languages: string[];
 }
 
-let { title, type, startDate, endDate, technologies, languages } = Astro.props;
+const { title, type, startDate, endDate, technologies, languages } =
+    Astro.props;
 
 const formattedStartDate = startDate.getFullYear().toString();
 const formattedEndDate =

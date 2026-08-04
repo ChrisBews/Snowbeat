@@ -4,14 +4,21 @@ import type { CollectionEntry } from 'astro:content';
 import ProjectListItem from './ProjectListItem.astro';
 
 interface Props {
-    isFirstItemHighlighted?: boolean;
     projects: CollectionEntry<'projects' | 'extras'>[];
     basePath: string;
 }
 
-const { isFirstItemHighlighted, projects, basePath } = Astro.props;
+const { projects, basePath } = Astro.props;
 
-const parsedProjects = isFirstItemHighlighted ? projects.slice(1) : projects;
+const featuredItemIndex = projects.findIndex(
+    (project) => project.data.isFeatured
+);
+const hasFeaturedProject = featuredItemIndex > -1;
+const featuredProject = hasFeaturedProject ? projects[featuredItemIndex] : null;
+
+const parsedProjects = hasFeaturedProject
+    ? projects.filter((project) => !project.data.isFeatured)
+    : projects;
 ---
 
 <style>
@@ -38,21 +45,21 @@ const parsedProjects = isFirstItemHighlighted ? projects.slice(1) : projects;
 
 <div>
     {
-        isFirstItemHighlighted && (
+        !!featuredProject && (
             <ProjectListItem
                 isFeatured
-                title={projects[0].data.title}
-                image={projects[0].data.primaryImage}
-                type={projects[0].data.type}
-                slug={`/${basePath}/${projects[0].id}`}
+                title={featuredProject.data.title}
+                image={featuredProject.data.primaryImage}
+                type={featuredProject.data.type}
+                slug={`/${basePath}/${featuredProject.id}`}
             />
         )
     }
     <div
-        class={`project-list-items section-content${isFirstItemHighlighted ? ' list-below-highlight' : ''}`}
+        class={`project-list-items section-content${hasFeaturedProject ? ' list-below-highlight' : ''}`}
     >
         {
-            (parsedProjects || []).map((project) => (
+            parsedProjects.map((project) => (
                 <ProjectListItem
                     title={project.data.title}
                     image={project.data.primaryImage}

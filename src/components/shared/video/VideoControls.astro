@@ -159,6 +159,10 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
             opacity 0.2s var(--anim-easing-quad-inout),
             transform 0.2s var(--anim-easing-quad-inout);
 
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+
         @media (--bp-800) {
             bottom: 40px;
             left: 40px;
@@ -469,9 +473,6 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 
         private getElementReferences = () => {
             this.overlayPlayButton = this.querySelector('.overlay-play-button');
-            if (this.controlsType === 'full') {
-                this.overlayPlayButton?.classList.add('hidden-during-play');
-            }
             this.mainControls = this.querySelector('.main-controls');
             this.progressBar = this.querySelector('.progress-bar');
             this.playButton = this.querySelector('.play-button');
@@ -543,7 +544,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
                 this.handleOverlayPress
             );
 
-            this?.addEventListener('mousemove', this.handleMouseMove);
+            this.addEventListener('mousemove', this.handleMouseMove);
 
             this.overlayPlayButton?.addEventListener(
                 'touchstart',
@@ -640,7 +641,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 
         public setVideoPlaying = (isPlaying: boolean) => {
             this.isPlaying = isPlaying;
-            this?.classList.toggle('is-playing', isPlaying);
+            this.classList.toggle('is-playing', isPlaying);
             if (!isPlaying) {
                 clearTimeout(this.inactivityTimer);
             }

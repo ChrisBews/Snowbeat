@@ -11,9 +11,5 @@ const projects = (await getCollection('projects')).sort(
 
 <section id="projects">
     <SectionTitle>Projects</SectionTitle>
-    <ProjectList
-        isFirstItemHighlighted
-        projects={projects}
-        basePath="projects"
-    />
+    <ProjectList projects={projects} basePath="projects" />
 </section>

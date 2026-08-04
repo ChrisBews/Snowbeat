@@ -48,7 +48,7 @@ const MAIN_NAV_OPTIONS = [
     };
 
     const closeMainNav = () => {
-        mainNavToggle?.removeAttribute('aria-expanded');
+        mainNavToggle?.setAttribute('aria-expanded', 'false');
         mainNavToggle?.removeAttribute('data-active');
         mainNav?.removeAttribute('data-visible');
         screenOverlay?.removeAttribute('data-visible');
@@ -242,6 +242,10 @@ const MAIN_NAV_OPTIONS = [
             z-index: 1;
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+
         @media (--bp-800) {
             display: flex;
             transform: none;
@@ -285,6 +289,10 @@ const MAIN_NAV_OPTIONS = [
         background-color: var(--color-brand-yellow);
         transition: background-color 0.15s linear;
 
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+
         &.active {
             background-color: var(--color-brand-yellow-dark);
         }
@@ -316,6 +324,10 @@ const MAIN_NAV_OPTIONS = [
         background-color: var(--color-brand-yellow);
         transition: background-color 0.15s linear;
 
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+
         @media (hover: hover) {
             &:hover {
                 background-color: var(--color-brand-yellow-dark);
@@ -342,6 +354,10 @@ const MAIN_NAV_OPTIONS = [
         border-radius: 2px;
         background-color: var(--color-brand-black);
         transition: transform 0.15s var(--anim-easing-quad-inout);
+
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
     }
 
     .menu-toggle[data-active] .menu-icon-row {

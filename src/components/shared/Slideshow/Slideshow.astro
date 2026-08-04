@@ -46,6 +46,10 @@ const captions: (string | undefined)[] = data.map(
         pointer-events: none;
         transition: opacity 0.15s var(--anim-easing-quad-inout);
 
+        @media (prefers-reduced-motion: reduce) {
+            transition: none;
+        }
+
         img {
             width: 100%;
             height: auto;
@@ -101,11 +105,13 @@ const captions: (string | undefined)[] = data.map(
     import { SlideshowEvent } from '@snowbeat/constants';
 
     class Slideshow extends HTMLElement {
+        private slideTransitionDuration = 150;
         private slideshowControls: SlideshowControlsElement | null = null;
         private slides: HTMLElement[] | null = null;
         private activeSlideIndex = 0;
         private totalSlides = 0;
         private isAnimating = false;
+        private transitionFallbackTimer: number | undefined;
 
         connectedCallback() {
             this.slides = Array.from(this.querySelectorAll('[data-slide]'));
@@ -113,8 +119,22 @@ const captions: (string | undefined)[] = data.map(
             this.slideshowControls = this.querySelector(
                 '[data-slideshow-controls]'
             ) as SlideshowControlsElement;
+            this.updateSlideTransitionDuration();
             this.prepareListeners();
         }
+
+        private updateSlideTransitionDuration = () => {
+            const defaultDuration = 150;
+            if (!this.slides?.length) {
+                this.slideTransitionDuration = defaultDuration;
+                return;
+            }
+
+            this.slideTransitionDuration =
+                parseFloat(
+                    getComputedStyle(this.slides[0]).transitionDuration
+                ) * 1000 || defaultDuration;
+        };
 
         private prepareListeners = () => {
             if (this.slideshowControls) {
@@ -146,10 +166,30 @@ const captions: (string | undefined)[] = data.map(
         };
 
         private handleNextPress = () => {
-            console.log('ok');
             const nextSlideIndex =
                 (this.activeSlideIndex + 1) % (this.totalSlides || 1);
             this.showSlide(nextSlideIndex);
+        };
+
+        private cleanupAfterSlideChange = (
+            currentSlide: HTMLElement,
+            nextSlide: HTMLElement,
+            nextSlideIndex: number
+        ) => {
+            // Already cleaned up
+            if (this.activeSlideIndex === nextSlideIndex) return;
+
+            if (this.transitionFallbackTimer) {
+                clearTimeout(this.transitionFallbackTimer);
+            }
+
+            // Next slide is faded in, so we can let the old one fade out back to it's start state now
+            currentSlide.classList.remove('is-current');
+            nextSlide.classList.remove('is-entering', 'is-visible');
+
+            nextSlide.classList.add('is-current');
+            this.activeSlideIndex = nextSlideIndex;
+            this.isAnimating = false;
         };
 
         private showSlide = (slideIndex: number) => {
@@ -186,17 +226,22 @@ const captions: (string | undefined)[] = data.map(
                                 return;
                             }
 
-                            // Next slide is faded in, so we can let the old one fade out back to it's start state now
-                            currentSlide.classList.remove('is-current');
-                            nextSlide.classList.remove(
-                                'is-entering',
-                                'is-visible'
+                            this.cleanupAfterSlideChange(
+                                currentSlide,
+                                nextSlide,
+                                slideIndex
                             );
-                            nextSlide.classList.add('is-current');
-                            this.activeSlideIndex = slideIndex;
-                            this.isAnimating = false;
                         },
                         { once: true }
+                    );
+                    this.transitionFallbackTimer = setTimeout(
+                        () =>
+                            this.cleanupAfterSlideChange(
+                                currentSlide,
+                                nextSlide,
+                                slideIndex
+                            ),
+                        this.slideTransitionDuration + 50
                     );
                 });
             });

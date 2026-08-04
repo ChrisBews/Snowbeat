@@ -1,12 +1,11 @@
 ---
 title: Tasklane
-slug: tasklane
 type: Web, iOS, and Android app
-startDate: 2022
+startDate: 2023-10-10
 endDate: Present
-primaryImage: ../../assets/images/projects/roli-learn/project-logo.png
+primaryImage: ../../assets/images/projects/tasklane/project-logo.png
 technologies:
-    - React Native
+    - React Strict DOM
     - Unity
     - JUCE
 languages:
@@ -19,19 +18,22 @@ languages:
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
 
 import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
 
-<ProjectImage
-    image={topImage}
-    type='screen-crop'
-    caption="More stuff would go here"
-/>
+<OneColumn>
+    <ProjectImage
+        src={topImage}
+        type="screen-crop"
+        caption="More stuff would go here"
+    />
+</OneColumn>
 
 <ProjectDescription
     websiteUrl={frontmatter.websiteUrl}
     appStoreUrl={frontmatter.appStoreUrl}
     playStoreUrl={frontmatter.playStoreUrl}
 >
-blah blah
+    blah blah
 </ProjectDescription>

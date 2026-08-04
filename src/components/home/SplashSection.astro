@@ -59,9 +59,13 @@ import SnowbeatIcon from '@snowbeat/assets/images/logo-icon.svg';
         z-index: 1;
         width: clamp(400px, 140svw, 1300px);
         height: auto;
-        translate: -50% -60%;
+        translate: -50% -50%;
         animation: logo-scroll;
         animation-timeline: view();
+
+        @media (prefers-reduced-motion: reduce) {
+            animation: none;
+        }
     }
 
     @media (--bp-600) {

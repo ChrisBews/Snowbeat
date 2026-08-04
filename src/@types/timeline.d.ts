@@ -5,7 +5,7 @@ interface JobRole {
 }
 
 interface TimelineEventData {
-    companyLogo: SvgComponent & ImageMetadata;
+    companyLogo: ImageMetadata;
     companyName: string;
     startYear: number;
     endYear: number;
