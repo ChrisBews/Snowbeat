@@ -23,17 +23,49 @@ isFeatured: true
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
 import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+import Slideshow from '@snowbeat/components/shared/Slideshow/Slideshow.astro';
+
 import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
-import Slideshow from '@snowbeat/components/shared/Slideshow/Slideshow.astro';
 
 import introImage from '@snowbeat/assets/images/projects/roli-learn/intro-image.png';
 
-import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
-import classicViewTablet from '@snowbeat/assets/images/projects/roli-learn/classic-view-tablet.png';
-import phonePortraitImage from '@snowbeat/assets/images/projects/roli-learn/search-phone-portrait.png';
-import phoneLandscapeImage from '@snowbeat/assets/images/projects/roli-learn/home-phone-landscape.png';
+import cascadeView from '@snowbeat/assets/images/projects/roli-learn/view-cascade.png';
+import rainbowView from '@snowbeat/assets/images/projects/roli-learn/view-rainbow.png';
+import colorNoteView from '@snowbeat/assets/images/projects/roli-learn/view-color-note.png';
+import sheetMusicView from '@snowbeat/assets/images/projects/roli-learn/view-sheet-music.png';
+
+import songTop from '@snowbeat/assets/images/projects/roli-learn/tablet-song-top.png';
+import homeScreen from '@snowbeat/assets/images/projects/roli-learn/tablet-home-screen.png';
+import phoneLesson from '@snowbeat/assets/images/projects/roli-learn/phone-lesson.png';
+import phonePortraitBrowse from '@snowbeat/assets/images/projects/roli-learn/phone-portrait-browse.png';
+import phonePortraitSearch from '@snowbeat/assets/images/projects/roli-learn/phone-portrait-search.png';
+import phonePortraitAchievements from '@snowbeat/assets/images/projects/roli-learn/phone-portrait-achievements.png';
+import phonePortraitHome from '@snowbeat/assets/images/projects/roli-learn/phone-portrait-home.png';
+import tabletHome from '@snowbeat/assets/images/projects/roli-learn/tablet-home.png';
+import assistantChat from '@snowbeat/assets/images/projects/roli-learn/tablet-assistant-chat.png';
+import tabletPracticeResults from '@snowbeat/assets/images/projects/roli-learn/tablet-practice-results.png'
+import phonePracticeResults from '@snowbeat/assets/images/projects/roli-learn/phone-practice-results.png'
+
+import setupStart from '@snowbeat/assets/images/projects/roli-learn/setup-start.png';
+import setupSelectPiano from '@snowbeat/assets/images/projects/roli-learn/setup-select-piano.png';
+import setupAdapter from '@snowbeat/assets/images/projects/roli-learn/setup-adapter.png';
+import setupTurnOn from '@snowbeat/assets/images/projects/roli-learn/setup-turn-on.png';
+import setupSuccess from '@snowbeat/assets/images/projects/roli-learn/setup-success.png';
+import setupAirwave from '@snowbeat/assets/images/projects/roli-learn/setup-airwave.png';
+import setupCalibration from '@snowbeat/assets/images/projects/roli-learn/setup-calibration.png';
+import setupSkinColor from '@snowbeat/assets/images/projects/roli-learn/setup-skin-colour.png';
+import setupComplete from '@snowbeat/assets/images/projects/roli-learn/setup-complete.png';
+
+import gameSuperluminal from '@snowbeat/assets/images/projects/roli-learn/game-superluminal.png';
+import gameSpringboard from '@snowbeat/assets/images/projects/roli-learn/game-springboard.png';
+
+import playgroundLight from '@snowbeat/assets/images/projects/roli-learn/tablet-playground-light.jpeg';
+import playgroundDark from '@snowbeat/assets/images/projects/roli-learn/tablet-playground-dark.jpeg';
+
+import videoCoachPoster from '@snowbeat/assets/images/projects/roli-learn/video-coach-poster.png';
+import videoHeroPoster from '@snowbeat/assets/images/projects/roli-learn/video-hero-poster.png';
 
 <OneColumn>
     <ProjectImage src={introImage} type="raw" />
@@ -49,97 +81,161 @@ An iOS and Android app that teaches users how to play the piano. The app is desi
 The app features [hundreds of songs to learn](https://google.co.uk), a huge number of structured guided music lessons, an AI music coach, goals to achieve, and numerous exercises and games to play.
 
 The ROLI Airwave was later integrated to support hand tracking within the app, allowing us to teach users which fingers to use for each note and flag when they use the incorrect one.
-
 </ProjectDescription>
 
 <OneColumn>
-    <ProjectImage
-        src={topImage}
+    <ProjectVideo
+        src='/media/projects/roli-learn/video-hero.mp4'
         type='raw'
-        caption='Testing stuff here'
+        controlsType='full'
+        caption='Intro to ROLI Learn'
+        poster={videoHeroPoster}
+        shouldPreload
     />
-
-    <ProjectImage
-        src={classicViewTablet}
-        type='tablet'
-    />
-
-    <ProjectImage
-        src={phonePortraitImage}
-        type='phone-portrait'
-    />
-
-    <ProjectImage
-        src={phoneLandscapeImage}
-        type='phone-landscape'
-    />
-
 </OneColumn>
 
-<ThreeColumns>
-    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
-    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
-    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
-</ThreeColumns>
-
-<TwoColumns>
-    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
-    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
-</TwoColumns>
-
 <TwoColumns arrangement="third-left">
-    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
-    <ProjectImage src={classicViewTablet} type="tablet" />
-</TwoColumns>
-
-<TwoColumns arrangement="third-right">
-    <ProjectImage src={classicViewTablet} type="tablet" />
-    <ProjectImage src={phonePortraitImage} type="phone-portrait" />
+    <ProjectImage src={phonePortraitHome} type="phone-portrait" />
+    <ProjectImage src={tabletHome} type="tablet" />
 </TwoColumns>
 
 <OneColumn>
+    <ProjectImage
+        src={homeScreen}
+        type='tablet'
+    />
+
     <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
+        src='/media/projects/roli-learn/loading-portrait.mp4'
+        type='phone-portrait'
+        caption='Animated loading spinner'
         isLooping
-        isMuted
         isAutoPlaying
-        type='phone-portrait'
+        isMuted
     />
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='simple'
-    />
-
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='full'
-        caption='Song settings UI animations'
+    <ProjectImage
+        src={songTop}
+        type='raw'
     />
 
     <Slideshow
-        hasPips
         data = {
             [
                 {
-                    src: classicViewTablet,
+                    src: cascadeView,
                     type: 'tablet',
-                    caption: 'Caption 1'
+                    caption: 'Playing a song in cascade view'
                 },
                 {
-                    src: phonePortraitImage,
-                    type: 'phone-portrait',
-                    caption: 'Caption 2'
+                    src: rainbowView,
+                    type: 'tablet',
+                    caption: 'Rainbow view'
                 },
                 {
-                    src: topImage,
+                    src: colorNoteView,
                     type: 'tablet',
-                    caption: 'Caption 3'
+                    caption: 'Color note view'
+                },
+                {
+                    src: sheetMusicView,
+                    type: 'tablet',
+                    caption: 'Classic view'
                 },
             ]
         }
     />
 
+    <ProjectImage
+        src={phoneLesson}
+        type='phone-landscape'
+    />
+</OneColumn>
+
+<ThreeColumns>
+    <ProjectImage src={phonePortraitBrowse} type="phone-portrait" />
+    <ProjectImage src={phonePortraitAchievements} type="phone-portrait" />
+    <ProjectImage src={phonePortraitSearch} type="phone-portrait" />
+</ThreeColumns>
+
+<OneColumn>
+    <Slideshow
+        hasPips
+        data = {
+            [
+                {
+                    src: setupStart,
+                    type: 'tablet',
+                    caption: "Some of the onboarding flow",
+                },
+                {
+                    src: setupSelectPiano,
+                    type: 'tablet',
+                },
+                {
+                    src: setupAdapter,
+                    type: 'tablet',
+                },
+                {
+                    src: setupTurnOn,
+                    type: 'tablet',
+                },
+                {
+                    src: setupAirwave,
+                    type: 'tablet',
+                },
+                {
+                    src: setupCalibration,
+                    type: 'tablet',
+                },
+                {
+                    src: setupSkinColor,
+                    type: 'tablet',
+                },
+                {
+                    src: setupComplete,
+                    type: 'tablet',
+                },
+                {
+                    src: setupSuccess,
+                    type: 'tablet',
+                },
+            ]
+        }
+    />
+</OneColumn>
+
+<OneColumn>
+    <ProjectVideo
+        src='/media/projects/roli-learn/video-coach.mp4'
+        type='raw'
+        controlsType='full'
+        caption='How the AI Piano Coach works'
+        poster={videoCoachPoster}
+    />
+    <ProjectImage src={assistantChat} type='raw' />
+    <ProjectImage src={gameSuperluminal} type='raw' />
+    <ProjectImage src={gameSpringboard} type='raw' />
+</OneColumn>
+
+<OneColumn>
+    <ProjectImage src={tabletPracticeResults} type="tablet" />
+    <ProjectImage src={phonePracticeResults} type="phone-landscape" />
+
+    <Slideshow
+        data = {
+            [
+                {
+                    src: playgroundLight,
+                    type: 'tablet',
+                    caption: 'Playground in light mode'
+                },
+                {
+                    src: playgroundDark,
+                    type: 'tablet',
+                    caption: 'Playground in dark mode'
+                },
+            ]
+        }
+    />
 </OneColumn>

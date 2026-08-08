@@ -12,6 +12,8 @@ interface Props {
     isLooping?: boolean;
     isAutoPlaying?: boolean;
     controlsType?: VideoControlsType;
+    poster?: ImageMetadata;
+    shouldPreload?: boolean;
 }
 
 const {
@@ -22,7 +24,12 @@ const {
     isLooping,
     isAutoPlaying,
     controlsType = 'none',
+    poster,
+    shouldPreload,
 } = Astro.props;
+
+const videoPreloadValue =
+    isAutoPlaying || shouldPreload ? 'auto' : poster ? 'none' : 'metadata';
 ---
 
 <style>
@@ -31,6 +38,7 @@ const {
         display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
         width: 100%;
         border-radius: 8px;
         overflow: hidden;
@@ -60,7 +68,10 @@ const {
 </style>
 
 <video-player class="project-video" data-controls-type={controlsType}>
-    <MediaFrame type={type}>
+    <MediaFrame
+        type={type}
+        caption={controlsType === 'none' ? caption : undefined}
+    >
         <video
             src={src}
             loop={isLooping}
@@ -68,7 +79,8 @@ const {
             autoplay={isAutoPlaying}
             playsinline
             class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
-        ></video>
+            poster={poster?.src}
+            preload={videoPreloadValue}></video>
     </MediaFrame>
     {
         ['full', 'simple'].includes(controlsType) && (

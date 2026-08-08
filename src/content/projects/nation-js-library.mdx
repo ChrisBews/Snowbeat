@@ -1,0 +1,45 @@
+---
+title: Nation JavaScript library
+type: Code library
+startDate: 2010-08-01
+endDate: 2016-08-01
+primaryImage: ../../assets/images/projects/nation-js-library/project-logo.png
+languages:
+    - JavaScript
+    - CSS
+    - HTML
+---
+
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+
+import introImage from '@snowbeat/assets/images/projects/nation-js-library/intro-image.png';
+import slideshowExample from '@snowbeat/assets/images/projects/nation-js-library/slideshow-docs-example.png';
+import animationLib from '@snowbeat/assets/images/projects/nation-js-library/animation-lib.png';
+
+<OneColumn>
+    <ProjectImage src={introImage} type="screen-crop" />
+</OneColumn>
+
+<ProjectDescription websiteUrl={frontmatter.websiteUrl}>
+    At Nation we took pride in our websites being efficient and fast loading, but large third party libraries have to cover a wide range of use cases, which invariably lead to bloat and code being loaded that would never be used.
+    
+    My solution was to create a central library of code for our most common use cases, which did what we needed and little more. This library was a little more hands on, in that you created the HTML and CSS that the library classes hooked into. This approach resulted in minimal code being loaded, and time to first paint being very low.
+
+    The library contained a number of different classes, such as accordions, custom dropdowns, infinite scroll functionality, slideshows, and video players. Each was simple to set up and use, and documentaiton was provided with examples to ensure everyone could onboard as quickly as possible.
+
+    An animation library was also included, which had two modes - one to prioritise CSS transitions and use JavaScript animations as a fallback for properties that required it, and another that simply used JavaScript for everything. Both modes were visually identical, but while CSS was optimal for performance, sometimes JavaScript mode was required depending on what was being animated, for example WebGL animations, and in which environment it was being run in.
+
+</ProjectDescription>
+
+<OneColumn>
+    <ProjectImage
+        src={animationLib}
+        type="raw"
+        caption="Animation library examples"
+    />
+    <ProjectImage src={slideshowExample} type="raw" />
+</OneColumn>

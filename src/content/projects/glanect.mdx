@@ -1,0 +1,66 @@
+---
+title: Glanect
+type: Website
+startDate: 2022-12-01
+endDate: Present
+primaryImage: ../../assets/images/projects/glanect/project-logo.png
+technologies:
+    - Affinity Designer
+languages:
+    - JavaScript
+    - CSS
+    - HTML
+websiteUrl: https://www.glanect.com
+---
+
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
+
+import introImage from '@snowbeat/assets/images/projects/glanect/intro-image.png';
+import desktopContactForm from '@snowbeat/assets/images/projects/glanect/desktop-contact-form.png';
+import desktopWebsite from '@snowbeat/assets/images/projects/glanect/website-desktop.png';
+import phoneWebsiteSection1 from '@snowbeat/assets/images/projects/glanect/phone-portrait-website-section-1.png';
+import phoneWebsiteSection2 from '@snowbeat/assets/images/projects/glanect/phone-portrait-website-section-2.png';
+import phoneWebsiteSection3 from '@snowbeat/assets/images/projects/glanect/phone-portrait-website-section-3.png';
+import websiteIcons from '@snowbeat/assets/images/projects/glanect/website-icons.png';
+import icons from '@snowbeat/assets/images/projects/glanect/icons.png';
+
+<OneColumn>
+    <ProjectImage src={introImage} type="screen-crop" />
+</OneColumn>
+
+<ProjectDescription websiteUrl={frontmatter.websiteUrl}>
+    A one-page website created to support a business consultancy. This simple site is intended as a first point of contact for potential clients to the young business.
+
+    The website is back to basics, written with pure HTML and CSS, with a small amount of JavaScript to support the mobile menu, the contact form, and the parallax effect in the header.
+
+    Accompanying materials included various Powerpoint presentations, business cards, and various graphic assets.
+
+</ProjectDescription>
+
+<OneColumn>
+    <ProjectImage src={desktopContactForm} type="tablet" />
+    <ProjectVideo
+        src='/media/projects/glanect/menu-toggle.mp4'
+        isLooping
+        isMuted
+        isAutoPlaying
+        type='phone-portrait'
+    />
+
+    <ProjectImage src={icons} type="raw" />
+
+    <ProjectImage src={desktopWebsite} type="raw" />
+
+</OneColumn>
+
+<ThreeColumns>
+    <ProjectImage src={phoneWebsiteSection1} type="phone-portrait" />
+    <ProjectImage src={phoneWebsiteSection2} type="phone-portrait" />
+    <ProjectImage src={phoneWebsiteSection3} type="phone-portrait" />
+</ThreeColumns>

@@ -1,0 +1,49 @@
+---
+title: ROLI.com
+type: Website
+startDate: 2017-08-01
+endDate: 2024-08-01
+primaryImage: ../../assets/images/projects/roli-web/project-logo.png
+technologies:
+    - React Native
+    - Unity
+    - JUCE
+languages:
+    - TypeScript
+    - Littlefoot
+    - C++
+---
+
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+
+import introImage from '@snowbeat/assets/images/projects/roli-learn/intro-image.png';
+
+<OneColumn>
+    <ProjectImage src={introImage} type="raw" />
+
+    <ProjectVideo
+        src='/media/projects/roli-play/song-settings.mp4'
+        isLooping
+        isMuted
+        isAutoPlaying
+        type='phone-portrait'
+    />
+
+    <ProjectVideo
+        src='/media/projects/roli-play/song-settings.mp4'
+        type='phone-portrait'
+        controlsType='simple'
+    />
+
+    <ProjectVideo
+        src='/media/projects/roli-play/song-settings.mp4'
+        type='phone-portrait'
+        controlsType='full'
+        caption='Song settings UI animations'
+    />
+
+</OneColumn>

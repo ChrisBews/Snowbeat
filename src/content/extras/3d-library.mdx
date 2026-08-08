@@ -2,8 +2,7 @@
 title: 3D Library
 type: Web, iOS, and Android app
 startDate: 2019-05-01
-endDate: 2019-05-01
-primaryImage: ../../assets/images/projects/roli-learn/project-logo.png
+primaryImage: ../../assets/images/extras/3d-library/project-logo.png
 technologies:
     - WebGL
 languages:
@@ -11,4 +10,43 @@ languages:
 websiteUrl: https://www.google.co.uk
 ---
 
-blah blah
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+
+import fullScene from '@snowbeat/assets/images/extras/3d-library/full-scene.png';
+import fullScene2 from '@snowbeat/assets/images/extras/3d-library/full-scene-2.png';
+import fullScene3 from '@snowbeat/assets/images/extras/3d-library/full-scene-3.png';
+import sceneFromBelow from '@snowbeat/assets/images/extras/3d-library/scene-from-below.png';
+import shapes from '@snowbeat/assets/images/extras/3d-library/shapes.png';
+import sphere from '@snowbeat/assets/images/extras/3d-library/sphere.png';
+import codeExample from '@snowbeat/assets/images/extras/3d-library/code-example.png';
+import codeExample2 from '@snowbeat/assets/images/extras/3d-library/code-example-2.png';
+import codeExample3 from '@snowbeat/assets/images/extras/3d-library/code-example-3.png';
+
+<OneColumn>
+    <ProjectImage src={fullScene} type="screen-crop" />
+</OneColumn>
+
+<ProjectDescription websiteUrl={frontmatter.websiteUrl}>
+    This project was the result of an effort to learn raw WebGL. To do so, I decided to make my own code library, with the intention being that I would learn a lot in the process, but would then have my own abstraction over it by the end of the project.
+
+    This library, which I called Oomph3D, covered quite a lot of the basics, and perhaps a little more. It supported the concept of scenes, to which you could easily add lights, and there was a selection of camera types: FollowCamera, FreeCamera, LookAtCamera, PerspectiveCamera, and ProjectionCamera.
+
+    There were a number of premade shape primitives, such as cubes, cylinders, planes, spheres, and an F shape, that latter of which I believe was in reference to a WebGL tutorial. Each could be assigned a texture or a flat colour.
+
+    It also had it's own custom made animation system which could animate a variety of properties over time and with a variety of easing functions. Animations could even be sequenced on a "timeline", which would allow for more complex animations to take place.
+
+</ProjectDescription>
+
+<OneColumn>
+    <ProjectImage src={sceneFromBelow} type="raw" />
+    <ProjectImage src={fullScene2} type="raw" />
+    <ProjectImage src={shapes} type="raw" />
+    <ProjectImage src={fullScene3} type="raw" />
+    <ProjectImage src={sphere} type="raw" />
+    <ProjectImage src={codeExample} type="tablet" />
+    <ProjectImage src={codeExample2} type="tablet" />
+    <ProjectImage src={codeExample3} type="tablet" />
+</OneColumn>

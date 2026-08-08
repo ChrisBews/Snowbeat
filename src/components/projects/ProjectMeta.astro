@@ -6,9 +6,9 @@ interface Props {
     title: string;
     type: string;
     startDate: Date;
-    endDate: Date | 'Present';
-    technologies: string[];
-    languages: string[];
+    endDate?: Date | 'Present';
+    technologies?: string[];
+    languages?: string[];
 }
 
 const { title, type, startDate, endDate, technologies, languages } =
@@ -16,7 +16,11 @@ const { title, type, startDate, endDate, technologies, languages } =
 
 const formattedStartDate = startDate.getFullYear().toString();
 const formattedEndDate =
-    endDate === 'Present' ? 'Present' : endDate.getFullYear().toString();
+    endDate === 'Present'
+        ? 'Present'
+        : endDate
+          ? endDate.getFullYear().toString()
+          : null;
 ---
 
 <style>
@@ -52,14 +56,22 @@ const formattedEndDate =
         <h2>{title}</h2>
         <div class="project-stats">
             <ProjectMetaStat name="Years active">
-                {formattedStartDate} - {formattedEndDate}
+                {formattedStartDate}{endDate ? `- ${formattedEndDate}` : ''}
             </ProjectMetaStat>
-            <ProjectMetaStat name="Technologies"
-                >{technologies.join(', ')}</ProjectMetaStat
-            >
-            <ProjectMetaStat name="Languages"
-                >{languages.join(', ')}</ProjectMetaStat
-            >
+            {
+                !!technologies && (
+                    <ProjectMetaStat name="Technologies">
+                        {technologies.join(', ')}
+                    </ProjectMetaStat>
+                )
+            }
+            {
+                !!languages && (
+                    <ProjectMetaStat name="Languages">
+                        {languages.join(', ')}
+                    </ProjectMetaStat>
+                )
+            }
         </div>
     </div>
 </div>

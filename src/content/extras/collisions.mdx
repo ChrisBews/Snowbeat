@@ -1,0 +1,96 @@
+---
+title: Collisions
+type: Web, iOS, and Android app
+startDate: 2016-05-01
+endDate: 2016-05-01
+primaryImage: ../../assets/images/extras/collisions/project-logo.png
+languages:
+    - JavaScript
+    - CSS
+    - HTML
+websiteUrl: https://www.google.co.uk
+---
+
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+import Slideshow from '@snowbeat/components/shared/Slideshow/Slideshow.astro';
+
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
+
+import collisionModels from '@snowbeat/assets/images/extras/collisions/collision-models.png';
+import collisionImpact from '@snowbeat/assets/images/extras/collisions/collisions-impact.png';
+import collisionGround1 from '@snowbeat/assets/images/extras/collisions/collisions-ground-1.png';
+import collisionGround2 from '@snowbeat/assets/images/extras/collisions/collisions-ground-2.png';
+import collisionGround3 from '@snowbeat/assets/images/extras/collisions/collisions-ground-3.png';
+import collisionGround4 from '@snowbeat/assets/images/extras/collisions/collisions-ground-4.png';
+import collisionGround5 from '@snowbeat/assets/images/extras/collisions/collisions-ground-5.png';
+import phonePortrait1 from '@snowbeat/assets/images/extras/collisions/phone-portrait-1.png';
+import phonePortrait2 from '@snowbeat/assets/images/extras/collisions/phone-portrait-2.png';
+import phonePortrait3 from '@snowbeat/assets/images/extras/collisions/phone-portrait-3.png';
+
+import phoneLandscape1 from '@snowbeat/assets/images/extras/collisions/phone-landscape-1.png';
+import phoneLandscape3 from '@snowbeat/assets/images/extras/collisions/phone-landscape-3.png';
+
+import collisionsCompare1 from '@snowbeat/assets/images/extras/collisions/collisions-compare-1.png';
+import collisionsCompare2 from '@snowbeat/assets/images/extras/collisions/collisions-compare-2.png';
+
+<OneColumn>
+    <ProjectVideo
+        src="/media/extras/collisions/collisions-demo-2.mp4"
+        type="raw"
+        controlsType="full"
+        isMuted
+    />
+</OneColumn>
+
+<ProjectDescription websiteUrl={frontmatter.websiteUrl}>
+    At Nation we were building a website for an audio production agency, and the design we came up with had these shapes in the background throughout.
+
+    The challenge here was to make them move around and collide with each other. This eventually grew into randomised shapes and randomised ground for them to collide with. This didn't use any code libraries and was built from the ground up in pure JavaScript.
+
+    I later created this mini-app for Nation's own website to demonstrate what I had built, and added a rendering mode that allowed the user to see the actual collision models being used by the code.
+
+    The squares around each shape are where the engine switches to more intense collision detection methods when another shape enters that area. When these squares overlap, the engine checks the actual shape points and if they are overlapping, otherwise shapes are just checked against their bounding box.
+
+</ProjectDescription>
+
+<OneColumn>
+    <Slideshow
+        data = {
+            [
+                {
+                    src: collisionsCompare1,
+                    type: 'screen-crop',
+                    caption: 'The full render users see'
+                },
+                {
+                    src: collisionsCompare2,
+                    type: 'screen-crop',
+                    caption: 'The collision models for that same scene'
+                },
+            ]
+        }
+    />
+
+    <ProjectImage src={collisionModels} type="screen-crop" />
+    <ProjectImage src={collisionImpact} type="raw" caption="Shapes radiate outwards when they collide" />
+    <ProjectImage src={collisionGround1} type="raw" caption="The ground is generated with a combination of straight lines and curves" />
+
+</OneColumn>
+
+<ThreeColumns>
+    <ProjectImage src={phonePortrait1} type="phone-portrait" />
+    <ProjectImage src={phonePortrait3} type="phone-portrait" />
+    <ProjectImage src={phonePortrait2} type="phone-portrait" />
+</ThreeColumns>
+
+<OneColumn>
+    <ProjectImage src={collisionGround2} type="raw" />
+    <ProjectImage src={collisionGround3} type="tablet" />
+    <ProjectImage src={collisionGround4} type="raw" />
+    <ProjectImage src={phoneLandscape1} type="phone-landscape" />
+    <ProjectImage src={phoneLandscape3} type="phone-landscape" />
+    <ProjectImage src={collisionGround5} type="raw" />
+</OneColumn>

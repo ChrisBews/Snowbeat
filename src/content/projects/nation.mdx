@@ -1,0 +1,77 @@
+---
+title: Nation
+type: Website
+startDate: 2014-08-01
+endDate: 2016-07-01
+primaryImage: ../../assets/images/projects/nation/project-logo.png
+technologies:
+    - React Native
+    - Unity
+    - JUCE
+languages:
+    - TypeScript
+    - Littlefoot
+    - C++
+---
+
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
+
+import introImage from '@snowbeat/assets/images/projects/nation/intro-image.png';
+import workPage from '@snowbeat/assets/images/projects/nation/page-work.png';
+import projectPage from '@snowbeat/assets/images/projects/nation/page-project.png';
+import aboutPage from '@snowbeat/assets/images/projects/nation/page-about.png';
+import careersPage from '@snowbeat/assets/images/projects/nation/page-careers.png';
+import contactPage from '@snowbeat/assets/images/projects/nation/page-contact.png';
+
+import phoneHome from '@snowbeat/assets/images/projects/nation/phone-portrait-home.png';
+import phoneWork from '@snowbeat/assets/images/projects/nation/phone-portrait-work.png';
+import phoneCareers from '@snowbeat/assets/images/projects/nation/phone-portrait-careers.png';
+
+<OneColumn>
+    <ProjectImage src={introImage} type="screen-crop" />
+</OneColumn>
+
+<ProjectDescription websiteUrl={frontmatter.websiteUrl}>
+    At Nation we took pride in our websites being efficient and fast loading,
+    but large third party libraries have to cover a wide range of use cases,
+    which invariably lead to bloat and code being loaded that would never be
+    used.
+</ProjectDescription>
+
+<OneColumn>
+    <ProjectVideo
+        src='/media/projects/nation/mobile-menu.mp4'
+        isLooping
+        isMuted
+        isAutoPlaying
+        type='phone-portrait'
+    />
+
+    <ProjectVideo
+        src='/media/projects/nation/site-animations.mp4'
+        isMuted
+        controlsType='full'
+        type='screen-crop'
+    />
+
+    <ProjectImage src={workPage} type="raw" />
+    <ProjectImage src={projectPage} type="raw" />
+
+</OneColumn>
+
+<ThreeColumns>
+    <ProjectImage src={phoneHome} type="phone-portrait" />
+    <ProjectImage src={phoneCareers} type="phone-portrait" />
+    <ProjectImage src={phoneWork} type="phone-portrait" />
+</ThreeColumns>
+
+<OneColumn>
+    <ProjectImage src={aboutPage} type="raw" />
+    <ProjectImage src={careersPage} type="raw" />
+    <ProjectImage src={contactPage} type="raw" />
+</OneColumn>

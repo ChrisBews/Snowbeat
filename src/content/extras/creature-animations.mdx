@@ -1,0 +1,55 @@
+---
+title: Creature animations
+type: Hand drawn animation
+startDate: 2020-10-01
+primaryImage: ../../assets/images/extras/creature-animations/project-logo.png
+technologies:
+    - Clip Studio Paint
+---
+
+import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
+import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
+import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+
+import snailOnionSkin from '@snowbeat/assets/images/extras/creature-animations/snail-onion-skin.png';
+import horseOnionSkin from '@snowbeat/assets/images/extras/creature-animations/horse-onion-skin.png';
+import horseTimeline from '@snowbeat/assets/images/extras/creature-animations/horse-timeline.png';
+import snailTimeline from '@snowbeat/assets/images/extras/creature-animations/snail-timeline.png';
+import horseFrames from '@snowbeat/assets/images/extras/creature-animations/horse-frames.png';
+import snailFrames from '@snowbeat/assets/images/extras/creature-animations/snail-frames.png';
+
+<OneColumn>
+    <ProjectVideo
+        src="/media/extras/creature-animations/horse-anim.mp4"
+        type="raw"
+        isLooping
+        isMuted
+        isAutoPlaying
+    />
+
+    <ProjectVideo
+        src="/media/extras/creature-animations/snail-anim.mp4"
+        type="raw"
+        isLooping
+        isMuted
+        isAutoPlaying
+    />
+
+</OneColumn>
+
+<ProjectDescription websiteUrl={frontmatter.websiteUrl}>
+    I realised I hadn't tried to do any hand drawn animation for several years, so I decided to do a couple of "walk" cycles in an effort to revive those skills.
+
+    These creatures are actually from an older version of the Snowbeat website which featured a slighly surreal farming theme mixing 3D renders and 2D drawings.
+
+    These are animated at 24fps in Clip Studio Paint on a Surface Book 2, whereas previously I would have used Flash / Adobe Animate and a graphics tablet, so there was definitely a learning curve there.
+
+</ProjectDescription>
+
+<OneColumn>
+    <ProjectImage src={snailOnionSkin} type="raw" />
+    <ProjectImage src={snailFrames} type="raw" />
+    <ProjectImage src={horseOnionSkin} type="raw" />
+    <ProjectImage src={horseFrames} type="raw" />
+</OneColumn>

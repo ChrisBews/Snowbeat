@@ -1,33 +1,54 @@
 ---
 title: Tasklane
 type: Web, iOS, and Android app
-startDate: 2023-10-10
+startDate: 2024-01-12
 endDate: Present
 primaryImage: ../../assets/images/projects/tasklane/project-logo.png
 technologies:
     - React Strict DOM
-    - Unity
-    - JUCE
+    - StyleX
+    - Node
+    - Microsoft Azure
+    - Firebase Messaging
+    - Affinity Designer 2
+    - Figma
 languages:
     - TypeScript
-    - Littlefoot
-    - Java
-    - Objective-C
-    - C++
+    - JavaScript
+    - CSS
+    - HTML
+appStoreUrl: https://apps.apple.com/gb/app/tasklane/id6462827587
+playStoreUrl: https://play.google.com/store/apps/details?id=com.tasklanetechnology.tasklane.app
 ---
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 
-import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.png';
+import desktopDashboard from '@snowbeat/assets/images/projects/tasklane/desktop-dashboard.png';
+import desktopDocuments from '@snowbeat/assets/images/projects/tasklane/desktop-documents.png';
+import desktopChecklistFailed from '@snowbeat/assets/images/projects/tasklane/desktop-checklist-failed.png';
+import desktopNotificationsDiscussion from '@snowbeat/assets/images/projects/tasklane/desktop-noticeboard-discussion.png';
+import desktopCalendarPayments from '@snowbeat/assets/images/projects/tasklane/desktop-calendar-payments.png';
+import desktopCalendarOccupancy from '@snowbeat/assets/images/projects/tasklane/desktop-calendar-occupancy.png';
+
+import tabletTickets from '@snowbeat/assets/images/projects/tasklane/tablet-tickets.png';
+import tabletChecklists from '@snowbeat/assets/images/projects/tasklane/tablet-checklists.png';
+
+import phoneDocumentsThumbs from '@snowbeat/assets/images/projects/tasklane/phone-documents-thumbs.png';
+import phoneDocumentsList from '@snowbeat/assets/images/projects/tasklane/phone-documents-list.png';
+import phoneMenu from '@snowbeat/assets/images/projects/tasklane/phone-menu.png';
+import phoneNotifications from '@snowbeat/assets/images/projects/tasklane/phone-notifications.png';
+import phoneReminders from '@snowbeat/assets/images/projects/tasklane/phone-reminders.png';
+
+import appIcon from '@snowbeat/assets/images/projects/tasklane/app-icon.png';
+import browserTabIcon from '@snowbeat/assets/images/projects/tasklane/browser-tab-icon.png';
+import tasklaneLogo from '@snowbeat/assets/images/projects/tasklane/tasklane-logo.png';
 
 <OneColumn>
-    <ProjectImage
-        src={topImage}
-        type="screen-crop"
-        caption="More stuff would go here"
-    />
+    <ProjectImage src={desktopDashboard} type="screen-crop" />
 </OneColumn>
 
 <ProjectDescription
@@ -35,5 +56,46 @@ import topImage from '@snowbeat/assets/images/projects/roli-learn/project-logo.p
     appStoreUrl={frontmatter.appStoreUrl}
     playStoreUrl={frontmatter.playStoreUrl}
 >
-    blah blah
+    Tasklane is a property management platform accessible from the web, and is available as both an iOS and Android app.
+
+    The platform acts as a central hub for property managers to oversee and track their business. It includes a full ticketing system, checklists, messaging, tenancy management, document storage, and a calendar function to track job statuses and building occupancy.
+
+    Tasklane supports different access levels, allowing property managers, contractors, and tenants to all use the same platform.
+
 </ProjectDescription>
+
+<OneColumn>
+    <ProjectImage src={tasklaneLogo} type="raw" />
+</OneColumn>
+
+<TwoColumns>
+    <ProjectImage src={appIcon} type="raw" caption="App icon" />
+    <ProjectImage src={browserTabIcon} type="raw" caption="Browser tab icon" />
+</TwoColumns>
+
+<OneColumn>
+    <ProjectImage src={tabletChecklists} type="tablet" />
+    <ProjectImage src={desktopChecklistFailed} type="screen-crop" />
+    <ProjectImage src={desktopDocuments} type="screen-crop" />
+    <ProjectImage src={tabletTickets} type="tablet" />
+</OneColumn>
+
+<TwoColumns>
+    <ProjectImage src={phoneDocumentsThumbs} type="phone-portrait" />
+    <ProjectImage src={phoneDocumentsList} type="phone-portrait" />
+</TwoColumns>
+
+<OneColumn>
+    <ProjectImage src={desktopNotificationsDiscussion} type="screen-crop" />
+</OneColumn>
+
+<ThreeColumns>
+    <ProjectImage src={phoneMenu} type="phone-portrait" />
+    <ProjectImage src={phoneNotifications} type="phone-portrait" />
+    <ProjectImage src={phoneReminders} type="phone-portrait" />
+</ThreeColumns>
+
+<OneColumn>
+    <ProjectImage src={desktopCalendarPayments} type="screen-crop" />
+    <ProjectImage src={desktopCalendarOccupancy} type="screen-crop" />
+</OneColumn>
