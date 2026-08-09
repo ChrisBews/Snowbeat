@@ -17,33 +17,73 @@ languages:
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
 import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
+import Slideshow from '@snowbeat/components/shared/Slideshow/Slideshow.astro';
 
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 
-import introImage from '@snowbeat/assets/images/projects/roli-learn/intro-image.png';
+import introImage from '@snowbeat/assets/images/projects/roli-connect/intro-image.png';
+import signedOut from '@snowbeat/assets/images/projects/roli-connect/signed-out.png';
+
+import onboarding1 from '@snowbeat/assets/images/projects/roli-connect/onboarding-1.png';
+import onboarding2 from '@snowbeat/assets/images/projects/roli-connect/onboarding-2.png';
+import onboarding3 from '@snowbeat/assets/images/projects/roli-connect/onboarding-3.png';
+import onboarding4 from '@snowbeat/assets/images/projects/roli-connect/onboarding-4.png';
+import onboarding5 from '@snowbeat/assets/images/projects/roli-connect/onboarding-5.png';
+import onboarding6 from '@snowbeat/assets/images/projects/roli-connect/onboarding-6.png';
+
+import tabDemos from '@snowbeat/assets/images/projects/roli-connect/tab-demos.png';
+import tabLearn from '@snowbeat/assets/images/projects/roli-connect/tab-learn.png';
+import tabSoftware from '@snowbeat/assets/images/projects/roli-connect/tab-software.png';
+import tabSounds from '@snowbeat/assets/images/projects/roli-connect/tab-sounds.png';
+import createAccount from '@snowbeat/assets/images/projects/roli-connect/create-account.png';
+import getStartedPlaceholder from '@snowbeat/assets/images/projects/roli-connect/get-started-placeholder.png';
+import uiAnimsPlaceholder from '@snowbeat/assets/images/projects/roli-connect/ui-anims-placeholder.png';
+import onboardingPlaceholder from '@snowbeat/assets/images/projects/roli-connect/onboarding-placeholder.png';
 
 <OneColumn>
     <ProjectImage src={introImage} type="raw" />
-
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        isLooping
-        isMuted
-        isAutoPlaying
-        type='phone-portrait'
-    />
-
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='simple'
-    />
-
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='full'
-        caption='Song settings UI animations'
-    />
-
 </OneColumn>
+
+<ProjectDescription>
+    At Nation we were building a website for an audio production agency, and the
+    design we came up with had these shapes in the background throughout.
+</ProjectDescription>
+
+<ThreeColumns>
+    <ProjectImage src={signedOut} type="raw" />
+    <ProjectImage src={onboarding1} type="raw" />
+    <ProjectVideo
+        src='/media/projects/roli-connect/ui-anims.mp4'
+        isMuted
+        type='raw'
+        controlsType='simple'
+        poster={uiAnimsPlaceholder}
+    />
+
+</ThreeColumns>
+
+<OneColumn>
+    <ProjectVideo
+        src="/media/projects/roli-connect/get-started.mp4"
+        type="raw"
+        controlsType="full"
+        poster={getStartedPlaceholder}
+    />
+</OneColumn>
+
+<ThreeColumns>
+    <ProjectImage src={createAccount} type="raw" />
+    <ProjectVideo
+        src='/media/projects/roli-connect/onboarding.mp4'
+        isMuted
+        type='raw'
+        controlsType='simple'
+        poster={onboardingPlaceholder}
+    />
+    <ProjectImage src={tabDemos} type="raw" />
+    <ProjectImage src={tabSoftware} type="raw" />
+    <ProjectImage src={tabLearn} type="raw" />
+    <ProjectImage src={tabSounds} type="raw" />
+
+</ThreeColumns>

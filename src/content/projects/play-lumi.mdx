@@ -3,7 +3,7 @@ title: Play LUMI
 type: Website
 startDate: 2021-08-01
 endDate: 2024-08-01
-primaryImage: ../../assets/images/projects/play-lumi/project-logo5.png
+primaryImage: ../../assets/images/projects/play-lumi/project-logo.png
 technologies:
     - React Native
     - Unity
@@ -16,34 +16,41 @@ languages:
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
-import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
 
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 
-import introImage from '@snowbeat/assets/images/projects/roli-learn/intro-image.png';
+import introImage from '@snowbeat/assets/images/projects/play-lumi/intro-image.png';
+
+import pageHome from '@snowbeat/assets/images/projects/play-lumi/page-home.png';
+import pageLibrary from '@snowbeat/assets/images/projects/play-lumi/page-library.png';
+import pageLumiKeys from '@snowbeat/assets/images/projects/play-lumi/page-lumi-keys.png';
+
+import phonePortraitHome from '@snowbeat/assets/images/projects/play-lumi/phone-portrait-home.png';
+import phonePortraitLearning from '@snowbeat/assets/images/projects/play-lumi/phone-portrait-learning.png';
+import phonePortraitKeys from '@snowbeat/assets/images/projects/play-lumi/phone-portrait-smaller-keys.png';
 
 <OneColumn>
-    <ProjectImage src={introImage} type="raw" />
+    <ProjectImage src={introImage} type="screen-crop" />
+</OneColumn>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        isLooping
-        isMuted
-        isAutoPlaying
-        type='phone-portrait'
-    />
+<ProjectDescription>
+    At Nation we were building a website for an audio production agency, and the
+    design we came up with had these shapes in the background throughout.
+</ProjectDescription>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='simple'
-    />
+<OneColumn>
+    <ProjectImage src={pageHome} type="raw" />
+</OneColumn>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='full'
-        caption='Song settings UI animations'
-    />
+<ThreeColumns>
+    <ProjectImage src={phonePortraitHome} type="phone-portrait" />
+    <ProjectImage src={phonePortraitLearning} type="phone-portrait" />
+    <ProjectImage src={phonePortraitKeys} type="phone-portrait" />
+</ThreeColumns>
 
+<OneColumn>
+    <ProjectImage src={pageLibrary} type="raw" />
+    <ProjectImage src={pageLumiKeys} type="raw" />
 </OneColumn>

@@ -16,34 +16,56 @@ languages:
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
-import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
 
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 
-import introImage from '@snowbeat/assets/images/projects/roli-learn/intro-image.png';
+import introImage from '@snowbeat/assets/images/projects/noise-fm/intro-image.png';
+import pageHome from '@snowbeat/assets/images/projects/noise-fm/page-home.png';
+import pageProject from '@snowbeat/assets/images/projects/noise-fm/page-project.png';
+import pageFeatures from '@snowbeat/assets/images/projects/noise-fm/page-features.png';
+import pageHomeFeaturedArtist from '@snowbeat/assets/images/projects/noise-fm/page-home-featured-artist.png';
+
+import trackPlayer from '@snowbeat/assets/images/projects/noise-fm/track-player.png';
+import sectionDiscover from '@snowbeat/assets/images/projects/noise-fm/section-discover.png';
+import sectionCreate from '@snowbeat/assets/images/projects/noise-fm/section-create.png';
+
+import phonePortraitSplash from '@snowbeat/assets/images/projects/noise-fm/phone-portrait-splash.png';
+import phonePortraitHome from '@snowbeat/assets/images/projects/noise-fm/phone-portrait-home.png';
+import phonePortraitFeatures from '@snowbeat/assets/images/projects/noise-fm/phone-portrait-features.png';
 
 <OneColumn>
-    <ProjectImage src={introImage} type="raw" />
+    <ProjectImage src={introImage} type="screen-crop" />
+</OneColumn>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        isLooping
-        isMuted
-        isAutoPlaying
-        type='phone-portrait'
-    />
+<ProjectDescription websiteUrl={frontmatter.websiteUrl}>
+    At Nation we took pride in our websites being efficient and fast loading,
+    but large third party libraries have to cover a wide range of use cases,
+    which invariably lead to bloat and code being loaded that would never be
+    used.
+</ProjectDescription>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='simple'
-    />
+<OneColumn>
+    <ProjectImage src={pageHome} type="raw" />
+</OneColumn>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='full'
-        caption='Song settings UI animations'
-    />
+<ThreeColumns>
+    <ProjectImage src={phonePortraitSplash} type="phone-portrait" />
+    <ProjectImage src={phonePortraitFeatures} type="phone-portrait" />
+    <ProjectImage src={phonePortraitHome} type="phone-portrait" />
+</ThreeColumns>
+
+<OneColumn>
+    <ProjectImage src={pageProject} type="raw" />
+
+    <ProjectImage src={trackPlayer} type="screen-crop" />
+
+    <ProjectImage src={sectionDiscover} type="raw" />
+
+    <ProjectImage src={sectionCreate} type="raw" />
+
+    <ProjectImage src={pageFeatures} type="screen-crop" />
+
+    <ProjectImage src={pageHomeFeaturedArtist} type="raw" />
 
 </OneColumn>

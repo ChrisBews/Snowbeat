@@ -16,34 +16,55 @@ languages:
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
 import ProjectImage from '@snowbeat/components/projects/ProjectImage.astro';
-import ProjectVideo from '@snowbeat/components/projects/ProjectVideo.astro';
 
 import OneColumn from '@snowbeat/components/shared/imageLayouts/OneColumn.astro';
+import TwoColumns from '@snowbeat/components/shared/imageLayouts/TwoColumns.astro';
+import ThreeColumns from '@snowbeat/components/shared/imageLayouts/ThreeColumns.astro';
 
-import introImage from '@snowbeat/assets/images/projects/roli-learn/intro-image.png';
+import introImage from '@snowbeat/assets/images/projects/roli-web/intro-image.png';
+
+import pageHome from '@snowbeat/assets/images/projects/roli-web/page-home.png';
+import pageCategoryBlocks from '@snowbeat/assets/images/projects/roli-web/page-product-category-blocks.png';
+import pageCategorySeaboard from '@snowbeat/assets/images/projects/roli-web/page-product-category-seaboard.png';
+import pageCategorySoftware from '@snowbeat/assets/images/projects/roli-web/page-product-category-software.png';
+import pageProductSeaboardBlock from '@snowbeat/assets/images/projects/roli-web/page-product-seaboard-block.png';
+
+import phonePortraitDetails from '@snowbeat/assets/images/projects/roli-web/phone-portrait-product-details.png';
+import phonePortraitProductsRelated from '@snowbeat/assets/images/projects/roli-web/phone-portrait-products-related.png';
+import phonePortraitSeaboardBlock from '@snowbeat/assets/images/projects/roli-web/phone-portrait-product-seaboard-block.png';
+import phonePortraitBlocksExpand from '@snowbeat/assets/images/projects/roli-web/phone-portrait-blocks-expand.png';
+import phonePortraitEquator from '@snowbeat/assets/images/projects/roli-web/phone-portrait-equator.png';
 
 <OneColumn>
-    <ProjectImage src={introImage} type="raw" />
+    <ProjectImage src={introImage} type="screen-crop" />
+</OneColumn>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        isLooping
-        isMuted
-        isAutoPlaying
-        type='phone-portrait'
-    />
+<ProjectDescription>
+    At Nation we were building a website for an audio production agency, and the
+    design we came up with had these shapes in the background throughout.
+</ProjectDescription>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='simple'
-    />
+<OneColumn>
+    <ProjectImage src={pageHome} type="raw" />
+</OneColumn>
 
-    <ProjectVideo
-        src='/media/projects/roli-play/song-settings.mp4'
-        type='phone-portrait'
-        controlsType='full'
-        caption='Song settings UI animations'
-    />
+<ThreeColumns>
+    <ProjectImage src={phonePortraitSeaboardBlock} type="phone-portrait" />
+    <ProjectImage src={phonePortraitProductsRelated} type="phone-portrait" />
+    <ProjectImage src={phonePortraitDetails} type="phone-portrait" />
+</ThreeColumns>
 
+<OneColumn>
+    <ProjectImage src={pageCategoryBlocks} type="raw" />
+    <ProjectImage src={pageCategorySeaboard} type="raw" />
+</OneColumn>
+
+<TwoColumns>
+    <ProjectImage src={phonePortraitBlocksExpand} type="phone-portrait" />
+    <ProjectImage src={phonePortraitEquator} type="phone-portrait" />
+</TwoColumns>
+
+<OneColumn>
+    <ProjectImage src={pageCategorySoftware} type="raw" />
+    <ProjectImage src={pageProductSeaboardBlock} type="raw" />
 </OneColumn>
