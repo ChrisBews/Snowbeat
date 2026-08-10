@@ -5,13 +5,14 @@ startDate: 2016-08-01
 endDate: 2024-08-01
 primaryImage: ../../assets/images/projects/noise-fm/project-logo.png
 technologies:
-    - React Native
-    - Unity
-    - JUCE
+    - React
+    - Redux
+    - React Router
+    - Webpack
 languages:
-    - TypeScript
-    - Littlefoot
-    - C++
+    - JavaScript
+    - CSS (Stylus)
+    - HTML
 ---
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
@@ -39,10 +40,12 @@ import phonePortraitFeatures from '@snowbeat/assets/images/projects/noise-fm/pho
 </OneColumn>
 
 <ProjectDescription websiteUrl={frontmatter.websiteUrl}>
-    At Nation we took pride in our websites being efficient and fast loading,
-    but large third party libraries have to cover a wide range of use cases,
-    which invariably lead to bloat and code being loaded that would never be
-    used.
+    Noise.fm was a website that was built to accompany the launch of the ROLI Lightpad Block, an MPE touch surface with LEDs to indicate functionality, and ROLI's NOISE iOS app.
+
+    Users of the NOISE app were able to create music on their phone using their Lightpad Block, and then they could share that music in the app, which would upload their music and associated details to be shown on the Noise.fm website. Other users could then browse the website and listen to what app users had created. They could also "fork" tracks that other users had made and then remix or modify them, as the MIDI data itself was uploaded alongside the audio clip.
+
+    The site allowed users to listen to a sample of the music through it's built in music player while they browsed and left likes and comments on songs they enjoyed. It also showed what hardware was used to create each track.
+
 </ProjectDescription>
 
 <OneColumn>

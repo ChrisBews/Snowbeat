@@ -5,13 +5,14 @@ startDate: 2021-08-01
 endDate: Present
 primaryImage: ../../assets/images/projects/roli-connect/project-logo.png
 technologies:
-    - React Native
-    - Unity
-    - JUCE
+    - Electron
+    - React
+    - MobX
+    - Webpack
 languages:
-    - TypeScript
-    - Littlefoot
-    - C++
+    - JavaScript
+    - CSS (Sass)
+    - HTML
 ---
 
 import ProjectDescription from '@snowbeat/components/projects/ProjectDescription.astro';
@@ -46,21 +47,37 @@ import onboardingPlaceholder from '@snowbeat/assets/images/projects/roli-connect
 </OneColumn>
 
 <ProjectDescription>
-    At Nation we were building a website for an audio production agency, and the
-    design we came up with had these shapes in the background throughout.
+    ROLI Connect is a desktop taskbar application that allows a user to
+    authenticate, and then browse and install the software that they own
+    licenses to. It also features a number of other functions, such as
+    installing soundpacks for ROLI's various synths, learning about their
+    hardware products, and registering ROLI hardware to their account.
+
+    The app also installed the ROLI Hardware Driver, which makes it easier for ROLI software to communicate with ROLI hardware and vice versa.
+
+    On this project I was primarily responsible for implementing the UI and associated animations.
+
 </ProjectDescription>
 
 <ThreeColumns>
     <ProjectImage src={signedOut} type="raw" />
-    <ProjectImage src={onboarding1} type="raw" />
     <ProjectVideo
-        src='/media/projects/roli-connect/ui-anims.mp4'
+        src="/media/projects/roli-connect/connect-loader.mp4"
         isMuted
-        type='raw'
-        controlsType='simple'
+        isLooping
+        isAutoPlaying
+        type="raw"
+    />
+    <ProjectVideo
+        src="/media/projects/roli-connect/ui-anims.mp4"
+        isMuted
+        type="raw"
+        controlsType="simple"
         poster={uiAnimsPlaceholder}
     />
-
+    <ProjectImage src={onboarding1} type="raw" />
+    <ProjectImage src={onboarding2} type="raw" />
+    <ProjectImage src={onboarding4} type="raw" />
 </ThreeColumns>
 
 <OneColumn>

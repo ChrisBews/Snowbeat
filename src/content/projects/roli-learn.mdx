@@ -45,8 +45,8 @@ import phonePortraitAchievements from '@snowbeat/assets/images/projects/roli-lea
 import phonePortraitHome from '@snowbeat/assets/images/projects/roli-learn/phone-portrait-home.png';
 import tabletHome from '@snowbeat/assets/images/projects/roli-learn/tablet-home.png';
 import assistantChat from '@snowbeat/assets/images/projects/roli-learn/tablet-assistant-chat.png';
-import tabletPracticeResults from '@snowbeat/assets/images/projects/roli-learn/tablet-practice-results.png'
-import phonePracticeResults from '@snowbeat/assets/images/projects/roli-learn/phone-practice-results.png'
+import tabletPracticeResults from '@snowbeat/assets/images/projects/roli-learn/tablet-practice-results.png';
+import phonePracticeResults from '@snowbeat/assets/images/projects/roli-learn/phone-practice-results.png';
 
 import setupStart from '@snowbeat/assets/images/projects/roli-learn/setup-start.png';
 import setupSelectPiano from '@snowbeat/assets/images/projects/roli-learn/setup-select-piano.png';
@@ -72,7 +72,6 @@ import videoHeroPoster from '@snowbeat/assets/images/projects/roli-learn/video-h
 </OneColumn>
 
 <ProjectDescription
-    websiteUrl={frontmatter.websiteUrl}
     appStoreUrl={frontmatter.appStoreUrl}
     playStoreUrl={frontmatter.playStoreUrl}
 >
@@ -81,14 +80,17 @@ An iOS and Android app that teaches users how to play the piano. The app is desi
 The app features [hundreds of songs to learn](https://google.co.uk), a huge number of structured guided music lessons, an AI music coach, goals to achieve, and numerous exercises and games to play.
 
 The ROLI Airwave was later integrated to support hand tracking within the app, allowing us to teach users which fingers to use for each note and flag when they use the incorrect one.
+
+This project was a team effort. I was primarily responsible for the React Native layer, and later the CI/devops work. I also jumped into the C++ layer here and there as needed.
+
 </ProjectDescription>
 
 <OneColumn>
     <ProjectVideo
-        src='/media/projects/roli-learn/video-hero.mp4'
-        type='raw'
-        controlsType='full'
-        caption='Intro to ROLI Learn'
+        src="/media/projects/roli-learn/video-hero.mp4"
+        type="raw"
+        controlsType="full"
+        caption="Intro to ROLI Learn"
         poster={videoHeroPoster}
         shouldPreload
     />
@@ -150,6 +152,7 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
         src={phoneLesson}
         type='phone-landscape'
     />
+
 </OneColumn>
 
 <ThreeColumns>
@@ -161,61 +164,59 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
 <OneColumn>
     <Slideshow
         hasPips
-        data = {
-            [
-                {
-                    src: setupStart,
-                    type: 'tablet',
-                    caption: "Some of the onboarding flow",
-                },
-                {
-                    src: setupSelectPiano,
-                    type: 'tablet',
-                },
-                {
-                    src: setupAdapter,
-                    type: 'tablet',
-                },
-                {
-                    src: setupTurnOn,
-                    type: 'tablet',
-                },
-                {
-                    src: setupAirwave,
-                    type: 'tablet',
-                },
-                {
-                    src: setupCalibration,
-                    type: 'tablet',
-                },
-                {
-                    src: setupSkinColor,
-                    type: 'tablet',
-                },
-                {
-                    src: setupComplete,
-                    type: 'tablet',
-                },
-                {
-                    src: setupSuccess,
-                    type: 'tablet',
-                },
-            ]
-        }
+        data={[
+            {
+                src: setupStart,
+                type: 'tablet',
+                caption: 'Some of the onboarding flow',
+            },
+            {
+                src: setupSelectPiano,
+                type: 'tablet',
+            },
+            {
+                src: setupAdapter,
+                type: 'tablet',
+            },
+            {
+                src: setupTurnOn,
+                type: 'tablet',
+            },
+            {
+                src: setupAirwave,
+                type: 'tablet',
+            },
+            {
+                src: setupCalibration,
+                type: 'tablet',
+            },
+            {
+                src: setupSkinColor,
+                type: 'tablet',
+            },
+            {
+                src: setupComplete,
+                type: 'tablet',
+            },
+            {
+                src: setupSuccess,
+                type: 'tablet',
+            },
+        ]}
     />
 </OneColumn>
 
 <OneColumn>
     <ProjectVideo
-        src='/media/projects/roli-learn/video-coach.mp4'
-        type='raw'
-        controlsType='full'
-        caption='How the AI Piano Coach works'
+        src="/media/projects/roli-learn/video-coach.mp4"
+        type="raw"
+        controlsType="full"
+        caption="How the AI Piano Coach works"
         poster={videoCoachPoster}
     />
-    <ProjectImage src={assistantChat} type='raw' />
-    <ProjectImage src={gameSuperluminal} type='raw' />
-    <ProjectImage src={gameSpringboard} type='raw' />
+    <ProjectImage src={assistantChat} type="raw" />
+    <ProjectImage src={gameSuperluminal} type="raw" />
+    <ProjectImage src={gameSpringboard} type="raw" />
 </OneColumn>
 
 <OneColumn>
@@ -238,4 +239,5 @@ The ROLI Airwave was later integrated to support hand tracking within the app, a
             ]
         }
     />
+
 </OneColumn>
