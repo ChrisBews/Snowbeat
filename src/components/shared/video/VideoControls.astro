@@ -558,12 +558,15 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
             if (this.inactivityTimer) {
                 clearTimeout(this.inactivityTimer);
             }
-            this.inactivityTimer = setTimeout(this.hide, this.INACTIVITY_DELAY);
+            this.inactivityTimer = window.setTimeout(
+                this.hide,
+                this.INACTIVITY_DELAY
+            );
         };
 
         private handleProgressTouchStart = () => {
             if (this.inactivityTimer) {
-                clearTimeout(this.inactivityTimer);
+                window.clearTimeout(this.inactivityTimer);
             }
         };
 
@@ -643,7 +646,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
             this.isPlaying = isPlaying;
             this.classList.toggle('is-playing', isPlaying);
             if (!isPlaying) {
-                clearTimeout(this.inactivityTimer);
+                window.clearTimeout(this.inactivityTimer);
             }
             if (isPlaying && ['simple', 'full'].includes(this.controlsType)) {
                 this.restartMouseMoveTimer();

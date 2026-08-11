@@ -3,7 +3,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default [
     {
-        ignores: ['public/**'],
+        ignores: ['public/**', 'dist/**', '.astro/**'],
     },
     ...eslintPluginAstro.configs.recommended,
     eslintConfigPrettier,

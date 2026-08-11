@@ -4,6 +4,8 @@ export const HEADER_HEIGHT_SMALL = 67;
 export const HEADER_OFFSET_SMALL = 10;
 export const GITHUB_URL = 'https://github.com/ChrisBews';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/chrisbews/';
+export const DEFAULT_SITE_DESCRIPTION =
+    'The home of developer Christopher Bews';
 
 export enum VideoPlayerEvent {
     PLAY_PRESS = 'play-press',

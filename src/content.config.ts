@@ -27,7 +27,9 @@ const extras = defineCollection({
             title: z.string(),
             type: z.string(),
             startDate: z.coerce.date(),
-            endDate: z.optional(z.union([z.literal('Present'), z.coerce.date()])),
+            endDate: z.optional(
+                z.union([z.literal('Present'), z.coerce.date()])
+            ),
             primaryImage: image(),
             technologies: z.optional(z.array(z.string())),
             languages: z.optional(z.array(z.string())),

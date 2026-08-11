@@ -1,11 +1,22 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
-
+import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-    integrations: [mdx()],
+    integrations: [
+        mdx(),
+        sitemap({
+            namespaces: {
+                news: false,
+                xhtml: false,
+                image: false,
+                video: false,
+            },
+        }),
+    ],
+    site: 'https://snowbeat.uk',
     fonts: [
         {
             provider: fontProviders.local(),

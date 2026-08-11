@@ -15,10 +15,10 @@
         "prettier:check": "npx prettier .",
         "prettier:fix": "npx prettier . --write"
     },
-    "dependencies": {},
     "devDependencies": {
         "@astrojs/check": "^0.9.9",
         "@astrojs/mdx": "7.0.3",
+        "@astrojs/sitemap": "^3.7.3",
         "@csstools/postcss-global-data": "^4.0.0",
         "@typescript-eslint/parser": "^8.65.0",
         "astro": "7.1.3",

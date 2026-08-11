@@ -179,7 +179,7 @@ const captions: (string | undefined)[] = data.map(
             if (this.activeSlideIndex === nextSlideIndex) return;
 
             if (this.transitionFallbackTimer) {
-                clearTimeout(this.transitionFallbackTimer);
+                window.clearTimeout(this.transitionFallbackTimer);
             }
 
             // Next slide is faded in, so we can let the old one fade out back to it's start state now
@@ -233,7 +233,7 @@ const captions: (string | undefined)[] = data.map(
                         },
                         { once: true }
                     );
-                    this.transitionFallbackTimer = setTimeout(
+                    this.transitionFallbackTimer = window.setTimeout(
                         () =>
                             this.cleanupAfterSlideChange(
                                 currentSlide,

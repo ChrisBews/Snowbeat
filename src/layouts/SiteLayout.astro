@@ -6,10 +6,22 @@ import {
     HEADER_OFFSET,
     HEADER_OFFSET_SMALL,
     HEADER_HEIGHT_SMALL,
+    DEFAULT_SITE_DESCRIPTION,
 } from '@snowbeat/constants';
 
 import SiteHeader from '@snowbeat/components/global/SiteHeader.astro';
 import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
+
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const { title = 'Snowbeat', description = DEFAULT_SITE_DESCRIPTION } =
+    Astro.props;
+const siteUrl = Astro.site ?? new URL('https://snowbeat.uk');
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+const ogImageUrl = new URL('/og-image.png', siteUrl);
 ---
 
 <html lang="en">
@@ -17,11 +29,30 @@ import SiteFooter from '@snowbeat/components/global/SiteFooter.astro';
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="canonical" href={canonicalUrl} />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="generator" content={Astro.generator} />
+        <meta name="description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Snowbeat" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImageUrl} />
+
         <Font cssVariable="--font-geist" />
         <Font cssVariable="--font-worksans" />
-        <title>Snowbeat</title>
+        <title>{title}</title>
     </head>
     <body>
         <style
