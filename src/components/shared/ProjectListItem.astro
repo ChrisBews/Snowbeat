@@ -22,6 +22,7 @@ const { slug, title, image, type, isFeatured } = Astro.props;
     .content-wrapper {
         display: block;
         text-decoration: none;
+        overflow: hidden;
     }
 
     h2 {
@@ -58,6 +59,13 @@ const { slug, title, image, type, isFeatured } = Astro.props;
     .main-image {
         width: 100%;
         height: auto;
+        transition: scale 0.6s var(--anim-easing-quad-inout);
+    }
+
+    @media (pointer: fine) {
+        .content-wrapper:hover .main-image {
+            scale: 1.025;
+        }
     }
 </style>
 
@@ -73,7 +81,7 @@ const { slug, title, image, type, isFeatured } = Astro.props;
                 decoding={isFeatured ? 'sync' : 'async'}
                 fetchpriority={isFeatured ? 'high' : 'auto'}
             />
-            <ImageCaption>{type}</ImageCaption>
+            <ImageCaption isThumbnail={!isFeatured}>{type}</ImageCaption>
         </figure>
     </a>
 </article>

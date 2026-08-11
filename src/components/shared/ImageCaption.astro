@@ -1,19 +1,33 @@
 ---
 import HighlightText from './HighlightText.astro';
+
+interface Props {
+    isThumbnail?: boolean;
+}
+
+const { isThumbnail } = Astro.props;
+
+const indent = isThumbnail ? 20 : 32;
+const smallIndent = isThumbnail ? 16 : 20;
 ---
 
-<style>
+<style
+    define:vars={{
+        indent: `${indent}px`,
+        'small-indent': `${smallIndent}px`,
+    }}
+>
     .image-caption {
         position: absolute;
-        bottom: 20px;
-        right: 20px;
-        left: 20px;
+        bottom: var(--small-indent);
+        right: var(--small-indent);
+        left: var(--small-indent);
         text-align: right;
 
         @media (--bp-800) {
-            bottom: 32px;
-            right: 32px;
-            left: 32px;
+            bottom: var(--indent);
+            right: var(--indent);
+            left: var(--indent);
         }
     }
 
