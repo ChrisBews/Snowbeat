@@ -32,7 +32,7 @@ const { Content } = await render(project);
     }
 </style>
 
-<SiteLayout title="Projects · Snowbeat">
+<SiteLayout title={`${project.data.title} · Snowbeat`}>
     <PrimaryImage
         image={project.data.primaryImage}
         alt={`${project.data.title} logo`}

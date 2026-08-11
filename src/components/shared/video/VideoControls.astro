@@ -556,7 +556,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
             if (!['simple', 'full'].includes(this.controlsType)) return;
 
             if (this.inactivityTimer) {
-                clearTimeout(this.inactivityTimer);
+                window.clearTimeout(this.inactivityTimer);
             }
             this.inactivityTimer = window.setTimeout(
                 this.hide,

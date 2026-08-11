@@ -14,6 +14,8 @@ interface Props {
     controlsType?: VideoControlsType;
     poster?: ImageMetadata;
     shouldPreload?: boolean;
+    width?: number;
+    height?: number;
 }
 
 const {
@@ -26,6 +28,8 @@ const {
     controlsType = 'none',
     poster,
     shouldPreload,
+    width,
+    height,
 } = Astro.props;
 
 const videoPreloadValue =
@@ -80,7 +84,9 @@ const videoPreloadValue =
             playsinline
             class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
             poster={poster?.src}
-            preload={videoPreloadValue}></video>
+            preload={videoPreloadValue}
+            width={width}
+            height={height}></video>
     </MediaFrame>
     {
         ['full', 'simple'].includes(controlsType) && (
