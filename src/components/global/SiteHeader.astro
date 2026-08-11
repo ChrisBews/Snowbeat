@@ -34,73 +34,6 @@ const MAIN_NAV_OPTIONS = [
 ];
 ---
 
-<script>
-    const mainNavToggle = document.querySelector('.menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
-    const mainNavOptions = document.querySelectorAll('.main-nav-item');
-    const screenOverlay = document.querySelector('.screen-overlay');
-
-    const openMainNav = () => {
-        mainNavToggle?.setAttribute('aria-expanded', 'true');
-        mainNavToggle?.setAttribute('data-active', 'true');
-        mainNav?.setAttribute('data-visible', 'true');
-        screenOverlay?.setAttribute('data-visible', 'true');
-    };
-
-    const closeMainNav = () => {
-        mainNavToggle?.setAttribute('aria-expanded', 'false');
-        mainNavToggle?.removeAttribute('data-active');
-        mainNav?.removeAttribute('data-visible');
-        screenOverlay?.removeAttribute('data-visible');
-    };
-
-    const toggleMainNavVisiblility = () => {
-        const isVisible = !mainNav?.hasAttribute('data-visible');
-
-        if (isVisible) {
-            openMainNav();
-        } else {
-            closeMainNav();
-        }
-    };
-
-    screenOverlay?.addEventListener('click', () => {
-        toggleMainNavVisiblility();
-    });
-
-    mainNavToggle?.addEventListener('click', () => {
-        toggleMainNavVisiblility();
-    });
-
-    mainNavOptions?.forEach((navOption) => {
-        navOption.addEventListener('click', closeMainNav);
-    });
-
-    // Handle issue where scaling the browser down to mobile layout
-    // would show the main nav animating into it's hidden position
-    const MOBILE_NAV_BREAKPOINT = 800;
-    let wasDesktop = window.innerWidth >= MOBILE_NAV_BREAKPOINT;
-
-    const observer = new ResizeObserver((entries) => {
-        const width = entries[0].contentRect.width;
-        const isDesktop = width >= MOBILE_NAV_BREAKPOINT;
-
-        if (isDesktop !== wasDesktop) {
-            // Use the no-transition class to force the nav into it's hidden position instantly
-            mainNav?.classList.add('no-transition');
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    // Remove the class after layout has properly updated
-                    mainNav?.classList.remove('no-transition');
-                });
-            });
-            wasDesktop = isDesktop;
-        }
-    });
-
-    observer.observe(document.body);
-</script>
-
 <style
     define:vars={{
         'header-offset': `${HEADER_OFFSET}px`,
@@ -419,3 +352,70 @@ const MAIN_NAV_OPTIONS = [
         </div>
     </div>
 </header>
+
+<script>
+    const mainNavToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const mainNavOptions = document.querySelectorAll('.main-nav-item');
+    const screenOverlay = document.querySelector('.screen-overlay');
+
+    const openMainNav = () => {
+        mainNavToggle?.setAttribute('aria-expanded', 'true');
+        mainNavToggle?.setAttribute('data-active', 'true');
+        mainNav?.setAttribute('data-visible', 'true');
+        screenOverlay?.setAttribute('data-visible', 'true');
+    };
+
+    const closeMainNav = () => {
+        mainNavToggle?.setAttribute('aria-expanded', 'false');
+        mainNavToggle?.removeAttribute('data-active');
+        mainNav?.removeAttribute('data-visible');
+        screenOverlay?.removeAttribute('data-visible');
+    };
+
+    const toggleMainNavVisiblility = () => {
+        const isVisible = !mainNav?.hasAttribute('data-visible');
+
+        if (isVisible) {
+            openMainNav();
+        } else {
+            closeMainNav();
+        }
+    };
+
+    screenOverlay?.addEventListener('click', () => {
+        toggleMainNavVisiblility();
+    });
+
+    mainNavToggle?.addEventListener('click', () => {
+        toggleMainNavVisiblility();
+    });
+
+    mainNavOptions?.forEach((navOption) => {
+        navOption.addEventListener('click', closeMainNav);
+    });
+
+    // Handle issue where scaling the browser down to mobile layout
+    // would show the main nav animating into it's hidden position
+    const MOBILE_NAV_BREAKPOINT = 800;
+    let wasDesktop = window.innerWidth >= MOBILE_NAV_BREAKPOINT;
+
+    const observer = new ResizeObserver((entries) => {
+        const width = entries[0].contentRect.width;
+        const isDesktop = width >= MOBILE_NAV_BREAKPOINT;
+
+        if (isDesktop !== wasDesktop) {
+            // Use the no-transition class to force the nav into it's hidden position instantly
+            mainNav?.classList.add('no-transition');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // Remove the class after layout has properly updated
+                    mainNav?.classList.remove('no-transition');
+                });
+            });
+            wasDesktop = isDesktop;
+        }
+    });
+
+    observer.observe(document.body);
+</script>
