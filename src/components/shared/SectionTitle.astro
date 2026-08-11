@@ -1,11 +1,22 @@
 ---
+interface Props {
+    hasNoTopPadding?: boolean;
+    hasNoBottomPadding?: boolean;
+}
 
+const { hasNoTopPadding, hasNoBottomPadding } = Astro.props;
 ---
 
-<style>
+<style
+    define:vars={{
+        'padding-top': hasNoTopPadding ? 0 : '3rem',
+        'padding-bottom': hasNoBottomPadding ? 0 : '3rem',
+    }}
+>
     h2 {
         font-size: var(--font-size-700);
-        padding-block: 3rem;
+        padding-top: var(--padding-top);
+        padding-bottom: var(--padding-bottom);
         text-align: center;
     }
 </style>

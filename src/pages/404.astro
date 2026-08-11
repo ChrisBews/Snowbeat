@@ -1,0 +1,115 @@
+---
+import {
+    HEADER_HEIGHT,
+    HEADER_OFFSET,
+    HEADER_OFFSET_SMALL,
+    HEADER_HEIGHT_SMALL,
+} from '@snowbeat/constants';
+
+import SiteLayout from '@snowbeat/layouts/SiteLayout.astro';
+import SectionTitle from '@snowbeat/components/shared/SectionTitle.astro';
+import HighlightText from '@snowbeat/components/shared/HighlightText.astro';
+import IconButton from '@snowbeat/components/shared/IconButton.astro';
+
+const topPadding = HEADER_OFFSET + HEADER_HEIGHT + 60;
+const topPaddingSmall = HEADER_OFFSET_SMALL + HEADER_HEIGHT_SMALL + 40;
+---
+
+<style
+    define:vars={{
+        'top-padding': `${topPadding}px`,
+        'top-padding-small': `${topPaddingSmall}px`,
+    }}
+>
+    .error-section {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 80svh;
+        padding-top: var(--top-padding-small);
+        padding-bottom: 20px;
+        background-color: var(--color-brand-grey-mid);
+
+        @media (--bp-600) {
+            padding-bottom: 30px;
+        }
+
+        @media (--bp-800) {
+            padding-top: var(--top-padding);
+            padding-bottom: 50px;
+        }
+    }
+
+    .title-wrapper {
+        padding-top: 8px;
+    }
+
+    .error-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .error-copy {
+        padding-top: 20px;
+        padding-bottom: 32px;
+        color: var(--color-brand-black);
+        text-align: center;
+
+        @media (--bp-600) {
+            padding-top: 32px;
+        }
+    }
+
+    .error-copy :global(p) {
+        padding-bottom: 40px;
+
+        &:last-child {
+            padding-bottom: 0;
+        }
+    }
+
+    .button-wrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+</style>
+
+<SiteLayout
+    title="Page not found · Snowbeat"
+    description="This page doesn't exist."
+>
+    <section class="error-section">
+        <div class="section-content error-content">
+            <HighlightText>Oh that's not good</HighlightText>
+            <div class="title-wrapper">
+                <SectionTitle hasNoTopPadding hasNoBottomPadding
+                    >Page not found</SectionTitle
+                >
+            </div>
+            <div class="section-content-reduced error-copy">
+                <p>
+                    The page you were looking for isn't here. It's not you, it's
+                    me. Probably.
+                </p>
+                <p>
+                    Use the site navigation above to find a page that does
+                    exist, or click the button below to go to the homepage and
+                    start from there.
+                </p>
+                <div class="button-wrapper">
+                    <IconButton
+                        icon="external"
+                        href="https://snowbeat.uk"
+                        target="_self"
+                    >
+                        View the homepage
+                    </IconButton>
+                </div>
+            </div>
+        </div>
+    </section>
+</SiteLayout>
