@@ -22,6 +22,20 @@ interface HTMLElementEventMap {
 
 type VideoControlsType = 'none' | 'simple' | 'full';
 
+interface VideoPlayerProps {
+    src: string;
+    type?: ImageType;
+    caption?: string;
+    isMuted?: boolean;
+    isLooping?: boolean;
+    isAutoPlaying?: boolean;
+    controlsType?: VideoControlsType;
+    poster?: ImageMetadata;
+    shouldPreload?: boolean;
+    width?: number;
+    height?: number;
+}
+
 interface HTMLVideoElement {
     webkitEnterFullScreen?: () => void;
     webkitExitFullScreen?: () => void;
