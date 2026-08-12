@@ -101,13 +101,14 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
         align-items: center;
         width: 62px;
         aspect-ratio: 1;
-        border-radius: 12px;
+        border-radius: 8px;
         overflow: clip;
         transition: background-color 0.15s linear;
         background-color: var(--color-brand-yellow);
 
         @media (--bp-600) {
             width: 102px;
+            border-radius: 12px;
         }
     }
 
@@ -229,6 +230,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 
         @media (--bp-600) {
             width: 32px;
+            border-width: 0 12px;
         }
     }
 
