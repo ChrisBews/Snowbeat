@@ -541,12 +541,6 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
             );
 
             this.progressBar?.addEventListener(
-                'touchmove',
-                this.handleProgressTouchMove,
-                { passive: false } // Make sure we can actually call preventDefault in the handler
-            );
-
-            this.progressBar?.addEventListener(
                 'touchend',
                 this.handleProgressTouchEnd
             );
@@ -584,10 +578,6 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 
         private handleProgressTouchEnd = () => {
             this.restartMouseMoveTimer();
-        };
-
-        private handleProgressTouchMove = (event: TouchEvent) => {
-            event.preventDefault();
         };
 
         private handleMouseMove = () => {
