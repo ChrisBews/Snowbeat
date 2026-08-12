@@ -451,6 +451,7 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
 
     class VideoControls extends HTMLElement implements VideoControlsElement {
         private INACTIVITY_DELAY = 2000;
+        private DEFAULT_PROGRESS_BAR_THUMB_SIZE = 22;
         private progressBar: HTMLInputElement | null = null;
         private playButton: HTMLButtonElement | null = null;
         private volumeButton: HTMLButtonElement | null = null;
@@ -461,7 +462,8 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
         private isPlaying: boolean = false;
         private isAutoPlaying: boolean = false;
         private inactivityTimer: number = 0;
-        private progressBarThumbSize: number = 22;
+        private progressBarThumbSize: number =
+            this.DEFAULT_PROGRESS_BAR_THUMB_SIZE;
 
         connectedCallback() {
             this.controlsType = this.getAttribute(
@@ -501,9 +503,11 @@ const { controlsType, isInitiallyMuted, isAutoPlaying, caption } = Astro.props;
                         '--thumb-size'
                     ),
                     10
-                ) || 22;
+                ) || this.DEFAULT_PROGRESS_BAR_THUMB_SIZE;
 
-            this.progressBarThumbSize = Number.isFinite(size) ? size : 22;
+            this.progressBarThumbSize = Number.isFinite(size)
+                ? size
+                : this.DEFAULT_PROGRESS_BAR_THUMB_SIZE;
         };
 
         private calculateThumbCenterPercentage(percentage: number): number {
