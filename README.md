@@ -33,4 +33,4 @@ Frontmatter in each mdx file is used to populate the homepage lists.
 
 ## AI?
 
-No AI was used to make this website. I am not against AI and often make use of it on other projects, sort of like a coding assistant I guess, but as this is my personal website I felt it should be hand-coded. It's also not a very complicated website anyway, so it would have saved less time than on other more complex projects anyway. Additionally - it's just fun to hand-code something!
+No AI was used to make this website. I am not against AI and often make use of it on other projects, sort of like a coding assistant I guess, but as this is my personal website I felt it should be hand-coded. It's also not a very complicated website anyway, so it would have saved less time than on other more complex projects. Additionally - it's just fun to hand-code something!
