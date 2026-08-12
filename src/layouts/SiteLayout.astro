@@ -82,6 +82,11 @@ const ogImageUrl = new URL('/og-image.png', siteUrl);
                 --font-size-450: 1.25rem;
                 --font-size-400: 1rem;
                 --font-size-350: 0.875rem;
+                --z-base: 1; /* Background layers */
+                --z-above-base: 2; /* Sits on top of background layers */
+                --z-controls: 10; /* Slideshow & video controls */
+                --z-overlay: 99; /* Full-screen overlay/dimmer */
+                --z-header: 100; /* Fixed header */
                 --anim-main-nav-delay: 0.05s;
                 --anim-easing-quad-inout: cubic-bezier(0.5, 1, 0.89, 1);
 
@@ -154,10 +159,6 @@ const ogImageUrl = new URL('/og-image.png', siteUrl);
                 font-weight: 700;
             }
 
-            main {
-                width: 100%;
-            }
-
             p {
                 font-size: var(--font-size-400);
                 line-height: 28px;
@@ -195,7 +196,7 @@ const ogImageUrl = new URL('/og-image.png', siteUrl);
             .section-content {
                 max-width: 1180px;
                 margin: 0 auto;
-                padding: 0 20px;
+                padding-inline: 20px;
 
                 @media (--bp-600) {
                     padding-inline: 30px;

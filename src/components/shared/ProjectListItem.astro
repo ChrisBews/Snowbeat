@@ -22,7 +22,7 @@ const { slug, title, image, type, isFeatured } = Astro.props;
     .content-wrapper {
         display: block;
         text-decoration: none;
-        overflow: hidden;
+        overflow: clip;
     }
 
     h2 {
@@ -53,7 +53,7 @@ const { slug, title, image, type, isFeatured } = Astro.props;
     figure {
         position: relative;
         border-radius: 8px;
-        overflow: hidden;
+        overflow: clip;
     }
 
     .main-image {

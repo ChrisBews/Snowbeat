@@ -32,14 +32,14 @@ import { LINKEDIN_URL, GITHUB_URL } from '@snowbeat/constants';
         display: flex;
         flex: 1;
         align-items: flex-end;
-        overflow: hidden;
+        overflow: clip;
     }
 
     .logo {
         width: 100%;
         height: auto;
         aspect-ratio: 494/83;
-        transform: translateY(12%);
+        translate: 0 12%;
     }
 
     .bottom-row {
@@ -66,7 +66,6 @@ import { LINKEDIN_URL, GITHUB_URL } from '@snowbeat/constants';
 
     .social-links {
         display: flex;
-        flex-direction: row;
         gap: 20px;
         list-style: none;
     }

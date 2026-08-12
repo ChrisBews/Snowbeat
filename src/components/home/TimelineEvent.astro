@@ -25,9 +25,8 @@ const { companyLogo, companyName, startYear, endYear, roles } = Astro.props;
     }
 
     .company-logo {
-        width: 100%;
         border-radius: 8px;
-        overflow: hidden;
+        overflow: clip;
 
         @media (--bp-500) {
             width: 130px;

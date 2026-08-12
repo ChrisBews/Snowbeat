@@ -14,22 +14,22 @@ const { totalSlides, hasPips, captions = [] } = Astro.props;
 <style>
     @keyframes slideshow-press-anim {
         0% {
-            transform: scale(1);
+            scale: 1;
         }
 
         50% {
-            transform: scale(0.97);
+            scale: 0.97;
         }
 
         100% {
-            transform: scale(1);
+            scale: 1;
         }
     }
 
     .slideshow-controls {
         position: absolute;
         inset: 0;
-        z-index: 10;
+        z-index: var(--z-controls);
     }
 
     .overlay-button {
@@ -71,7 +71,7 @@ const { totalSlides, hasPips, captions = [] } = Astro.props;
             background-color: var(--color-brand-yellow);
             transition:
                 background-color 0.15s var(--anim-easing-quad-inout),
-                transform 0.15s var(--anim-easing-quad-inout);
+                scale 0.15s var(--anim-easing-quad-inout);
 
             @media (--bp-600) {
                 width: 72px;
@@ -110,11 +110,11 @@ const { totalSlides, hasPips, captions = [] } = Astro.props;
         }
 
         &.previous .icon::after {
-            transform: rotate(180deg);
+            rotate: 180deg;
         }
 
         &:hover .icon {
-            transform: scale(1.05);
+            scale: 1.05;
             background-color: var(--color-brand-yellow-dark);
         }
     }

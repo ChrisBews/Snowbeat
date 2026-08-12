@@ -17,16 +17,14 @@ const { src, type = 'raw', alt = '', caption } = Astro.props;
     .project-image {
         position: relative;
         display: flex;
-        flex-direction: row;
         justify-content: center;
-        width: 100%;
     }
 
     .image {
         width: 100%;
         height: auto;
         border-radius: 8px;
-        overflow: hidden;
+        overflow: clip;
     }
 
     .crop-image {

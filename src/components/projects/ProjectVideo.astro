@@ -40,12 +40,10 @@ const videoPreloadValue =
     .project-video {
         position: relative;
         display: flex;
-        flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: 100%;
         border-radius: 8px;
-        overflow: hidden;
+        overflow: clip;
         touch-action: manipulation;
     }
 
@@ -71,37 +69,39 @@ const videoPreloadValue =
     }
 </style>
 
-<video-player class="project-video" data-controls-type={controlsType}>
-    <MediaFrame
-        type={type}
-        caption={controlsType === 'none' ? caption : undefined}
-    >
-        <video
-            src={src}
-            loop={isLooping}
-            muted={isMuted || isAutoPlaying}
-            autoplay={isAutoPlaying}
-            playsinline
-            class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
-            poster={poster?.src}
-            preload={videoPreloadValue}
-            width={width}
-            height={height}></video>
-    </MediaFrame>
-    {
-        ['full', 'simple'].includes(controlsType) && (
-            <VideoControls
-                controlsType={controlsType}
-                isInitiallyMuted={isMuted || isAutoPlaying}
-                isAutoPlaying={isAutoPlaying}
-                caption={caption}
-            />
-        )
-    }
-    <div class="error-message">
-        <HighlightText>Error loading video</HighlightText>
-    </div>
-</video-player>
+<div class="project-video">
+    <video-player data-controls-type={controlsType}>
+        <MediaFrame
+            type={type}
+            caption={controlsType === 'none' ? caption : undefined}
+        >
+            <video
+                src={src}
+                loop={isLooping}
+                muted={isMuted || isAutoPlaying}
+                autoplay={isAutoPlaying}
+                playsinline
+                class={`image ${type === 'screen-crop' ? ' crop-image' : ''}`}
+                poster={poster?.src}
+                preload={videoPreloadValue}
+                width={width}
+                height={height}></video>
+        </MediaFrame>
+        {
+            ['full', 'simple'].includes(controlsType) && (
+                <VideoControls
+                    controlsType={controlsType}
+                    isInitiallyMuted={isMuted || isAutoPlaying}
+                    isAutoPlaying={isAutoPlaying}
+                    caption={caption}
+                />
+            )
+        }
+        <div class="error-message">
+            <HighlightText>Error loading video</HighlightText>
+        </div>
+    </video-player>
+</div>
 
 <script>
     import { VideoPlayerEvent } from '@snowbeat/constants';

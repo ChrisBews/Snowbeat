@@ -42,7 +42,7 @@ const MAIN_NAV_OPTIONS = [
 >
     .screen-overlay {
         position: fixed;
-        z-index: 99;
+        z-index: var(--z-overlay);
         inset: 0;
         display: none;
         opacity: 0;
@@ -69,7 +69,7 @@ const MAIN_NAV_OPTIONS = [
         top: var(--header-offset-small);
         left: 0;
         right: 0;
-        z-index: 100;
+        z-index: var(--z-header);
 
         @media (--bp-800) {
             top: var(--header-offset);
@@ -79,7 +79,6 @@ const MAIN_NAV_OPTIONS = [
     .header-content {
         position: relative;
         display: flex;
-        flex-direction: row;
         align-items: stretch;
         justify-content: space-between;
         gap: 20px;
@@ -90,7 +89,7 @@ const MAIN_NAV_OPTIONS = [
 
     .logo-wrapper {
         padding-block: 20px;
-        padding-left: 30px;
+        padding-inline-start: 30px;
 
         @media (--bp-800) {
             padding-block: 24px;
@@ -116,13 +115,13 @@ const MAIN_NAV_OPTIONS = [
         top: 100%;
         width: 100%;
         display: flex;
-        overflow: hidden;
+        overflow: clip;
 
         @media (--bp-800) {
             position: static;
             flex-basis: 70%;
             padding-block: 8px;
-            padding-right: 8px;
+            padding-inline-end: 8px;
         }
     }
 
@@ -130,7 +129,6 @@ const MAIN_NAV_OPTIONS = [
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        width: 100%;
         list-style: none;
 
         @media (--bp-800) {
@@ -144,13 +142,13 @@ const MAIN_NAV_OPTIONS = [
         display: none;
         flex: 1;
         opacity: 1;
-        transform: translateY(-100%);
+        translate: 0 -100%;
 
         /* Animate display so that we can still animate other values when display is initially none.
            We still need to animate opacity due to the note found in the following link (below transition-property): 
            https://www.w3.org/TR/css-transitions-2/#transition-property-property */
         transition:
-            transform 0.07s linear
+            translate 0.07s linear
                 calc((3 - var(--nav-item-index)) * var(--anim-main-nav-delay)),
             display 0.01s linear
                 calc((4 - var(--nav-item-index)) * var(--anim-main-nav-delay)),
@@ -181,7 +179,7 @@ const MAIN_NAV_OPTIONS = [
 
         @media (--bp-800) {
             display: flex;
-            transform: none;
+            translate: 0 0;
             transition: none;
             opacity: 1;
         }
@@ -190,18 +188,18 @@ const MAIN_NAV_OPTIONS = [
     .main-nav[data-visible] .main-nav-item {
         display: flex;
         opacity: 1;
-        transform: translateY(0);
+        translate: 0 0;
         transition-delay: calc(
             var(--nav-item-index) * var(--anim-main-nav-delay)
         );
 
         @media (--bp-800) {
-            transform: none;
+            translate: 0 0;
         }
 
         @starting-style {
             opacity: 0;
-            transform: translateY(-100%);
+            translate: 0 -100%;
         }
     }
 
@@ -246,7 +244,6 @@ const MAIN_NAV_OPTIONS = [
 
     .menu-toggle {
         display: flex;
-        flex-direction: row;
         align-items: center;
         justify-content: center;
         width: 76px;
@@ -286,7 +283,9 @@ const MAIN_NAV_OPTIONS = [
         height: 4px;
         border-radius: 2px;
         background-color: var(--color-brand-black);
-        transition: transform 0.15s var(--anim-easing-quad-inout);
+        transition:
+            translate 0.15s var(--anim-easing-quad-inout),
+            rotate 0.15s var(--anim-easing-quad-inout);
 
         @media (prefers-reduced-motion: reduce) {
             transition: none;
@@ -295,15 +294,17 @@ const MAIN_NAV_OPTIONS = [
 
     .menu-toggle[data-active] .menu-icon-row {
         &:nth-child(1) {
-            transform: translateY(11px) rotate(45deg);
+            translate: 0 11px;
+            rotate: 45deg;
         }
 
         &:nth-child(2) {
-            transform: rotate(45deg);
+            rotate: 45deg;
         }
 
         &:nth-child(3) {
-            transform: translateY(-11px) rotate(-45deg);
+            translate: 0 -11px;
+            rotate: -45deg;
         }
     }
 </style>
