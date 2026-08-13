@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 1527 1527" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <rect id="Artboard4" x="0" y="0" width="1527" height="1527" style="fill:none;"/>
-    <path d="M764.348,1526.343C1351.944,1508.897 1469.615,936.138 1462.937,723.074C1462.263,701.545 1191.611,1101.038 940.6,935.944C785.655,834.035 881.093,629.958 982.937,459.741C1089.261,282.036 1005.517,-2.97 754.498,0.32C-173.137,12.481 -162.958,1553.877 764.348,1526.343Z" style="fill:rgb(239,255,18);fill-rule:nonzero;"/>
+<svg width="800" height="800" viewBox="0 0 800 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <path d="M400.492,799.658C664.646,789.992 803.741,490.388 799.923,378.741C799.538,367.46 644.788,576.796 501.267,490.286C412.675,436.885 467.243,329.948 525.474,240.754C586.267,147.635 538.385,-1.71 394.86,0.015C-135.532,6.387 -129.554,819.054 400.492,799.658Z" style="fill:rgb(228,244,0);fill-rule:nonzero;"/>
 </svg>
